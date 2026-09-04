@@ -28,6 +28,10 @@ const TOPIC_TEMPLATE_MAP: Record<string, string> = {
   "cardinality": "cardinality-demo",
   "power-set": "power-set",
   "venn": "union-intersection",
+  "expression-builder": "excluded-middle",
+  "truth-table": "modus-ponens",
+  "equivalence": "de-morgan-logic",
+  "induction": "modus-ponens",
 };
 
 export function ModuleExplorer({ activeModuleId }: { activeModuleId: string }) {
@@ -35,6 +39,7 @@ export function ModuleExplorer({ activeModuleId }: { activeModuleId: string }) {
   const [previewModule, setPreviewModule] = useState<typeof MODULES[0] | null>(null);
   const loadTemplate = useWorkspaceStore((s) => s.loadTemplate);
   const setOutputTab = useWorkspaceStore((s) => s.setOutputTab);
+  const setActiveModule = useWorkspaceStore((s) => s.setActiveModule);
 
   function toggle(id: string) {
     setExpanded((prev) => {
@@ -45,11 +50,20 @@ export function ModuleExplorer({ activeModuleId }: { activeModuleId: string }) {
     });
   }
 
-  function handleTopicClick(topicId: string) {
+  function handleTopicClick(topicId: string, targetModuleId: string) {
+    if (targetModuleId !== activeModuleId) {
+      window.location.href = `/workspace/${targetModuleId}?topic=${topicId}`;
+      return;
+    }
+
     const templateId = TOPIC_TEMPLATE_MAP[topicId];
     if (templateId) {
       loadTemplate(templateId);
       if (topicId === "venn") {
+        setOutputTab("output");
+      } else if (topicId === "induction") {
+        setOutputTab("induction");
+      } else if (topicId === "truth-table") {
         setOutputTab("output");
       }
     }
@@ -116,7 +130,7 @@ export function ModuleExplorer({ activeModuleId }: { activeModuleId: string }) {
                           type="button"
                           onClick={() => {
                             if (isClickable) {
-                              handleTopicClick(topic.id);
+                              handleTopicClick(topic.id, mod.id);
                             } else {
                               setPreviewModule(mod);
                             }

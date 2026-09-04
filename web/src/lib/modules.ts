@@ -30,12 +30,12 @@ export const MODULES: ModuleDefinition[] = [
     shortLabel: "Logic",
     description: "Truth tables, tautology checking, and mathematical induction visualizers.",
     accent: "cyan",
-    status: "coming-soon",
+    status: "available",
     topics: [
-      { id: "expression-builder", label: "Expression Builder", status: "coming-soon" },
-      { id: "truth-table", label: "Truth Table Generator", status: "coming-soon" },
-      { id: "equivalence", label: "Equivalence Checker", status: "coming-soon" },
-      { id: "induction", label: "Induction Visualizer", status: "coming-soon" },
+      { id: "expression-builder", label: "Expression Builder", status: "available" },
+      { id: "truth-table", label: "Truth Table Generator", status: "available" },
+      { id: "equivalence", label: "Equivalence Checker", status: "available" },
+      { id: "induction", label: "Induction Visualizer", status: "available" },
     ],
   },
   {

@@ -17,12 +17,20 @@ import { useWorkspaceStore } from "@/store/workspace-store";
 import { SetNode, type SetNodeData } from "./nodes/set-node";
 import { OperationNode } from "./nodes/operation-node";
 import { ResultNode } from "./nodes/result-node";
+import { LogicVarNode } from "./nodes/logic-var-node";
+import { LogicOpNode } from "./nodes/logic-op-node";
+import { LogicResultNode } from "./nodes/logic-result-node";
 import { SetFormModal, type SetFormValues } from "./set-form-modal";
+import { CanvasPalette } from "./canvas-palette";
+import { LogicPalette } from "./logic-palette";
 
 const NODE_TYPES = {
   set: SetNode,
   operation: OperationNode,
   result: ResultNode,
+  "logic-var": LogicVarNode,
+  "logic-op": LogicOpNode,
+  "logic-result": LogicResultNode,
 };
 
 export function WorkspaceCanvas() {
@@ -35,6 +43,7 @@ export function WorkspaceCanvas() {
   const selectNode = useWorkspaceStore((s) => s.selectNode);
   const selectedNodeId = useWorkspaceStore((s) => s.selectedNodeId);
   const deleteNode = useWorkspaceStore((s) => s.deleteNode);
+  const activeModuleId = useWorkspaceStore((s) => s.activeModuleId);
   const loadSavedProject = useWorkspaceStore((s) => s.loadSavedProject);
   const loadTemplate = useWorkspaceStore((s) => s.loadTemplate);
 
@@ -45,9 +54,13 @@ export function WorkspaceCanvas() {
   useEffect(() => {
     const loaded = loadSavedProject();
     if (!loaded && nodes.length === 0) {
-      loadTemplate("union-intersection");
+      if (activeModuleId === "logic") {
+        loadTemplate("modus-ponens");
+      } else {
+        loadTemplate("union-intersection");
+      }
     }
-  }, []);
+  }, [activeModuleId]);
 
   // Keyboard shortcut: Delete or Backspace to delete selected node
   useEffect(() => {
@@ -66,16 +79,20 @@ export function WorkspaceCanvas() {
 
   const onConnect = useCallback(
     (connection: Connection) => {
+      const isLogic = activeModuleId === "logic";
       const newEdge: Edge = {
         ...connection,
         id: `e-${connection.source}-${connection.target}-${Date.now()}`,
         animated: true,
-        style: { stroke: "var(--lv-cyan)", strokeWidth: 2 },
+        style: {
+          stroke: isLogic ? "var(--lv-cyan)" : "var(--lv-blue)",
+          strokeWidth: 2,
+        },
       };
       const newEdges = addEdge(newEdge, edges);
       setEdges(newEdges);
     },
-    [edges, setEdges]
+    [edges, setEdges, activeModuleId]
   );
 
   function handleEditSubmit(values: SetFormValues) {
@@ -91,7 +108,7 @@ export function WorkspaceCanvas() {
   }
 
   return (
-    <div className="h-full w-full">
+    <div className="relative h-full w-full">
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -124,6 +141,9 @@ export function WorkspaceCanvas() {
           nodeColor="#1D2A40"
         />
       </ReactFlow>
+
+      {/* Floating Dynamic Palette according to active module */}
+      {activeModuleId === "logic" ? <LogicPalette /> : <CanvasPalette />}
 
       {editingNode && (
         <SetFormModal

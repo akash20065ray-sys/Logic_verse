@@ -15,21 +15,23 @@ import {
   Code2,
   FileText,
   Info,
+  Table,
+  Sigma,
 } from "lucide-react";
 import { useWorkspaceStore } from "@/store/workspace-store";
 import { cn } from "@/lib/utils";
 import { VennDiagram } from "./venn-diagram";
-
-const TABS: { id: "output" | "steps" | "formal-model" | "errors"; label: string }[] = [
-  { id: "output", label: "Output" },
-  { id: "steps", label: "Steps" },
-  { id: "formal-model", label: "Formal Model" },
-  { id: "errors", label: "Errors" },
-];
+import { TruthTableView } from "./truth-table-view";
+import { InductionView } from "./induction-view";
 
 export function OutputPanel() {
+  const activeModuleId = useWorkspaceStore((s) => s.activeModuleId);
   const outputTab = useWorkspaceStore((s) => s.outputTab);
   const setOutputTab = useWorkspaceStore((s) => s.setOutputTab);
+
+  const isLogic = activeModuleId === "logic";
+
+  // Set Theory store data
   const graphEvaluation = useWorkspaceStore((s) => s.graphEvaluation);
   const activeStepIndex = useWorkspaceStore((s) => s.activeStepIndex);
   const setStepIndex = useWorkspaceStore((s) => s.setStepIndex);
@@ -37,19 +39,26 @@ export function OutputPanel() {
   const stepBackward = useWorkspaceStore((s) => s.stepBackward);
   const isPlayingSteps = useWorkspaceStore((s) => s.isPlayingSteps);
   const setIsPlayingSteps = useWorkspaceStore((s) => s.setIsPlayingSteps);
+
+  // Logic store data
+  const logicEvaluation = useWorkspaceStore((s) => s.logicEvaluation);
+
   const nodes = useWorkspaceStore((s) => s.nodes);
 
   const [copied, setCopied] = useState<string | null>(null);
   const [exportModalOpen, setExportModalOpen] = useState(false);
 
-  const { primaryResult, primarySets, allSteps, formalModel, errors } = graphEvaluation;
-  const errorCount = errors.filter((e) => e.type === "error").length;
-  const warningCount = errors.filter((e) => e.type === "warning").length;
+  // Pick errors based on active module
+  const currentErrors = isLogic ? logicEvaluation.errors : graphEvaluation.errors;
+  const errorCount = currentErrors.filter((e) => e.type === "error").length;
+  const warningCount = currentErrors.filter((e) => e.type === "warning").length;
 
-  // Auto-play step simulation
+  const { primaryResult, primarySets, allSteps, formalModel } = graphEvaluation;
+
+  // Auto-play step simulation for Set Theory
   useEffect(() => {
     let timer: NodeJS.Timeout;
-    if (isPlayingSteps && allSteps.length > 0) {
+    if (!isLogic && isPlayingSteps && allSteps.length > 0) {
       timer = setInterval(() => {
         if (activeStepIndex < allSteps.length - 1) {
           stepForward();
@@ -59,7 +68,7 @@ export function OutputPanel() {
       }, 1500);
     }
     return () => clearInterval(timer);
-  }, [isPlayingSteps, activeStepIndex, allSteps.length, stepForward, setIsPlayingSteps]);
+  }, [isLogic, isPlayingSteps, activeStepIndex, allSteps.length, stepForward, setIsPlayingSteps]);
 
   function copyToClipboard(text: string, id: string) {
     navigator.clipboard.writeText(text);
@@ -70,10 +79,10 @@ export function OutputPanel() {
   function handleDownloadJson() {
     const data = JSON.stringify(
       {
-        version: "0.1",
-        project: "LogicVerse Formal Model",
+        version: "0.2",
+        module: activeModuleId,
         nodes: nodes,
-        formalModel: formalModel,
+        evaluation: isLogic ? logicEvaluation : graphEvaluation,
         timestamp: new Date().toISOString(),
       },
       null,
@@ -83,28 +92,45 @@ export function OutputPanel() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `logicverse-model-${Date.now()}.json`;
+    a.download = `logicverse-${activeModuleId}-${Date.now()}.json`;
     a.click();
     URL.revokeObjectURL(url);
     setExportModalOpen(false);
   }
 
+  const tabs = isLogic
+    ? [
+        { id: "output" as const, label: "Truth Table", icon: Table },
+        { id: "induction" as const, label: "Induction", icon: Sigma },
+        { id: "formal-model" as const, label: "Formal WFF", icon: Code2 },
+        { id: "errors" as const, label: "Errors", icon: AlertTriangle },
+      ]
+    : [
+        { id: "output" as const, label: "Output", icon: CheckCircle2 },
+        { id: "steps" as const, label: "Steps", icon: Play },
+        { id: "formal-model" as const, label: "Formal Model", icon: Code2 },
+        { id: "errors" as const, label: "Errors", icon: AlertTriangle },
+      ];
+
   return (
     <div className="flex h-full flex-col">
       {/* Header Tabs */}
       <div className="flex items-center border-b border-lv-border-soft px-3 shrink-0">
-        {TABS.map((tab) => {
+        {tabs.map((tab) => {
           const hasErrors = tab.id === "errors" && (errorCount > 0 || warningCount > 0);
+          const isActive = outputTab === tab.id;
+
           return (
             <button
               key={tab.id}
               onClick={() => setOutputTab(tab.id)}
               className={cn(
                 "relative flex items-center gap-1.5 px-3 py-2 text-xs font-medium transition-colors",
-                outputTab === tab.id ? "text-lv-text font-semibold" : "text-lv-faint hover:text-lv-muted"
+                isActive ? "text-lv-text font-semibold" : "text-lv-faint hover:text-lv-muted"
               )}
             >
-              {tab.label}
+              <tab.icon className={cn("h-3.5 w-3.5", isActive ? "text-lv-cyan" : "text-lv-faint")} />
+              <span>{tab.label}</span>
               {hasErrors && (
                 <span
                   className={cn(
@@ -115,7 +141,7 @@ export function OutputPanel() {
                   {errorCount + warningCount}
                 </span>
               )}
-              {outputTab === tab.id && (
+              {isActive && (
                 <span className="absolute inset-x-2 -bottom-px h-0.5 rounded-full bg-lv-cyan" />
               )}
             </button>
@@ -134,8 +160,19 @@ export function OutputPanel() {
 
       {/* Dock Content */}
       <div className="lv-scrollbar flex-1 overflow-y-auto px-4 py-3 font-mono text-[13px]">
-        {/* OUTPUT TAB */}
-        {outputTab === "output" && (
+        {/* LOGIC: TRUTH TABLE TAB */}
+        {isLogic && outputTab === "output" && (
+          <TruthTableView
+            truthTable={logicEvaluation.truthTable}
+            activeAssignments={logicEvaluation.variableAssignments}
+          />
+        )}
+
+        {/* LOGIC: INDUCTION TAB */}
+        {isLogic && outputTab === "induction" && <InductionView />}
+
+        {/* SET THEORY: OUTPUT TAB */}
+        {!isLogic && outputTab === "output" && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
             <div className="space-y-3">
               {primaryResult ? (
@@ -179,7 +216,6 @@ export function OutputPanel() {
                     </div>
                   </div>
 
-                  {/* Inclusion-Exclusion formula display if applicable */}
                   {primaryResult.notation.includes("∪") && primarySets.length >= 2 && (
                     <div className="rounded-lg bg-lv-panel/80 border border-lv-border-soft p-2.5 text-xs text-lv-muted space-y-1">
                       <div className="text-[10px] uppercase tracking-wider text-lv-faint font-semibold">
@@ -204,7 +240,6 @@ export function OutputPanel() {
               )}
             </div>
 
-            {/* Venn Diagram Visualizer Column */}
             <div className="flex flex-col">
               <VennDiagram
                 labelA={primarySets[0]?.label ?? "A"}
@@ -217,8 +252,8 @@ export function OutputPanel() {
           </div>
         )}
 
-        {/* STEPS TAB */}
-        {outputTab === "steps" && (
+        {/* SET THEORY: STEPS TAB */}
+        {!isLogic && outputTab === "steps" && (
           <div className="space-y-4">
             {allSteps.length === 0 ? (
               <div className="text-lv-muted py-4">
@@ -226,7 +261,6 @@ export function OutputPanel() {
               </div>
             ) : (
               <>
-                {/* Stepper Controls Bar */}
                 <div className="flex items-center gap-2 border-b border-lv-border-soft pb-3">
                   <button
                     type="button"
@@ -271,7 +305,6 @@ export function OutputPanel() {
                   </span>
                 </div>
 
-                {/* Active Step Card */}
                 {allSteps[activeStepIndex] && (
                   <div className="rounded-xl border border-lv-cyan/40 bg-lv-surface/70 p-4 space-y-2">
                     <div className="flex items-center justify-between">
@@ -296,96 +329,87 @@ export function OutputPanel() {
                     )}
                   </div>
                 )}
-
-                {/* Steps Timeline Overview */}
-                <div className="space-y-1.5 pt-2">
-                  <div className="text-[11px] uppercase tracking-wider text-lv-faint font-semibold">
-                    Execution Trace
-                  </div>
-                  {allSteps.map((step, idx) => (
-                    <button
-                      key={step.stepNumber}
-                      type="button"
-                      onClick={() => setStepIndex(idx)}
-                      className={cn(
-                        "w-full text-left flex items-center justify-between rounded-lg px-3 py-2 text-xs transition-colors",
-                        activeStepIndex === idx
-                          ? "bg-lv-surface border border-lv-cyan/40 text-lv-text font-medium"
-                          : "hover:bg-lv-surface/40 text-lv-muted"
-                      )}
-                    >
-                      <span>
-                        {step.stepNumber}. {step.title}
-                      </span>
-                      {activeStepIndex === idx && (
-                        <span className="h-1.5 w-1.5 rounded-full bg-lv-cyan" />
-                      )}
-                    </button>
-                  ))}
-                </div>
               </>
             )}
           </div>
         )}
 
-        {/* FORMAL MODEL TAB */}
+        {/* FORMAL MODEL TAB (Shared / Adapted) */}
         {outputTab === "formal-model" && (
           <div className="space-y-4">
-            <div>
-              <p className="text-lv-faint text-xs mb-2">// Formal logic representation & set-builder specification</p>
-              <div className="rounded-xl border border-lv-border bg-lv-surface/70 p-3 space-y-2">
-                <div className="text-xs text-lv-faint">Set-Builder Definition</div>
-                <div className="text-sm font-bold text-lv-cyan">
-                  {formalModel.definitions[0] || formalModel.expression}
+            {isLogic ? (
+              <div className="space-y-3">
+                <p className="text-lv-faint text-xs">// Well-Formed Formula (WFF) Specification & LaTeX</p>
+                <div className="rounded-xl border border-lv-border bg-lv-surface/70 p-3 space-y-1">
+                  <div className="text-xs text-lv-faint">Canonical Expression</div>
+                  <div className="text-sm font-bold text-lv-cyan">
+                    {logicEvaluation.activeExpression}
+                  </div>
                 </div>
-              </div>
-            </div>
 
-            {formalModel.properties.length > 0 && (
-              <div>
-                <div className="text-xs font-semibold uppercase tracking-wider text-lv-faint mb-2">
-                  Axiomatic Set Properties
+                <div>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className="text-xs text-lv-faint">LaTeX Formula</span>
+                    <button
+                      type="button"
+                      onClick={() => copyToClipboard(logicEvaluation.latexExpression, "logic-latex")}
+                      className="flex items-center gap-1 rounded bg-lv-surface px-2 py-0.5 text-[11px] text-lv-muted hover:text-lv-text"
+                    >
+                      {copied === "logic-latex" ? <Check className="h-3 w-3 text-lv-success" /> : <Copy className="h-3 w-3" />}
+                      Copy LaTeX
+                    </button>
+                  </div>
+                  <div className="rounded-lg border border-lv-border bg-lv-panel p-2.5 text-xs text-lv-text select-all">
+                    {logicEvaluation.latexExpression}
+                  </div>
                 </div>
-                <ul className="space-y-1">
-                  {formalModel.properties.map((prop, i) => (
-                    <li key={i} className="flex items-center gap-2 text-xs text-lv-muted">
-                      <span className="h-1.5 w-1.5 rounded-full bg-lv-purple" />
-                      {prop}
-                    </li>
-                  ))}
-                </ul>
               </div>
+            ) : (
+              <>
+                <div>
+                  <p className="text-lv-faint text-xs mb-2">// Formal logic representation & set-builder specification</p>
+                  <div className="rounded-xl border border-lv-border bg-lv-surface/70 p-3 space-y-2">
+                    <div className="text-xs text-lv-faint">Set-Builder Definition</div>
+                    <div className="text-sm font-bold text-lv-cyan">
+                      {formalModel.definitions[0] || formalModel.expression}
+                    </div>
+                  </div>
+                </div>
+
+                {formalModel.properties.length > 0 && (
+                  <div>
+                    <div className="text-xs font-semibold uppercase tracking-wider text-lv-faint mb-2">
+                      Axiomatic Set Properties
+                    </div>
+                    <ul className="space-y-1">
+                      {formalModel.properties.map((prop, i) => (
+                        <li key={i} className="flex items-center gap-2 text-xs text-lv-muted">
+                          <span className="h-1.5 w-1.5 rounded-full bg-lv-purple" />
+                          {prop}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </>
             )}
-
-            <div>
-              <div className="flex items-center justify-between mb-1.5">
-                <span className="text-xs text-lv-faint">LaTeX Representation</span>
-                <button
-                  type="button"
-                  onClick={() => copyToClipboard(formalModel.latex, "latex")}
-                  className="flex items-center gap-1 rounded bg-lv-surface px-2 py-0.5 text-[11px] text-lv-muted hover:text-lv-text"
-                >
-                  {copied === "latex" ? <Check className="h-3 w-3 text-lv-success" /> : <Copy className="h-3 w-3" />}
-                  Copy LaTeX
-                </button>
-              </div>
-              <div className="rounded-lg border border-lv-border bg-lv-panel p-2.5 text-xs text-lv-text select-all">
-                {formalModel.latex}
-              </div>
-            </div>
           </div>
         )}
 
-        {/* ERRORS & VALIDATION TAB */}
+        {/* ERRORS TAB */}
         {outputTab === "errors" && (
           <div className="space-y-2">
-            {errors.length === 0 ? (
+            {currentErrors.length === 0 ? (
               <div className="flex items-center gap-2 text-lv-success py-4">
                 <CheckCircle2 className="h-4 w-4 text-lv-success" />
-                <span>All connections valid. Model conforms to Discrete Mathematics rules.</span>
+                <span>
+                  {isLogic
+                    ? "All logic gate connections are well-formed and valid."
+                    : "All connections valid. Model conforms to Discrete Mathematics rules."}
+                </span>
               </div>
             ) : (
-              errors.map((err) => (
+              currentErrors.map((err) => (
                 <div
                   key={err.id}
                   className={cn(
@@ -426,7 +450,7 @@ export function OutputPanel() {
             <div className="flex items-center justify-between border-b border-lv-border-soft pb-3">
               <h3 className="text-sm font-semibold text-lv-text flex items-center gap-2">
                 <Download className="h-4 w-4 text-lv-cyan" />
-                Export Model & Workspace
+                Export {isLogic ? "Logic" : "Set Theory"} Model
               </h3>
               <button
                 type="button"
@@ -456,7 +480,9 @@ export function OutputPanel() {
               <button
                 type="button"
                 onClick={() => {
-                  const md = `# ${primaryResult?.notation ?? "LogicVerse Model"}\n\n- Definition: ${formalModel.definitions[0] ?? ""}\n- Result: {${primaryResult?.elements.join(", ") ?? ""}}\n- Cardinality: ${primaryResult?.cardinality ?? 0}\n\nLaTeX:\n\`\`\`latex\n${formalModel.latex}\n\`\`\``;
+                  const md = isLogic
+                    ? `# Logic Model: ${logicEvaluation.activeExpression}\n\nLaTeX: \`${logicEvaluation.latexExpression}\`\n\nTruth Table:\n${logicEvaluation.truthTable?.markdownTable ?? ""}`
+                    : `# ${primaryResult?.notation ?? "LogicVerse Model"}\n\n- Definition: ${formalModel.definitions[0] ?? ""}\n- Result: {${primaryResult?.elements.join(", ") ?? ""}}\n- Cardinality: ${primaryResult?.cardinality ?? 0}\n\nLaTeX:\n\`\`\`latex\n${formalModel.latex}\n\`\`\``;
                   copyToClipboard(md, "md-report");
                   setExportModalOpen(false);
                 }}

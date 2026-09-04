@@ -1,4 +1,5 @@
 import type { GraphEvaluation } from "./graph-evaluator";
+import type { LogicEvaluation } from "./logic-graph-evaluator";
 
 export interface AiResponse {
   message: string;
@@ -81,6 +82,45 @@ export function generateExplanation(evalResult: GraphEvaluation): AiResponse {
   };
 }
 
+export function generateLogicExplanation(evalResult: LogicEvaluation): AiResponse {
+  const { activeExpression, truthTable, currentTruthValue, isTautology, isContradiction, isContingent, errors } =
+    evalResult;
+
+  if (errors.some((e) => e.type === "error")) {
+    const err = errors.find((e) => e.type === "error");
+    return {
+      message: `Logic Error detected: **${err?.message}**.\n\n${err?.remedy || "Please review your connections."}`,
+    };
+  }
+
+  if (!truthTable || truthTable.rows.length === 0) {
+    return {
+      message:
+        "Your logic canvas has no active formula probe. Add proposition variables (e.g. $P, Q$), connect them with logic gates like **AND (∧)** or **IMPLIES (→)**, and link to a **Result Probe** to see the full Truth Table!",
+      suggestedAction: {
+        label: "Load Modus Ponens",
+        actionType: "load-template",
+        templateId: "modus-ponens",
+      },
+    };
+  }
+
+  const classification = isTautology
+    ? "an unconditional **TAUTOLOGY (⊤)** (true under every truth assignment)"
+    : isContradiction
+    ? "an unsatisfiable **CONTRADICTION (⊥)** (false under all truth assignments)"
+    : "a **CONTINGENCY** (its truth value depends on the variable assignments)";
+
+  return {
+    message: `### Propositional Logic Analysis: **${activeExpression}**\n\n- **Current Value**: ${currentTruthValue ? "TRUE (T)" : "FALSE (F)"}\n- **Classification**: This proposition is ${classification}.\n- **Variables**: ${truthTable.variables.join(", ")} (${truthTable.rows.length} total interpretations)\n\nCheck the **Truth Table** tab in the dock below to inspect each row and see the canonical DNF/CNF expansions!`,
+    keyTakeaways: [
+      isTautology ? "Valid theorem" : isContradiction ? "Unsatisfiable" : "Satisfiable",
+      `Canonical DNF: ${truthTable.dnf}`,
+      `Canonical CNF: ${truthTable.cnf}`,
+    ],
+  };
+}
+
 export function generateHint(evalResult: GraphEvaluation): AiResponse {
   const { primaryResult, primarySets } = evalResult;
 
@@ -102,6 +142,28 @@ export function generateHint(evalResult: GraphEvaluation): AiResponse {
   return {
     message:
       "💡 **Pedagogical Hint**: Explore chaining operations! Connect the output of a Union into an Intersection with a third set to visualize complex expressions like $(A \\cup B) \\cap C$.",
+  };
+}
+
+export function generateLogicHint(evalResult: LogicEvaluation): AiResponse {
+  const { truthTable, activeExpression } = evalResult;
+
+  if (truthTable?.isTautology) {
+    return {
+      message: `💡 **Pedagogical Hint**: Notice that **${activeExpression}** is a **Tautology**! Every row in the truth table evaluates to True. That means it represents a universally valid law of inference or identity.`,
+    };
+  }
+
+  if (activeExpression.includes("→")) {
+    return {
+      message:
+        "💡 **Pedagogical Hint**: Remember the Material Implication rule: $P \\to Q$ is False **only when $P = \\text{True}$ and $Q = \\text{False}$**. If the premise $P$ is False, the conditional is vacuously True!",
+    };
+  }
+
+  return {
+    message:
+      "💡 **Pedagogical Hint**: Try clicking the (T / F) toggle buttons directly on your variable nodes to observe how truth values propagate live through your logic gates!",
   };
 }
 
@@ -146,9 +208,103 @@ export function generateExample(): AiResponse {
   };
 }
 
-export function answerDiscreteMathQuestion(query: string, evalResult: GraphEvaluation): AiResponse {
-  const q = query.toLowerCase();
+export function generateLogicExample(): AiResponse {
+  const templates = [
+    {
+      id: "modus-ponens",
+      title: "Modus Ponens",
+      desc: "The primary inference rule: ((P → Q) ∧ P) → Q.",
+    },
+    {
+      id: "de-morgan-logic",
+      title: "De Morgan's Law",
+      desc: "Demonstrates that ¬(P ∧ Q) ≡ ¬P ∨ ¬Q.",
+    },
+    {
+      id: "material-implication",
+      title: "Material Implication",
+      desc: "Explores why P → Q ≡ ¬P ∨ Q.",
+    },
+    {
+      id: "excluded-middle",
+      title: "Law of Excluded Middle",
+      desc: "Classic tautology: P ∨ ¬P.",
+    },
+  ];
 
+  const picked = templates[Math.floor(Math.random() * templates.length)];
+
+  return {
+    message: `✨ Logic Theorem Suggestion:\n\n**${picked.title}**\n${picked.desc}\n\nWould you like me to load this theorem onto your canvas?`,
+    suggestedAction: {
+      label: `Load "${picked.title}"`,
+      actionType: "load-template",
+      templateId: picked.id,
+    },
+  };
+}
+
+export function answerDiscreteMathQuestion(
+  query: string,
+  evalResult: GraphEvaluation,
+  logicEval?: LogicEvaluation,
+  moduleId?: string
+): AiResponse {
+  const q = query.toLowerCase();
+  const isLogic = moduleId === "logic" || q.includes("logic") || q.includes("truth table") || q.includes("tautology") || q.includes("modus") || q.includes("induction");
+
+  if (isLogic && logicEval) {
+    if (q.includes("explain") || q.includes("what is happening") || q.includes("current")) {
+      return generateLogicExplanation(logicEval);
+    }
+    if (q.includes("hint") || q.includes("help") || q.includes("clue")) {
+      return generateLogicHint(logicEval);
+    }
+    if (q.includes("example") || q.includes("generate") || q.includes("template")) {
+      return generateLogicExample();
+    }
+    if (q.includes("tautology")) {
+      return {
+        message:
+          "### What is a Tautology?\n\nA **Tautology** is a propositional formula that is **True under every possible truth assignment** (every row of its truth table is $T$).\n\nExamples:\n- Law of Excluded Middle: $P \\lor \\neg P$\n- Law of Non-Contradiction: $\\neg(P \\land \\neg P)$\n- Modus Ponens: $((P \\to Q) \\land P) \\to Q$\n\nIf even a single row in the truth table is False, the formula is not a tautology.",
+        suggestedAction: {
+          label: "Load Modus Ponens Tautology",
+          actionType: "load-template",
+          templateId: "modus-ponens",
+        },
+      };
+    }
+    if (q.includes("modus ponens") || q.includes("inference")) {
+      return {
+        message:
+          "### Modus Ponens (Law of Detachment)\n\n$$\\frac{P \\to Q, \\quad P}{\\therefore Q}$$\n\nIf statement $P \\to Q$ is true, and premise $P$ is true, then conclusion $Q$ must necessarily be true. The conditional statement $((P \\to Q) \\land P) \\to Q$ is a **Tautology**.",
+        suggestedAction: {
+          label: "Load Modus Ponens",
+          actionType: "load-template",
+          templateId: "modus-ponens",
+        },
+      };
+    }
+    if (q.includes("implication") || q.includes("->") || q.includes("implies")) {
+      return {
+        message:
+          "### Material Implication (P → Q)\n\n$P \\to Q$ asserts: *\"If P is true, then Q must be true.\"*\n\n- When $P = \\text{True}$ and $Q = \\text{False}$, the promise is broken: **False**.\n- When $P = \\text{False}$, the statement is **vacuously True**, regardless of $Q$!\n- Equivalent to: $\\neg P \\lor Q$ (Material Implication equivalence).",
+        suggestedAction: {
+          label: "Load Material Implication",
+          actionType: "load-template",
+          templateId: "material-implication",
+        },
+      };
+    }
+    if (q.includes("induction")) {
+      return {
+        message:
+          "### Principle of Mathematical Induction\n\nTo prove a statement $P(n)$ is true for all natural numbers $n \\ge 1$:\n\n1. **Base Step**: Prove $P(1)$ is true.\n2. **Inductive Hypothesis**: Assume $P(k)$ is true for an arbitrary integer $k \\ge 1$.\n3. **Inductive Step**: Prove that $P(k) \\implies P(k + 1)$.\n\nClick the **Induction tab** in the output dock to step through visual induction proofs!",
+      };
+    }
+  }
+
+  // Set Theory or General queries
   if (q.includes("explain") || q.includes("what is happening") || q.includes("current")) {
     return generateExplanation(evalResult);
   }
@@ -164,11 +320,11 @@ export function answerDiscreteMathQuestion(query: string, evalResult: GraphEvalu
   if (q.includes("de morgan") || q.includes("demorgan")) {
     return {
       message:
-        "### De Morgan's Laws for Sets\n\n1. **First Law**: $(A \\cup B)^c = A^c \\cap B^c$\n   *The complement of the union equals the intersection of the complements.*\n\n2. **Second Law**: $(A \\cap B)^c = A^c \\cup B^c$\n   *The complement of the intersection equals the union of the complements.*\n\nThese laws allow you to convert between OR (union) and AND (intersection) by distributing the negation.",
+        "### De Morgan's Laws\n\n1. **For Sets**: $(A \\cup B)^c = A^c \\cap B^c$\n2. **For Logic**: $\\neg(P \\land Q) \\equiv \\neg P \\lor \\neg Q$\n\nBoth reflect the exact same discrete duality: distributing a negation swaps OR and AND.",
       suggestedAction: {
-        label: "Load De Morgan Template",
+        label: isLogic ? "Load De Morgan Logic" : "Load De Morgan Sets",
         actionType: "load-template",
-        templateId: "de-morgan",
+        templateId: isLogic ? "de-morgan-logic" : "difference-symdiff",
       },
     };
   }
@@ -187,7 +343,7 @@ export function answerDiscreteMathQuestion(query: string, evalResult: GraphEvalu
   if (q.includes("power set") || q.includes("powerset") || q.includes("subset")) {
     return {
       message:
-        "### Power Set 𝒫(A)\n\nThe power set of $A$, denoted $\\mathcal{P}(A)$ or $2^A$, is the collection of **all possible subsets** of $A$.\n\n- If $|A| = n$, then $|\mathcal{P}(A)| = 2^n$.\n- Always includes the empty set $\\emptyset$ and the full set $A$ itself.\n- For example, if $A = \\{1, 2\\}$, then $\\mathcal{P}(A) = \\{\\emptyset, \\{1\\}, \\{2\\}, \\{1, 2\\}\\}$ ($2^2 = 4$ subsets).",
+        "### Power Set 𝒫(A)\n\nThe power set of $A$, denoted $\\mathcal{P}(A)$ or $2^A$, is the collection of **all possible subsets** of $A$.\n\n- If $|A| = n$, then $|\mathcal{P}(A)| = 2^n$.\n- Always includes the empty set $\\emptyset$ and the full set $A$ itself.",
       suggestedAction: {
         label: "Load Power Set Template",
         actionType: "load-template",
@@ -196,27 +352,11 @@ export function answerDiscreteMathQuestion(query: string, evalResult: GraphEvalu
     };
   }
 
-  if (q.includes("cartesian") || q.includes("product") || q.includes("pair")) {
-    return {
-      message:
-        "### Cartesian Product A × B\n\nThe Cartesian product produces ordered pairs $(x, y)$ such that $x \\in A$ and $y \\in B$.\n\n- Formally: $A \\times B = \\{ (x, y) \\mid x \\in A \\land y \\in B \\}$\n- Cardinality rule: $|A \\times B| = |A| \\cdot |B|$\n- Non-commutative: $A \\times B \\ne B \\times A$ unless $A = B$ or one is empty.",
-      suggestedAction: {
-        label: "Load Cartesian Product Template",
-        actionType: "load-template",
-        templateId: "cartesian-product",
-      },
-    };
-  }
-
-  if (q.includes("venn") || q.includes("diagram")) {
-    return {
-      message:
-        "### Venn Diagrams in LogicVerse\n\nA Venn diagram visually depicts set relationships in an enclosed universe $\\mathcal{U}$:\n\n- **A only**: $A - B$\n- **B only**: $B - A$\n- **Overlap**: $A \\cap B$\n- **Total shaded**: $A \\cup B$\n\nLook at the **Output tab** in the bottom dock — LogicVerse renders an interactive, real SVG Venn diagram populated with your exact canvas elements!",
-    };
-  }
-
-  // General discrete math response referencing canvas
   return {
-    message: `I understand you're asking about: "${query}".\n\n${generateExplanation(evalResult).message}\n\nYou can also ask me about **De Morgan's laws**, **Power sets**, **Cartesian products**, **Inclusion-exclusion**, or click **Generate example** to explore preset configurations!`,
+    message: `I understand you're asking about: "${query}".\n\n${
+      isLogic && logicEval
+        ? generateLogicExplanation(logicEval).message
+        : generateExplanation(evalResult).message
+    }\n\nYou can ask about **Truth tables**, **Tautologies**, **Material Implication**, **De Morgan's laws**, or **Mathematical Induction**!`,
   };
 }

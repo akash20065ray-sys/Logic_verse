@@ -9,6 +9,9 @@ import {
   generateExplanation,
   generateExample,
   generateHint,
+  generateLogicExplanation,
+  generateLogicExample,
+  generateLogicHint,
   type AiResponse,
 } from "@/lib/algorithms/logic-ai-engine";
 
@@ -38,21 +41,25 @@ const QUICK_ACTIONS = [
 
 export function LogicAiPanel() {
   const graphEvaluation = useWorkspaceStore((s) => s.graphEvaluation);
+  const logicEvaluation = useWorkspaceStore((s) => s.logicEvaluation);
+  const activeModuleId = useWorkspaceStore((s) => s.activeModuleId);
   const loadTemplate = useWorkspaceStore((s) => s.loadTemplate);
   const [messages, setMessages] = useState<ChatMessage[]>(INITIAL_MESSAGES);
   const [input, setInput] = useState("");
+
+  const isLogic = activeModuleId === "logic";
 
   function processQuery(text: string) {
     let response: AiResponse;
 
     if (text === "Explain this step") {
-      response = generateExplanation(graphEvaluation);
+      response = isLogic ? generateLogicExplanation(logicEvaluation) : generateExplanation(graphEvaluation);
     } else if (text === "Generate example") {
-      response = generateExample();
+      response = isLogic ? generateLogicExample() : generateExample();
     } else if (text === "Give me a hint") {
-      response = generateHint(graphEvaluation);
+      response = isLogic ? generateLogicHint(logicEvaluation) : generateHint(graphEvaluation);
     } else {
-      response = answerDiscreteMathQuestion(text, graphEvaluation);
+      response = answerDiscreteMathQuestion(text, graphEvaluation, logicEvaluation, activeModuleId);
     }
 
     setMessages((prev) => [

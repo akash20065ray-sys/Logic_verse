@@ -4,16 +4,18 @@ export interface TemplateDefinition {
   id: string;
   title: string;
   description: string;
+  moduleId?: string;
   topicId?: string;
   nodes: Node[];
   edges: Edge[];
 }
 
-export const WORKSPACE_TEMPLATES: Record<string, TemplateDefinition> = {
+export const SET_THEORY_TEMPLATES: Record<string, TemplateDefinition> = {
   "union-intersection": {
     id: "union-intersection",
     title: "Union & Intersection",
     description: "Standard 2-set setup computing union A ∪ B with real-time inclusion-exclusion.",
+    moduleId: "set-theory",
     topicId: "set-operations",
     nodes: [
       {
@@ -71,6 +73,7 @@ export const WORKSPACE_TEMPLATES: Record<string, TemplateDefinition> = {
     id: "difference-symdiff",
     title: "Difference & Symmetric Difference",
     description: "Demonstrates non-commutative set subtraction A − B versus exclusive-or A ⊕ B.",
+    moduleId: "set-theory",
     topicId: "set-operations",
     nodes: [
       {
@@ -163,6 +166,7 @@ export const WORKSPACE_TEMPLATES: Record<string, TemplateDefinition> = {
     id: "power-set",
     title: "Power Set Visualizer",
     description: "Generates all 2^n subsets of a given finite set.",
+    moduleId: "set-theory",
     topicId: "power-set",
     nodes: [
       {
@@ -205,6 +209,7 @@ export const WORKSPACE_TEMPLATES: Record<string, TemplateDefinition> = {
     id: "cartesian-product",
     title: "Cartesian Product",
     description: "Constructs ordered pairs A × B with |A| × |B| cardinality.",
+    moduleId: "set-theory",
     topicId: "set-operations",
     nodes: [
       {
@@ -262,6 +267,7 @@ export const WORKSPACE_TEMPLATES: Record<string, TemplateDefinition> = {
     id: "cardinality-demo",
     title: "Cardinality & Counting",
     description: "Inspects set sizes and verifies the Inclusion-Exclusion principle.",
+    moduleId: "set-theory",
     topicId: "cardinality",
     nodes: [
       {
@@ -302,4 +308,94 @@ export const WORKSPACE_TEMPLATES: Record<string, TemplateDefinition> = {
   },
 };
 
-export const DEFAULT_STARTER_TEMPLATE = WORKSPACE_TEMPLATES["union-intersection"];
+export const LOGIC_TEMPLATES: Record<string, TemplateDefinition> = {
+  "modus-ponens": {
+    id: "modus-ponens",
+    title: "Modus Ponens ((P → Q) ∧ P) → Q",
+    description: "Classic rule of logical inference. Demonstrates a canonical Tautology.",
+    moduleId: "logic",
+    topicId: "truth-table",
+    nodes: [
+      { id: "var-p", type: "logic-var", position: { x: 60, y: 80 }, data: { label: "P", value: true } },
+      { id: "var-q", type: "logic-var", position: { x: 60, y: 220 }, data: { label: "Q", value: true } },
+      { id: "gate-imp1", type: "logic-op", position: { x: 230, y: 80 }, data: { label: "IMPLIES", symbol: "→" } },
+      { id: "gate-and", type: "logic-op", position: { x: 370, y: 140 }, data: { label: "AND", symbol: "∧" } },
+      { id: "gate-imp2", type: "logic-op", position: { x: 520, y: 140 }, data: { label: "IMPLIES", symbol: "→" } },
+      { id: "res-mp", type: "logic-result", position: { x: 680, y: 140 }, data: { label: "Result" } },
+    ],
+    edges: [
+      { id: "e1", source: "var-p", target: "gate-imp1", targetHandle: "handle-p", animated: true, style: { stroke: "var(--lv-cyan)", strokeWidth: 2 } },
+      { id: "e2", source: "var-q", target: "gate-imp1", targetHandle: "handle-q", animated: true, style: { stroke: "var(--lv-purple)", strokeWidth: 2 } },
+      { id: "e3", source: "gate-imp1", target: "gate-and", targetHandle: "handle-p", animated: true, style: { stroke: "var(--lv-cyan)", strokeWidth: 2 } },
+      { id: "e4", source: "var-p", target: "gate-and", targetHandle: "handle-q", animated: true, style: { stroke: "var(--lv-cyan)", strokeWidth: 2 } },
+      { id: "e5", source: "gate-and", target: "gate-imp2", targetHandle: "handle-p", animated: true, style: { stroke: "var(--lv-cyan)", strokeWidth: 2 } },
+      { id: "e6", source: "var-q", target: "gate-imp2", targetHandle: "handle-q", animated: true, style: { stroke: "var(--lv-purple)", strokeWidth: 2 } },
+      { id: "e7", source: "gate-imp2", target: "res-mp", animated: true, style: { stroke: "var(--lv-success)", strokeWidth: 2 } },
+    ],
+  },
+  "de-morgan-logic": {
+    id: "de-morgan-logic",
+    title: "De Morgan: ¬(P ∧ Q)",
+    description: "Evaluates the negated conjunction to compare against ¬P ∨ ¬Q.",
+    moduleId: "logic",
+    topicId: "equivalence",
+    nodes: [
+      { id: "var-p", type: "logic-var", position: { x: 80, y: 90 }, data: { label: "P", value: true } },
+      { id: "var-q", type: "logic-var", position: { x: 80, y: 210 }, data: { label: "Q", value: false } },
+      { id: "gate-and", type: "logic-op", position: { x: 260, y: 150 }, data: { label: "AND", symbol: "∧" } },
+      { id: "gate-not", type: "logic-op", position: { x: 420, y: 150 }, data: { label: "NOT", symbol: "¬" } },
+      { id: "res-dm", type: "logic-result", position: { x: 580, y: 150 }, data: { label: "Result" } },
+    ],
+    edges: [
+      { id: "e1", source: "var-p", target: "gate-and", targetHandle: "handle-p", animated: true, style: { stroke: "var(--lv-cyan)", strokeWidth: 2 } },
+      { id: "e2", source: "var-q", target: "gate-and", targetHandle: "handle-q", animated: true, style: { stroke: "var(--lv-purple)", strokeWidth: 2 } },
+      { id: "e3", source: "gate-and", target: "gate-not", targetHandle: "handle-unary", animated: true, style: { stroke: "var(--lv-cyan)", strokeWidth: 2 } },
+      { id: "e4", source: "gate-not", target: "res-dm", animated: true, style: { stroke: "var(--lv-cyan)", strokeWidth: 2 } },
+    ],
+  },
+  "material-implication": {
+    id: "material-implication",
+    title: "Material Implication: P → Q",
+    description: "Shows that P → Q evaluates to False only when P is True and Q is False.",
+    moduleId: "logic",
+    topicId: "truth-table",
+    nodes: [
+      { id: "var-p", type: "logic-var", position: { x: 100, y: 90 }, data: { label: "P", value: true } },
+      { id: "var-q", type: "logic-var", position: { x: 100, y: 210 }, data: { label: "Q", value: false } },
+      { id: "gate-imp", type: "logic-op", position: { x: 300, y: 150 }, data: { label: "IMPLIES", symbol: "→" } },
+      { id: "res-imp", type: "logic-result", position: { x: 500, y: 150 }, data: { label: "Result" } },
+    ],
+    edges: [
+      { id: "e1", source: "var-p", target: "gate-imp", targetHandle: "handle-p", animated: true, style: { stroke: "var(--lv-cyan)", strokeWidth: 2 } },
+      { id: "e2", source: "var-q", target: "gate-imp", targetHandle: "handle-q", animated: true, style: { stroke: "var(--lv-purple)", strokeWidth: 2 } },
+      { id: "e3", source: "gate-imp", target: "res-imp", animated: true, style: { stroke: "var(--lv-cyan)", strokeWidth: 2 } },
+    ],
+  },
+  "excluded-middle": {
+    id: "excluded-middle",
+    title: "Law of Excluded Middle: P ∨ ¬P",
+    description: "Every proposition is either True or False. Canonical tautology.",
+    moduleId: "logic",
+    topicId: "expression-builder",
+    nodes: [
+      { id: "var-p", type: "logic-var", position: { x: 80, y: 140 }, data: { label: "P", value: true } },
+      { id: "gate-not", type: "logic-op", position: { x: 260, y: 220 }, data: { label: "NOT", symbol: "¬" } },
+      { id: "gate-or", type: "logic-op", position: { x: 420, y: 140 }, data: { label: "OR", symbol: "∨" } },
+      { id: "res-lem", type: "logic-result", position: { x: 600, y: 140 }, data: { label: "Result" } },
+    ],
+    edges: [
+      { id: "e1", source: "var-p", target: "gate-not", targetHandle: "handle-unary", animated: true, style: { stroke: "var(--lv-cyan)", strokeWidth: 2 } },
+      { id: "e2", source: "var-p", target: "gate-or", targetHandle: "handle-p", animated: true, style: { stroke: "var(--lv-cyan)", strokeWidth: 2 } },
+      { id: "e3", source: "gate-not", target: "gate-or", targetHandle: "handle-q", animated: true, style: { stroke: "var(--lv-purple)", strokeWidth: 2 } },
+      { id: "e4", source: "gate-or", target: "res-lem", animated: true, style: { stroke: "var(--lv-success)", strokeWidth: 2 } },
+    ],
+  },
+};
+
+export const WORKSPACE_TEMPLATES: Record<string, TemplateDefinition> = {
+  ...SET_THEORY_TEMPLATES,
+  ...LOGIC_TEMPLATES,
+};
+
+export const DEFAULT_STARTER_TEMPLATE = SET_THEORY_TEMPLATES["union-intersection"];
+export const DEFAULT_LOGIC_TEMPLATE = LOGIC_TEMPLATES["modus-ponens"];

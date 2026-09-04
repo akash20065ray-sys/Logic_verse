@@ -11,12 +11,12 @@ module will reuse.
 ## What's implemented
 
 - **Landing page** — hero with an animated finite-automaton signature element,
-  workflow explainer (Build -> Run -> See -> Understand), module grid covering
-  all 6 syllabus units, and a LogicAI preview section.
+  workflow explainer (Build -> Run -> See -> Understand), domain library grid covering
+  all 6 foundational domains, and a LogicAI preview section.
 - **Dashboard** — recent projects, learning-analytics summary (strong /
   needs-practice topics), stat cards.
 - **Workspace** — the three-panel IDE shell:
-  - Left: Module Explorer (tree nav across all 7 modules / 6 units)
+  - Left: Module Explorer (tree nav across all 7 core modules)
   - Center: infinite canvas (React Flow) + floating component palette
   - Right: LogicAI panel (context-aware chat UI, not yet wired to a model)
   - Bottom: Output dock with Output / Steps / Formal Model / Errors tabs

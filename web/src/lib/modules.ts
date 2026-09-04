@@ -3,44 +3,45 @@ import type { ModuleDefinition } from "@/types/module";
 // This registry drives the Module Explorer (left panel) and the dashboard.
 // Phase 1 ships the shell with Set Theory as the working demo module
 // (PROJECT SPEC section 31-32); the rest are staged as "coming-soon" so the
-// full syllabus structure is visible from day one without being fake-functional.
+// full module architecture is visible from day one without being fake-functional.
 export const MODULES: ModuleDefinition[] = [
   {
     id: "set-theory",
-    unit: "Unit I",
+    unit: "Foundations",
     title: "Set Theory",
     shortLabel: "Set Theory",
     description:
-      "Build sets visually, run operations, and generate Venn diagrams with a live formal model.",
+      "Build sets visually, run operations, generate 2-Set/3-Set Venn diagrams, and explore Cantor's Diagonalization.",
     accent: "blue",
     status: "available",
     topics: [
       { id: "set-builder", label: "Set Builder", status: "available" },
       { id: "set-operations", label: "Union / Intersection / Difference", status: "available" },
-      { id: "cardinality", label: "Cardinality", status: "available" },
-      { id: "power-set", label: "Power Set", status: "available" },
-      { id: "venn", label: "Venn Diagram", status: "available" },
-      { id: "countability", label: "Countability & Diagonalization", status: "coming-soon" },
+      { id: "cardinality", label: "Cardinality & Power Set", status: "available" },
+      { id: "venn", label: "Venn Diagram (2-Set / 3-Set)", status: "available" },
+      { id: "pie-solver", label: "Inclusion-Exclusion (PIE)", status: "available" },
+      { id: "countability", label: "Countability & Diagonalization", status: "available" },
     ],
   },
   {
     id: "logic",
-    unit: "Unit I",
+    unit: "Formal Logic",
     title: "Propositional Logic",
     shortLabel: "Logic",
-    description: "Truth tables, tautology checking, and mathematical induction visualizers.",
+    description: "Truth tables, counter-example finder, tautology verification, and mathematical induction.",
     accent: "cyan",
     status: "available",
     topics: [
       { id: "expression-builder", label: "Expression Builder", status: "available" },
       { id: "truth-table", label: "Truth Table Generator", status: "available" },
+      { id: "counter-example", label: "Counter-Example Finder", status: "available" },
       { id: "equivalence", label: "Equivalence Checker", status: "available" },
       { id: "induction", label: "Induction Visualizer", status: "available" },
     ],
   },
   {
     id: "relations-functions",
-    unit: "Unit II",
+    unit: "Algebraic Systems",
     title: "Relations & Functions",
     shortLabel: "Relations",
     description: "Relation matrices, closures, Hasse diagrams, and function analysis.",
@@ -55,7 +56,7 @@ export const MODULES: ModuleDefinition[] = [
   },
   {
     id: "automata",
-    unit: "Unit III",
+    unit: "Automata Theory",
     title: "Finite Automata",
     shortLabel: "DFA / NFA",
     description: "CircuitVerse-style automata builder with step-by-step string simulation.",
@@ -70,7 +71,7 @@ export const MODULES: ModuleDefinition[] = [
   },
   {
     id: "regex",
-    unit: "Unit IV",
+    unit: "Formal Languages",
     title: "Regular Expressions",
     shortLabel: "Regex",
     description: "Visual regex builder with NFA/DFA conversion and Arden's theorem steps.",
@@ -85,7 +86,7 @@ export const MODULES: ModuleDefinition[] = [
   },
   {
     id: "cfg",
-    unit: "Unit V",
+    unit: "Grammar & Parsing",
     title: "Context-Free Grammar",
     shortLabel: "CFG",
     description: "Grammar builder with animated parse trees, CNF/GNF, and CYK visualization.",
@@ -100,7 +101,7 @@ export const MODULES: ModuleDefinition[] = [
   },
   {
     id: "pda-tm",
-    unit: "Unit VI",
+    unit: "Turing Machines",
     title: "PDA & Turing Machine",
     shortLabel: "PDA / TM",
     description: "Stack visualization for PDAs and infinite-tape simulation for Turing machines.",

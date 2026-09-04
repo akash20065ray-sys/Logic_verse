@@ -56,6 +56,19 @@ export function ModuleExplorer({ activeModuleId }: { activeModuleId: string }) {
       return;
     }
 
+    if (topicId === "countability") {
+      setOutputTab("diagonalization" as any);
+      return;
+    }
+    if (topicId === "pie-solver") {
+      setOutputTab("pie-solver" as any);
+      return;
+    }
+    if (topicId === "counter-example") {
+      setOutputTab("output");
+      return;
+    }
+
     const templateId = TOPIC_TEMPLATE_MAP[topicId];
     if (templateId) {
       loadTemplate(templateId);
@@ -76,7 +89,7 @@ export function ModuleExplorer({ activeModuleId }: { activeModuleId: string }) {
           Module Explorer
         </span>
         <span className="text-[10px] font-mono text-lv-cyan bg-lv-cyan/10 px-1.5 py-0.5 rounded">
-          Syllabus
+          Libraries
         </span>
       </div>
 
@@ -200,7 +213,7 @@ export function ModuleExplorer({ activeModuleId }: { activeModuleId: string }) {
             <div className="space-y-2">
               <div className="text-xs font-semibold text-lv-faint uppercase font-mono tracking-wider flex items-center gap-1.5">
                 <BookOpen className="h-3.5 w-3.5 text-lv-cyan" />
-                Syllabus Topics & Visualizers
+                Domain Features & Toolkits
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {previewModule.topics.map((t) => (
@@ -216,7 +229,7 @@ export function ModuleExplorer({ activeModuleId }: { activeModuleId: string }) {
             </div>
 
             <div className="rounded-xl bg-lv-surface/60 border border-lv-border p-3 text-xs text-lv-faint">
-              💡 <em>Phase 1 ships Set Theory as the reference module. Unit {previewModule.unit} visualizers follow the same deterministic graph contract!</em>
+              💡 <em>All modules follow the same reactive DAG graph engine and multi-modal state verification contract.</em>
             </div>
           </div>
         </div>

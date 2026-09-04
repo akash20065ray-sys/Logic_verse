@@ -47,15 +47,15 @@ export function HeroSection() {
 
           <dl className="mt-14 grid max-w-md grid-cols-3 gap-6 border-t border-lv-border-soft pt-6">
             <div>
-              <dt className="text-xs text-lv-faint">Syllabus units</dt>
+              <dt className="text-xs text-lv-faint">Core Domains</dt>
               <dd className="mt-1 font-mono text-2xl text-lv-text">6</dd>
             </div>
             <div>
-              <dt className="text-xs text-lv-faint">Interactive modules</dt>
-              <dd className="mt-1 font-mono text-2xl text-lv-text">7</dd>
+              <dt className="text-xs text-lv-faint">Interactive Toolkits</dt>
+              <dd className="mt-1 font-mono text-2xl text-lv-text">12+</dd>
             </div>
             <div>
-              <dt className="text-xs text-lv-faint">Deterministic engine</dt>
+              <dt className="text-xs text-lv-faint">Deterministic Engine</dt>
               <dd className="mt-1 font-mono text-2xl text-lv-cyan">100%</dd>
             </div>
           </dl>

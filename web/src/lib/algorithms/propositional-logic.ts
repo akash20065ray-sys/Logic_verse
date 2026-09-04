@@ -24,6 +24,8 @@ export interface TruthTable {
   isTautology: boolean;
   isContradiction: boolean;
   isContingent: boolean;
+  falsifyingAssignment?: Record<string, boolean>; // Counter-example to being a Tautology
+  satisfyingAssignment?: Record<string, boolean>; // Witness to being Satisfiable
   dnf: string; // Disjunctive Normal Form (Minterms)
   cnf: string; // Conjunctive Normal Form (Maxterms)
   latexTable: string;
@@ -221,6 +223,19 @@ export function generateTruthTable(ast: LogicAST): TruthTable {
   const isContradiction = trueCount === 0 && numRows > 0;
   const isContingent = !isTautology && !isContradiction;
 
+  // Extract counterexample: first row where result is false (for tautology check)
+  // Extract witness: first row where result is true (for satisfiability check)
+  let falsifyingAssignment: Record<string, boolean> | undefined;
+  let satisfyingAssignment: Record<string, boolean> | undefined;
+  for (const r of rows) {
+    if (!r.result && !falsifyingAssignment) {
+      falsifyingAssignment = { ...r.assignment };
+    }
+    if (r.result && !satisfyingAssignment) {
+      satisfyingAssignment = { ...r.assignment };
+    }
+  }
+
   const dnf =
     minterms.length === 0
       ? "⊥"
@@ -262,6 +277,8 @@ export function generateTruthTable(ast: LogicAST): TruthTable {
     isTautology,
     isContradiction,
     isContingent,
+    falsifyingAssignment,
+    satisfyingAssignment,
     dnf,
     cnf,
     latexTable,

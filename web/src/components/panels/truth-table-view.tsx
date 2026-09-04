@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { Copy, Check, Sparkles, CheckCircle2, XCircle, FileSpreadsheet } from "lucide-react";
+import { Copy, Check, Sparkles, CheckCircle2, XCircle, FileSpreadsheet, AlertTriangle, Sliders } from "lucide-react";
 import type { TruthTable } from "@/lib/algorithms/propositional-logic";
 import { cn } from "@/lib/utils";
+import { useWorkspaceStore } from "@/store/workspace-store";
 
 interface TruthTableViewProps {
   truthTable: TruthTable | null;
@@ -31,6 +32,26 @@ export function TruthTableView({ truthTable, activeAssignments = {} }: TruthTabl
     setTimeout(() => setCopied(null), 2000);
   }
 
+  function applyAssignmentToCanvas(assignment: Record<string, boolean>) {
+    const currentNodes = useWorkspaceStore.getState().nodes;
+    const updated = currentNodes.map((n) => {
+      if (n.type === "logic-var") {
+        const varLabel = (n.data?.label as string) || "P";
+        if (assignment[varLabel] !== undefined) {
+          return {
+            ...n,
+            data: {
+              ...n.data,
+              value: assignment[varLabel],
+            },
+          };
+        }
+      }
+      return n;
+    });
+    useWorkspaceStore.getState().setNodes(updated);
+  }
+
   const {
     variables,
     subexpressionHeaders,
@@ -38,6 +59,8 @@ export function TruthTableView({ truthTable, activeAssignments = {} }: TruthTabl
     isTautology,
     isContradiction,
     isContingent,
+    falsifyingAssignment,
+    satisfyingAssignment,
     dnf,
     cnf,
     markdownTable,
@@ -79,6 +102,35 @@ export function TruthTableView({ truthTable, activeAssignments = {} }: TruthTabl
           </button>
         </div>
       </div>
+
+      {/* Counter-Example Alert Card */}
+      {falsifyingAssignment && !isTautology && (
+        <div className="rounded-xl border border-lv-warning/40 bg-lv-warning/10 p-3 flex flex-wrap items-center justify-between gap-3 shadow-sm">
+          <div className="flex items-center gap-2">
+            <AlertTriangle className="h-4 w-4 text-lv-warning shrink-0" />
+            <div className="text-xs font-mono">
+              <span className="font-bold text-lv-warning">Falsifying Counter-Example: </span>
+              <span className="text-lv-text font-bold">
+                {Object.entries(falsifyingAssignment)
+                  .map(([v, val]) => `${v} = ${val ? "True" : "False"}`)
+                  .join(", ")}
+              </span>
+              <span className="text-lv-faint text-[11px] ml-2">
+                (Evaluates formula to <strong className="text-lv-error">False</strong>)
+              </span>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => applyAssignmentToCanvas(falsifyingAssignment!)}
+            className="flex items-center gap-1.5 rounded-lg border border-lv-warning/50 bg-lv-warning/20 px-3 py-1 text-xs font-mono font-bold text-lv-warning hover:bg-lv-warning/30 transition-colors shadow-xs"
+          >
+            <Sliders className="h-3.5 w-3.5" />
+            Set Canvas to Counter-Example
+          </button>
+        </div>
+      )}
 
       {/* Truth Table */}
       <div className="overflow-x-auto rounded-xl border border-lv-border bg-lv-surface/40">

@@ -16,16 +16,16 @@ export function ModulesSection() {
         <div className="mb-14 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
           <div className="max-w-xl">
             <span className="font-mono text-xs uppercase tracking-widest text-lv-faint">
-              Syllabus coverage
+              Domain Libraries
             </span>
             <h2 className="mt-3 text-3xl font-semibold tracking-tight text-lv-text sm:text-4xl">
-              Six units. One consistent contract.
+              Six domains. One unified reactive engine.
             </h2>
           </div>
           <p className="max-w-sm text-sm text-lv-muted">
-            Set Theory is fully built as the reference module. Every other unit
+            Set Theory and Propositional Logic are fully functional. Every domain
             follows the same Builder → Validator → Algorithm → Visualizer
-            contract as it ships.
+            contract across the platform.
           </p>
         </div>
 

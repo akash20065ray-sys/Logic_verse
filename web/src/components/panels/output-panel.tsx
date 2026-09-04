@@ -17,12 +17,16 @@ import {
   Info,
   Table,
   Sigma,
+  Calculator,
+  Sparkles,
 } from "lucide-react";
 import { useWorkspaceStore } from "@/store/workspace-store";
 import { cn } from "@/lib/utils";
 import { VennDiagram } from "./venn-diagram";
 import { TruthTableView } from "./truth-table-view";
 import { InductionView } from "./induction-view";
+import { DiagonalizationView } from "./diagonalization-view";
+import { PieSolverView } from "./pie-solver-view";
 
 export function OutputPanel() {
   const activeModuleId = useWorkspaceStore((s) => s.activeModuleId);
@@ -106,7 +110,9 @@ export function OutputPanel() {
         { id: "errors" as const, label: "Errors", icon: AlertTriangle },
       ]
     : [
-        { id: "output" as const, label: "Output", icon: CheckCircle2 },
+        { id: "output" as const, label: "Output & Venn", icon: CheckCircle2 },
+        { id: "pie-solver" as const, label: "Inclusion-Exclusion (PIE)", icon: Calculator },
+        { id: "diagonalization" as const, label: "Diagonalization (Cantor)", icon: Sparkles },
         { id: "steps" as const, label: "Steps", icon: Play },
         { id: "formal-model" as const, label: "Formal Model", icon: Code2 },
         { id: "errors" as const, label: "Errors", icon: AlertTriangle },
@@ -178,25 +184,12 @@ export function OutputPanel() {
               {primaryResult ? (
                 <>
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-lv-success" />
-                      <span className="font-semibold text-lv-text text-sm">
-                        {primaryResult.notation}
-                      </span>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() =>
-                        copyToClipboard(
-                          `${primaryResult.notation} = {${primaryResult.elements.join(", ")}}`,
-                          "result"
-                        )
-                      }
-                      className="flex items-center gap-1 rounded bg-lv-surface px-2 py-0.5 text-[11px] text-lv-muted hover:text-lv-text"
-                    >
-                      {copied === "result" ? <Check className="h-3 w-3 text-lv-success" /> : <Copy className="h-3 w-3" />}
-                      Copy Result
-                    </button>
+                    <span className="text-xs font-bold uppercase tracking-wider text-lv-faint">
+                      Active Evaluation
+                    </span>
+                    <span className="rounded bg-lv-blue/20 px-2 py-0.5 text-xs text-lv-blue font-bold">
+                      {primaryResult.notation}
+                    </span>
                   </div>
 
                   <div className="rounded-xl border border-lv-border bg-lv-surface/70 p-3">
@@ -215,22 +208,6 @@ export function OutputPanel() {
                       )}
                     </div>
                   </div>
-
-                  {primaryResult.notation.includes("∪") && primarySets.length >= 2 && (
-                    <div className="rounded-lg bg-lv-panel/80 border border-lv-border-soft p-2.5 text-xs text-lv-muted space-y-1">
-                      <div className="text-[10px] uppercase tracking-wider text-lv-faint font-semibold">
-                        Principle of Inclusion-Exclusion
-                      </div>
-                      <div className="text-lv-text font-mono">
-                        |A ∪ B| = |A| + |B| − |A ∩ B|
-                      </div>
-                      <div className="text-lv-cyan">
-                        = {primarySets[0].elements.length} + {primarySets[1].elements.length} −{" "}
-                        {primarySets[0].elements.length + primarySets[1].elements.length - primaryResult.cardinality}{" "}
-                        = {primaryResult.cardinality}
-                      </div>
-                    </div>
-                  )}
                 </>
               ) : (
                 <div className="text-lv-muted py-6 flex flex-col gap-2">
@@ -246,11 +223,19 @@ export function OutputPanel() {
                 elementsA={primarySets[0]?.elements ?? []}
                 labelB={primarySets[1]?.label ?? "B"}
                 elementsB={primarySets[1]?.elements ?? []}
+                labelC={primarySets[2]?.label ?? "C"}
+                elementsC={primarySets[2]?.elements ?? []}
                 activeOperation={primaryResult?.notation ?? "∪"}
               />
             </div>
           </div>
         )}
+
+        {/* SET THEORY: PIE SOLVER TAB */}
+        {!isLogic && outputTab === "pie-solver" && <PieSolverView />}
+
+        {/* SET THEORY: DIAGONALIZATION TAB */}
+        {!isLogic && outputTab === "diagonalization" && <DiagonalizationView />}
 
         {/* SET THEORY: STEPS TAB */}
         {!isLogic && outputTab === "steps" && (

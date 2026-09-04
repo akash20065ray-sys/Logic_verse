@@ -20,7 +20,7 @@ interface WorkspaceState {
   outputPanelOpen: boolean;
   paletteOpen: boolean;
   expressionModalOpen: boolean;
-  outputTab: "output" | "steps" | "formal-model" | "errors" | "induction";
+  outputTab: "output" | "steps" | "formal-model" | "errors" | "induction" | "diagonalization" | "pie-solver";
 
   leftPanelWidth: number;
   rightPanelWidth: number;

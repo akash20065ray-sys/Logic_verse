@@ -12,7 +12,7 @@ export interface ModuleTopic {
 
 export interface ModuleDefinition {
   id: string;
-  unit: string; // e.g. "Unit I"
+  unit: string; // e.g. "Domain 01" or category title
   title: string;
   shortLabel: string; // shown in the explorer tree
   description: string;

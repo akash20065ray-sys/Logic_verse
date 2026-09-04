@@ -105,16 +105,23 @@ export function ModuleExplorer({ activeModuleId }: { activeModuleId: string }) {
                 )}
                 <span className="truncate">{mod.shortLabel}</span>
                 {!isAvailable && (
-                  <button
-                    type="button"
+                  <span
+                    role="button"
+                    tabIndex={0}
                     onClick={(e) => {
                       e.stopPropagation();
                       setPreviewModule(mod);
                     }}
-                    className="ml-auto rounded-full bg-lv-surface px-1.5 py-0.5 text-[9px] font-mono text-lv-faint hover:text-lv-cyan transition-colors"
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.stopPropagation();
+                        setPreviewModule(mod);
+                      }
+                    }}
+                    className="ml-auto rounded-full bg-lv-surface px-1.5 py-0.5 text-[9px] font-mono text-lv-faint hover:text-lv-cyan transition-colors cursor-pointer"
                   >
                     Preview
-                  </button>
+                  </span>
                 )}
               </button>
 

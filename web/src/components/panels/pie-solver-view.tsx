@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Calculator, Sparkles, BookOpen, CheckCircle2, RotateCcw } from "lucide-react";
+import { Calculator, Sparkles, BookOpen, CheckCircle2, RotateCcw, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface ProblemPreset {
@@ -51,7 +51,11 @@ const PRESETS: ProblemPreset[] = [
   },
 ];
 
-export function PieSolverView() {
+interface PieSolverViewProps {
+  onClose?: () => void;
+}
+
+export function PieSolverView({ onClose }: PieSolverViewProps = {}) {
   const [activePresetIdx, setActivePresetIdx] = useState<number>(0);
   const [numSets, setNumSets] = useState<2 | 3>(2);
 
@@ -167,6 +171,18 @@ export function PieSolverView() {
               </option>
             ))}
           </select>
+
+          {onClose && (
+            <button
+              type="button"
+              onClick={onClose}
+              className="flex items-center gap-1 rounded-lg border border-lv-border bg-lv-surface px-2.5 py-1 text-xs text-lv-faint hover:text-lv-text hover:border-lv-border transition-colors ml-1 font-mono"
+              title="Close and cut PIE Solver tab"
+            >
+              <X className="h-3.5 w-3.5 text-lv-faint" />
+              <span>Close</span>
+            </button>
+          )}
         </div>
       </div>
 

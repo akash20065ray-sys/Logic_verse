@@ -11,6 +11,7 @@ import {
   AlertCircle,
   ArrowRight,
   HelpCircle,
+  X,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
@@ -20,7 +21,11 @@ import {
   generateCantorSnake,
 } from "@/lib/algorithms/diagonalization";
 
-export function DiagonalizationView() {
+interface DiagonalizationViewProps {
+  onClose?: () => void;
+}
+
+export function DiagonalizationView({ onClose }: DiagonalizationViewProps = {}) {
   const [tab, setTab] = useState<"diagonal" | "snake">("diagonal");
   const [diagMode, setDiagMode] = useState<"decimal" | "binary">("decimal");
   const [rows, setRows] = useState<number[][]>(DEFAULT_DECIMAL_ROWS);
@@ -91,40 +96,54 @@ export function DiagonalizationView() {
           </button>
         </div>
 
-        {tab === "diagonal" && (
-          <div className="flex items-center gap-2">
-            <div className="flex rounded-lg border border-lv-border bg-lv-surface/60 p-0.5 text-[11px] font-mono">
+        <div className="flex items-center gap-2">
+          {tab === "diagonal" && (
+            <>
+              <div className="flex rounded-lg border border-lv-border bg-lv-surface/60 p-0.5 text-[11px] font-mono">
+                <button
+                  type="button"
+                  onClick={() => switchMode("decimal")}
+                  className={cn(
+                    "rounded-md px-2.5 py-1 transition-colors",
+                    diagMode === "decimal" ? "bg-lv-cyan/20 font-bold text-lv-cyan" : "text-lv-faint hover:text-lv-text"
+                  )}
+                >
+                  Decimal (0.d₁d₂…)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => switchMode("binary")}
+                  className={cn(
+                    "rounded-md px-2.5 py-1 transition-colors",
+                    diagMode === "binary" ? "bg-lv-cyan/20 font-bold text-lv-cyan" : "text-lv-faint hover:text-lv-text"
+                  )}
+                >
+                  Binary Strings ({`{0,1}`}∞)
+                </button>
+              </div>
               <button
                 type="button"
-                onClick={() => switchMode("decimal")}
-                className={cn(
-                  "rounded-md px-2.5 py-1 transition-colors",
-                  diagMode === "decimal" ? "bg-lv-cyan/20 font-bold text-lv-cyan" : "text-lv-faint hover:text-lv-text"
-                )}
+                onClick={randomizeRows}
+                className="flex items-center gap-1.5 rounded-lg border border-lv-border bg-lv-surface px-2.5 py-1 text-xs text-lv-muted hover:text-lv-text transition-colors"
               >
-                Decimal (0.d₁d₂…)
+                <Shuffle className="h-3.5 w-3.5" />
+                Randomize
               </button>
-              <button
-                type="button"
-                onClick={() => switchMode("binary")}
-                className={cn(
-                  "rounded-md px-2.5 py-1 transition-colors",
-                  diagMode === "binary" ? "bg-lv-cyan/20 font-bold text-lv-cyan" : "text-lv-faint hover:text-lv-text"
-                )}
-              >
-                Binary Strings ({`{0,1}`}∞)
-              </button>
-            </div>
+            </>
+          )}
+
+          {onClose && (
             <button
               type="button"
-              onClick={randomizeRows}
-              className="flex items-center gap-1.5 rounded-lg border border-lv-border bg-lv-surface px-2.5 py-1 text-xs text-lv-muted hover:text-lv-text transition-colors"
+              onClick={onClose}
+              className="flex items-center gap-1 rounded-lg border border-lv-border bg-lv-surface px-2.5 py-1 text-xs text-lv-faint hover:text-lv-text hover:border-lv-border transition-colors ml-1 font-mono"
+              title="Close and cut Diagonalization tab"
             >
-              <Shuffle className="h-3.5 w-3.5" />
-              Randomize
+              <X className="h-3.5 w-3.5 text-lv-faint" />
+              <span>Close</span>
             </button>
-          </div>
-        )}
+          )}
+        </div>
       </div>
 
       {/* TAB 1: CANTOR'S DIAGONALIZATION */}

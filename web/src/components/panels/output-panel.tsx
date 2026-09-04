@@ -19,6 +19,8 @@ import {
   Sigma,
   Calculator,
   Sparkles,
+  X,
+  Plus,
 } from "lucide-react";
 import { useWorkspaceStore } from "@/store/workspace-store";
 import { cn } from "@/lib/utils";
@@ -102,37 +104,69 @@ export function OutputPanel() {
     setExportModalOpen(false);
   }
 
+  const [closedTabs, setClosedTabs] = useState<Set<string>>(new Set());
+
+  // Automatically unhide a tab when activated
+  useEffect(() => {
+    if (closedTabs.has(outputTab)) {
+      setClosedTabs((prev) => {
+        const next = new Set(prev);
+        next.delete(outputTab);
+        return next;
+      });
+    }
+  }, [outputTab, closedTabs]);
+
+  function handleCloseTab(tabId: string) {
+    setClosedTabs((prev) => new Set(prev).add(tabId));
+    if (outputTab === tabId) {
+      setOutputTab("output");
+    }
+  }
+
+  function handleOpenTab(tabId: typeof outputTab) {
+    setClosedTabs((prev) => {
+      const next = new Set(prev);
+      next.delete(tabId);
+      return next;
+    });
+    setOutputTab(tabId);
+  }
+
   const tabs = isLogic
     ? [
-        { id: "output" as const, label: "Truth Table", icon: Table },
-        { id: "induction" as const, label: "Induction", icon: Sigma },
-        { id: "formal-model" as const, label: "Formal WFF", icon: Code2 },
-        { id: "errors" as const, label: "Errors", icon: AlertTriangle },
+        { id: "output" as const, label: "Truth Table", icon: Table, closable: false },
+        { id: "induction" as const, label: "Induction", icon: Sigma, closable: false },
+        { id: "formal-model" as const, label: "Formal WFF", icon: Code2, closable: false },
+        { id: "errors" as const, label: "Errors", icon: AlertTriangle, closable: false },
       ]
     : [
-        { id: "output" as const, label: "Output & Venn", icon: CheckCircle2 },
-        { id: "pie-solver" as const, label: "Inclusion-Exclusion (PIE)", icon: Calculator },
-        { id: "diagonalization" as const, label: "Diagonalization (Cantor)", icon: Sparkles },
-        { id: "steps" as const, label: "Steps", icon: Play },
-        { id: "formal-model" as const, label: "Formal Model", icon: Code2 },
-        { id: "errors" as const, label: "Errors", icon: AlertTriangle },
+        { id: "output" as const, label: "Output & Venn", icon: CheckCircle2, closable: false },
+        { id: "pie-solver" as const, label: "Inclusion-Exclusion (PIE)", icon: Calculator, closable: true },
+        { id: "diagonalization" as const, label: "Diagonalization (Cantor)", icon: Sparkles, closable: true },
+        { id: "steps" as const, label: "Steps", icon: Play, closable: false },
+        { id: "formal-model" as const, label: "Formal Model", icon: Code2, closable: false },
+        { id: "errors" as const, label: "Errors", icon: AlertTriangle, closable: false },
       ];
+
+  const visibleTabs = tabs.filter((t) => !t.closable || !closedTabs.has(t.id) || outputTab === t.id);
+  const hiddenTools = tabs.filter((t) => t.closable && closedTabs.has(t.id) && outputTab !== t.id);
 
   return (
     <div className="flex h-full flex-col">
       {/* Header Tabs */}
       <div className="flex items-center border-b border-lv-border-soft px-3 shrink-0">
-        {tabs.map((tab) => {
+        {visibleTabs.map((tab) => {
           const hasErrors = tab.id === "errors" && (errorCount > 0 || warningCount > 0);
           const isActive = outputTab === tab.id;
 
           return (
-            <button
+            <div
               key={tab.id}
               onClick={() => setOutputTab(tab.id)}
               className={cn(
-                "relative flex items-center gap-1.5 px-3 py-2 text-xs font-medium transition-colors",
-                isActive ? "text-lv-text font-semibold" : "text-lv-faint hover:text-lv-muted"
+                "group relative flex items-center gap-1.5 px-3 py-2 text-xs font-medium transition-colors cursor-pointer select-none",
+                isActive ? "text-lv-text font-semibold" : "text-lv-faint hover:text-lv-muted hover:bg-lv-surface/40"
               )}
             >
               <tab.icon className={cn("h-3.5 w-3.5", isActive ? "text-lv-cyan" : "text-lv-faint")} />
@@ -147,12 +181,47 @@ export function OutputPanel() {
                   {errorCount + warningCount}
                 </span>
               )}
+
+              {/* Cut / Close Tab option */}
+              {tab.closable && (
+                <span
+                  role="button"
+                  tabIndex={0}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleCloseTab(tab.id);
+                  }}
+                  className="ml-1 -mr-1 flex items-center justify-center h-4 w-4 rounded-full text-lv-faint hover:bg-lv-surface hover:text-lv-text transition-colors"
+                  title={`Close and cut ${tab.label} tab`}
+                >
+                  <X className="h-3 w-3" />
+                </span>
+              )}
+
               {isActive && (
                 <span className="absolute inset-x-2 -bottom-px h-0.5 rounded-full bg-lv-cyan" />
               )}
-            </button>
+            </div>
           );
         })}
+
+        {/* Quick re-add button if tools are cut/closed */}
+        {hiddenTools.length > 0 && (
+          <div className="flex items-center gap-1 pl-1">
+            {hiddenTools.map((tool) => (
+              <button
+                key={tool.id}
+                type="button"
+                onClick={() => handleOpenTab(tool.id)}
+                className="flex items-center gap-1 rounded px-2 py-1 text-[11px] font-mono text-lv-faint hover:text-lv-text hover:bg-lv-surface/60 transition-colors border border-dashed border-lv-border-soft"
+                title={`Reopen ${tool.label}`}
+              >
+                <Plus className="h-3 w-3" />
+                <span>{tool.id === "pie-solver" ? "PIE Solver" : "Diagonalization"}</span>
+              </button>
+            ))}
+          </div>
+        )}
 
         <button
           type="button"
@@ -232,10 +301,14 @@ export function OutputPanel() {
         )}
 
         {/* SET THEORY: PIE SOLVER TAB */}
-        {!isLogic && outputTab === "pie-solver" && <PieSolverView />}
+        {!isLogic && outputTab === "pie-solver" && (
+          <PieSolverView onClose={() => handleCloseTab("pie-solver")} />
+        )}
 
         {/* SET THEORY: DIAGONALIZATION TAB */}
-        {!isLogic && outputTab === "diagonalization" && <DiagonalizationView />}
+        {!isLogic && outputTab === "diagonalization" && (
+          <DiagonalizationView onClose={() => handleCloseTab("diagonalization")} />
+        )}
 
         {/* SET THEORY: STEPS TAB */}
         {!isLogic && outputTab === "steps" && (

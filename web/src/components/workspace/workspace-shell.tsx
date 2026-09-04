@@ -35,9 +35,14 @@ function WorkspaceShellContent({ moduleId }: { moduleId: string }) {
   const [isResizingRight, setIsResizingRight] = useState(false);
   const [isResizingBottom, setIsResizingBottom] = useState(false);
 
+  const setOutputTab = useWorkspaceStore((s) => s.setOutputTab);
+
   useEffect(() => {
     setActiveModule(moduleId);
-  }, [moduleId, setActiveModule]);
+    if (moduleId === "relations-functions" && !topic) {
+      setOutputTab("matrix");
+    }
+  }, [moduleId, setActiveModule, topic, setOutputTab]);
 
   useEffect(() => {
     if (topic === "cardinality") {
@@ -52,8 +57,20 @@ function WorkspaceShellContent({ moduleId }: { moduleId: string }) {
       loadTemplate("de-morgan-logic");
     } else if (topic === "expression-builder") {
       loadTemplate("excluded-middle");
+    } else if (topic === "relation-builder") {
+      setOutputTab("matrix");
+    } else if (topic === "hasse") {
+      setOutputTab("hasse");
+    } else if (topic === "warshall") {
+      setOutputTab("warshall");
+    } else if (topic === "functions") {
+      setOutputTab("functions");
+    } else if (topic === "countability") {
+      setOutputTab("diagonalization");
+    } else if (topic === "pie-solver") {
+      setOutputTab("pie-solver");
     }
-  }, [topic, loadTemplate]);
+  }, [topic, loadTemplate, setOutputTab]);
 
   // Mouse drag handlers for resizing
   const handleLeftResizeStart = useCallback((e: React.MouseEvent) => {

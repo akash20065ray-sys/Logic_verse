@@ -46,12 +46,12 @@ export const MODULES: ModuleDefinition[] = [
     shortLabel: "Relations",
     description: "Relation matrices, closures, Hasse diagrams, and function analysis.",
     accent: "purple",
-    status: "coming-soon",
+    status: "available",
     topics: [
-      { id: "relation-builder", label: "Relation Builder", status: "coming-soon" },
-      { id: "warshall", label: "Warshall's Algorithm", status: "coming-soon" },
-      { id: "hasse", label: "Hasse Diagrams", status: "coming-soon" },
-      { id: "functions", label: "Function Analyzer", status: "coming-soon" },
+      { id: "relation-builder", label: "Relation Matrix & Properties", status: "available" },
+      { id: "hasse", label: "Hasse Diagrams (Posets)", status: "available" },
+      { id: "warshall", label: "Warshall's Algorithm", status: "available" },
+      { id: "functions", label: "Function Analyzer", status: "available" },
     ],
   },
   {

@@ -20,7 +20,18 @@ interface WorkspaceState {
   outputPanelOpen: boolean;
   paletteOpen: boolean;
   expressionModalOpen: boolean;
-  outputTab: "output" | "steps" | "formal-model" | "errors" | "induction" | "diagonalization" | "pie-solver";
+  outputTab:
+    | "output"
+    | "steps"
+    | "formal-model"
+    | "errors"
+    | "induction"
+    | "diagonalization"
+    | "pie-solver"
+    | "matrix"
+    | "hasse"
+    | "warshall"
+    | "functions";
 
   leftPanelWidth: number;
   rightPanelWidth: number;
@@ -111,6 +122,18 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
         logicEvaluation: evalLogic,
         activeTemplateId: DEFAULT_LOGIC_TEMPLATE.id,
         activeStepIndex: 0,
+        outputTab: "output",
+      });
+    } else if (id === "relations-functions") {
+      const evalSet = evaluateCanvasGraph(DEFAULT_STARTER_TEMPLATE.nodes, DEFAULT_STARTER_TEMPLATE.edges);
+      set({
+        activeModuleId: id,
+        nodes: evalSet.updatedNodes,
+        edges: DEFAULT_STARTER_TEMPLATE.edges,
+        graphEvaluation: evalSet,
+        activeTemplateId: DEFAULT_STARTER_TEMPLATE.id,
+        activeStepIndex: 0,
+        outputTab: "matrix",
       });
     } else {
       const evalSet = evaluateCanvasGraph(DEFAULT_STARTER_TEMPLATE.nodes, DEFAULT_STARTER_TEMPLATE.edges);
@@ -121,6 +144,7 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
         graphEvaluation: evalSet,
         activeTemplateId: DEFAULT_STARTER_TEMPLATE.id,
         activeStepIndex: 0,
+        outputTab: "output",
       });
     }
   },

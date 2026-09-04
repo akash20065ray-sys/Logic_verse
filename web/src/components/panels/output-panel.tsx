@@ -21,6 +21,10 @@ import {
   Sparkles,
   X,
   Plus,
+  Grid3X3,
+  GitBranch,
+  Route,
+  ArrowRightLeft,
 } from "lucide-react";
 import { useWorkspaceStore } from "@/store/workspace-store";
 import { cn } from "@/lib/utils";
@@ -29,6 +33,10 @@ import { TruthTableView } from "./truth-table-view";
 import { InductionView } from "./induction-view";
 import { DiagonalizationView } from "./diagonalization-view";
 import { PieSolverView } from "./pie-solver-view";
+import { RelationMatrixView } from "./relation-matrix-view";
+import { HasseDiagramView } from "./hasse-diagram-view";
+import { WarshallView } from "./warshall-view";
+import { FunctionMapperView } from "./function-mapper-view";
 
 export function OutputPanel() {
   const activeModuleId = useWorkspaceStore((s) => s.activeModuleId);
@@ -36,6 +44,7 @@ export function OutputPanel() {
   const setOutputTab = useWorkspaceStore((s) => s.setOutputTab);
 
   const isLogic = activeModuleId === "logic";
+  const isRelations = activeModuleId === "relations-functions";
 
   // Set Theory store data
   const graphEvaluation = useWorkspaceStore((s) => s.graphEvaluation);
@@ -120,7 +129,7 @@ export function OutputPanel() {
   function handleCloseTab(tabId: string) {
     setClosedTabs((prev) => new Set(prev).add(tabId));
     if (outputTab === tabId) {
-      setOutputTab("output");
+      setOutputTab(isRelations ? "matrix" : "output");
     }
   }
 
@@ -138,6 +147,14 @@ export function OutputPanel() {
         { id: "output" as const, label: "Truth Table", icon: Table, closable: false },
         { id: "induction" as const, label: "Induction", icon: Sigma, closable: false },
         { id: "formal-model" as const, label: "Formal WFF", icon: Code2, closable: false },
+        { id: "errors" as const, label: "Errors", icon: AlertTriangle, closable: false },
+      ]
+    : isRelations
+    ? [
+        { id: "matrix" as const, label: "Relation Matrix & Properties", icon: Grid3X3, closable: false },
+        { id: "hasse" as const, label: "Hasse Diagram (Poset)", icon: GitBranch, closable: true },
+        { id: "warshall" as const, label: "Warshall's Algorithm", icon: Route, closable: true },
+        { id: "functions" as const, label: "Function Analyzer", icon: ArrowRightLeft, closable: true },
         { id: "errors" as const, label: "Errors", icon: AlertTriangle, closable: false },
       ]
     : [
@@ -208,18 +225,30 @@ export function OutputPanel() {
         {/* Quick re-add button if tools are cut/closed */}
         {hiddenTools.length > 0 && (
           <div className="flex items-center gap-1 pl-1">
-            {hiddenTools.map((tool) => (
-              <button
-                key={tool.id}
-                type="button"
-                onClick={() => handleOpenTab(tool.id)}
-                className="flex items-center gap-1 rounded px-2 py-1 text-[11px] font-mono text-lv-faint hover:text-lv-text hover:bg-lv-surface/60 transition-colors border border-dashed border-lv-border-soft"
-                title={`Reopen ${tool.label}`}
-              >
-                <Plus className="h-3 w-3" />
-                <span>{tool.id === "pie-solver" ? "PIE Solver" : "Diagonalization"}</span>
-              </button>
-            ))}
+            {hiddenTools.map((tool) => {
+              const getToolLabel = (id: string) => {
+                switch (id) {
+                  case "pie-solver": return "PIE Solver";
+                  case "diagonalization": return "Diagonalization";
+                  case "hasse": return "Hasse Diagram";
+                  case "warshall": return "Warshall";
+                  case "functions": return "Function Analyzer";
+                  default: return tool.label;
+                }
+              };
+              return (
+                <button
+                  key={tool.id}
+                  type="button"
+                  onClick={() => handleOpenTab(tool.id)}
+                  className="flex items-center gap-1 rounded px-2 py-1 text-[11px] font-mono text-lv-faint hover:text-lv-text hover:bg-lv-surface/60 transition-colors border border-dashed border-lv-border-soft"
+                  title={`Reopen ${tool.label}`}
+                >
+                  <Plus className="h-3 w-3" />
+                  <span>{getToolLabel(tool.id)}</span>
+                </button>
+              );
+            })}
           </div>
         )}
 
@@ -235,6 +264,26 @@ export function OutputPanel() {
 
       {/* Dock Content */}
       <div className="lv-scrollbar flex-1 overflow-y-auto px-4 py-3 font-mono text-[13px]">
+        {/* RELATIONS: MATRIX & PROPERTIES TAB */}
+        {isRelations && (outputTab === "matrix" || outputTab === "output") && (
+          <RelationMatrixView />
+        )}
+
+        {/* RELATIONS: HASSE DIAGRAM TAB */}
+        {isRelations && outputTab === "hasse" && (
+          <HasseDiagramView />
+        )}
+
+        {/* RELATIONS: WARSHALL ALGORITHM TAB */}
+        {isRelations && outputTab === "warshall" && (
+          <WarshallView />
+        )}
+
+        {/* RELATIONS: FUNCTION ANALYZER TAB */}
+        {isRelations && outputTab === "functions" && (
+          <FunctionMapperView />
+        )}
+
         {/* LOGIC: TRUTH TABLE TAB */}
         {isLogic && outputTab === "output" && (
           <TruthTableView
@@ -247,7 +296,7 @@ export function OutputPanel() {
         {isLogic && outputTab === "induction" && <InductionView />}
 
         {/* SET THEORY: OUTPUT TAB */}
-        {!isLogic && outputTab === "output" && (
+        {!isLogic && !isRelations && outputTab === "output" && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
             <div className="space-y-3">
               {primaryResult ? (
@@ -301,17 +350,17 @@ export function OutputPanel() {
         )}
 
         {/* SET THEORY: PIE SOLVER TAB */}
-        {!isLogic && outputTab === "pie-solver" && (
+        {!isLogic && !isRelations && outputTab === "pie-solver" && (
           <PieSolverView onClose={() => handleCloseTab("pie-solver")} />
         )}
 
         {/* SET THEORY: DIAGONALIZATION TAB */}
-        {!isLogic && outputTab === "diagonalization" && (
+        {!isLogic && !isRelations && outputTab === "diagonalization" && (
           <DiagonalizationView onClose={() => handleCloseTab("diagonalization")} />
         )}
 
         {/* SET THEORY: STEPS TAB */}
-        {!isLogic && outputTab === "steps" && (
+        {!isLogic && !isRelations && outputTab === "steps" && (
           <div className="space-y-4">
             {allSteps.length === 0 ? (
               <div className="text-lv-muted py-4">
@@ -508,7 +557,7 @@ export function OutputPanel() {
             <div className="flex items-center justify-between border-b border-lv-border-soft pb-3">
               <h3 className="text-sm font-semibold text-lv-text flex items-center gap-2">
                 <Download className="h-4 w-4 text-lv-cyan" />
-                Export {isLogic ? "Logic" : "Set Theory"} Model
+                Export {isLogic ? "Logic" : isRelations ? "Relations & Functions" : "Set Theory"} Model
               </h3>
               <button
                 type="button"

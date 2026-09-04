@@ -57,15 +57,31 @@ export function ModuleExplorer({ activeModuleId }: { activeModuleId: string }) {
     }
 
     if (topicId === "countability") {
-      setOutputTab("diagonalization" as any);
+      setOutputTab("diagonalization");
       return;
     }
     if (topicId === "pie-solver") {
-      setOutputTab("pie-solver" as any);
+      setOutputTab("pie-solver");
       return;
     }
     if (topicId === "counter-example") {
       setOutputTab("output");
+      return;
+    }
+    if (topicId === "relation-builder") {
+      setOutputTab("matrix");
+      return;
+    }
+    if (topicId === "hasse") {
+      setOutputTab("hasse");
+      return;
+    }
+    if (topicId === "warshall") {
+      setOutputTab("warshall");
+      return;
+    }
+    if (topicId === "functions") {
+      setOutputTab("functions");
       return;
     }
 

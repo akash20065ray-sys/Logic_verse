@@ -9,6 +9,8 @@ import {
   Sparkles,
   RotateCcw,
   BookOpen,
+  Palette,
+  X,
 } from "lucide-react";
 import { useWorkspaceStore } from "@/store/workspace-store";
 import { SetFormModal, type SetFormValues } from "./set-form-modal";
@@ -31,6 +33,8 @@ export function CanvasPalette() {
   const nodes = useWorkspaceStore((s) => s.nodes);
   const clearCanvas = useWorkspaceStore((s) => s.clearCanvas);
   const loadTemplate = useWorkspaceStore((s) => s.loadTemplate);
+  const paletteOpen = useWorkspaceStore((s) => s.paletteOpen);
+  const setPaletteOpen = useWorkspaceStore((s) => s.setPaletteOpen);
   const [formOpen, setFormOpen] = useState(false);
   const [templatesOpen, setTemplatesOpen] = useState(false);
   const [presetsOpen, setPresetsOpen] = useState(false);
@@ -89,16 +93,43 @@ export function CanvasPalette() {
     });
   }
 
+  if (!paletteOpen) {
+    return (
+      <button
+        type="button"
+        onClick={() => setPaletteOpen(true)}
+        className="absolute left-4 top-4 z-10 flex items-center gap-2 rounded-xl border border-lv-border bg-lv-panel/90 px-3 py-2 text-xs font-medium text-lv-text shadow-xl backdrop-blur-xl hover:bg-lv-surface hover:border-lv-blue transition-all"
+        title="Open Component Palette"
+      >
+        <Palette className="w-3.5 h-3.5 text-lv-blue" />
+        <span>Palette</span>
+        <span className="rounded-full bg-lv-surface px-1.5 py-0.5 font-mono text-[10px] text-lv-muted">
+          {nodes.length}
+        </span>
+      </button>
+    );
+  }
+
   return (
     <>
       <div className="absolute left-4 top-4 z-10 flex flex-col gap-1 rounded-2xl border border-lv-border bg-lv-panel/95 p-2 shadow-2xl shadow-black/50 backdrop-blur-xl lv-glass">
-        <div className="px-2 py-1 flex items-center justify-between border-b border-lv-border-soft pb-1.5 mb-1">
-          <span className="font-mono text-[10px] uppercase tracking-wider text-lv-faint font-semibold">
-            Palette
-          </span>
-          <span className="rounded-full bg-lv-surface px-1.5 py-0.5 text-[9px] font-mono text-lv-muted">
-            {nodes.length} nodes
-          </span>
+        <div className="px-2 py-1 flex items-center justify-between border-b border-lv-border-soft pb-1.5 mb-1 gap-3">
+          <div className="flex items-center gap-1.5">
+            <span className="font-mono text-[10px] uppercase tracking-wider text-lv-faint font-semibold">
+              Palette
+            </span>
+            <span className="rounded-full bg-lv-surface px-1.5 py-0.5 text-[9px] font-mono text-lv-muted">
+              {nodes.length}
+            </span>
+          </div>
+          <button
+            type="button"
+            onClick={() => setPaletteOpen(false)}
+            className="rounded p-0.5 text-lv-faint hover:text-lv-text hover:bg-lv-surface transition-colors"
+            title="Minimize Palette"
+          >
+            <X className="w-3.5 h-3.5" />
+          </button>
         </div>
 
         {/* Add Custom Set */}

@@ -12,15 +12,21 @@ import {
   PanelBottom,
   Check,
   RotateCcw,
+  Wand2,
+  Palette,
 } from "lucide-react";
 import { useWorkspaceStore } from "@/store/workspace-store";
 import { cn } from "@/lib/utils";
 
 export function WorkspaceToolbar({ projectName }: { projectName: string }) {
+  const activeModuleId = useWorkspaceStore((s) => s.activeModuleId);
   const aiPanelOpen = useWorkspaceStore((s) => s.aiPanelOpen);
   const outputPanelOpen = useWorkspaceStore((s) => s.outputPanelOpen);
+  const paletteOpen = useWorkspaceStore((s) => s.paletteOpen);
   const toggleAiPanel = useWorkspaceStore((s) => s.toggleAiPanel);
   const toggleOutputPanel = useWorkspaceStore((s) => s.toggleOutputPanel);
+  const togglePalette = useWorkspaceStore((s) => s.togglePalette);
+  const toggleExpressionModal = useWorkspaceStore((s) => s.toggleExpressionModal);
   const saveProject = useWorkspaceStore((s) => s.saveProject);
   const saveStatus = useWorkspaceStore((s) => s.saveStatus);
   const setOutputTab = useWorkspaceStore((s) => s.setOutputTab);
@@ -35,9 +41,13 @@ export function WorkspaceToolbar({ projectName }: { projectName: string }) {
 
   function handleRun() {
     recomputeGraph();
-    setOutputTab("steps");
-    setStepIndex(0);
-    setIsPlayingSteps(true);
+    if (activeModuleId === "logic") {
+      setOutputTab("output");
+    } else {
+      setOutputTab("steps");
+      setStepIndex(0);
+      setIsPlayingSteps(true);
+    }
   }
 
   function handleShare() {
@@ -48,7 +58,7 @@ export function WorkspaceToolbar({ projectName }: { projectName: string }) {
   }
 
   return (
-    <header className="relative flex h-14 shrink-0 items-center justify-between border-b border-lv-border-soft bg-lv-panel px-3">
+    <header className="relative flex h-14 shrink-0 items-center justify-between border-b border-lv-border-soft bg-lv-panel px-3 z-40">
       {/* Brand & Project Name */}
       <div className="flex items-center gap-3">
         <Link
@@ -64,7 +74,7 @@ export function WorkspaceToolbar({ projectName }: { projectName: string }) {
           </span>
         </Link>
         <div className="h-5 w-px bg-lv-border" />
-        <span className="text-sm font-medium text-lv-text truncate max-w-[200px] sm:max-w-none">
+        <span className="text-sm font-medium text-lv-text truncate max-w-[180px] sm:max-w-none">
           {projectName}
         </span>
         {saveStatus ? (
@@ -80,6 +90,17 @@ export function WorkspaceToolbar({ projectName }: { projectName: string }) {
 
       {/* Toolbar actions */}
       <div className="flex items-center gap-1.5">
+        {/* Custom Expression Builder button */}
+        <button
+          type="button"
+          onClick={toggleExpressionModal}
+          className="inline-flex items-center gap-1.5 rounded-lg border border-lv-cyan/40 bg-lv-cyan/10 px-2.5 py-1.5 text-xs font-semibold text-lv-cyan hover:bg-lv-cyan/20 transition-all active:scale-95 shadow-xs"
+          title="Build your own formula"
+        >
+          <Wand2 className="h-3.5 w-3.5" />
+          <span className="hidden sm:inline">Expression Builder</span>
+        </button>
+
         <ToolbarButton icon={Save} label="Save" onClick={saveProject} />
         <ToolbarButton icon={Play} label="Run" accent onClick={handleRun} />
         <ToolbarButton
@@ -89,6 +110,14 @@ export function WorkspaceToolbar({ projectName }: { projectName: string }) {
         />
 
         <div className="mx-1 h-5 w-px bg-lv-border" />
+
+        {/* Palette Toggle */}
+        <ToolbarIconToggle
+          icon={Palette}
+          label="Toggle components palette"
+          active={paletteOpen}
+          onClick={togglePalette}
+        />
 
         <ToolbarIconToggle
           icon={PanelRight}
@@ -113,21 +142,40 @@ export function WorkspaceToolbar({ projectName }: { projectName: string }) {
           />
 
           {settingsOpen && (
-            <div className="absolute right-0 top-full mt-2 z-50 w-52 rounded-xl border border-lv-border bg-lv-panel p-3 shadow-2xl backdrop-blur-xl space-y-2">
+            <div className="absolute right-0 top-full mt-2 z-50 w-56 rounded-xl border border-lv-border bg-lv-panel p-3 shadow-2xl backdrop-blur-xl space-y-2">
               <div className="text-[10px] font-mono uppercase tracking-wider text-lv-faint font-semibold border-b border-lv-border-soft pb-1.5">
-                Canvas Settings
+                Workspace Controls
               </div>
 
               <button
                 type="button"
                 onClick={() => {
-                  loadTemplate("union-intersection");
+                  togglePalette();
+                  setSettingsOpen(false);
+                }}
+                className="flex w-full items-center justify-between rounded-lg px-2 py-1.5 text-left text-xs text-lv-muted hover:bg-lv-surface hover:text-lv-text transition-colors"
+              >
+                <span className="flex items-center gap-2">
+                  <Palette className="h-3.5 w-3.5 text-lv-cyan" />
+                  <span>Floating Palette</span>
+                </span>
+                <span className="font-mono text-[10px] text-lv-faint">{paletteOpen ? "ON" : "OFF"}</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  if (activeModuleId === "logic") {
+                    loadTemplate("modus-ponens");
+                  } else {
+                    loadTemplate("union-intersection");
+                  }
                   setSettingsOpen(false);
                 }}
                 className="flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left text-xs text-lv-muted hover:bg-lv-surface hover:text-lv-text transition-colors"
               >
                 <RotateCcw className="h-3.5 w-3.5 text-lv-cyan" />
-                <span>Reset to Starter Model</span>
+                <span>Reset to Default Model</span>
               </button>
 
               <button

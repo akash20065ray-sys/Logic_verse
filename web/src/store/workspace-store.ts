@@ -14,9 +14,18 @@ interface WorkspaceState {
   nodes: Node[];
   edges: Edge[];
   selectedNodeId: string | null;
+
+  // Panel toggles & sizes
   aiPanelOpen: boolean;
   outputPanelOpen: boolean;
+  paletteOpen: boolean;
+  expressionModalOpen: boolean;
   outputTab: "output" | "steps" | "formal-model" | "errors" | "induction";
+
+  leftPanelWidth: number;
+  rightPanelWidth: number;
+  bottomPanelHeight: number;
+
   activeStepIndex: number;
   isPlayingSteps: boolean;
   graphEvaluation: GraphEvaluation;
@@ -32,8 +41,18 @@ interface WorkspaceState {
   addNode: (node: Node) => void;
   deleteNode: (id: string) => void;
   selectNode: (id: string | null) => void;
+
   toggleAiPanel: () => void;
   toggleOutputPanel: () => void;
+  togglePalette: () => void;
+  setPaletteOpen: (open: boolean) => void;
+  toggleExpressionModal: () => void;
+  setExpressionModalOpen: (open: boolean) => void;
+
+  setLeftPanelWidth: (w: number) => void;
+  setRightPanelWidth: (w: number) => void;
+  setBottomPanelHeight: (h: number) => void;
+
   setOutputTab: (tab: WorkspaceState["outputTab"]) => void;
   setStepIndex: (idx: number) => void;
   setIsPlayingSteps: (val: boolean) => void;
@@ -61,9 +80,17 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
   nodes: initialSetEval.updatedNodes,
   edges: DEFAULT_STARTER_TEMPLATE.edges,
   selectedNodeId: null,
+
   aiPanelOpen: true,
   outputPanelOpen: true,
+  paletteOpen: true,
+  expressionModalOpen: false,
   outputTab: "output",
+
+  leftPanelWidth: 260,
+  rightPanelWidth: 320,
+  bottomPanelHeight: 260,
+
   activeStepIndex: 0,
   isPlayingSteps: false,
   graphEvaluation: initialSetEval,
@@ -107,6 +134,7 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
       const evalLogic = evaluateLogicGraph(currentNodes, currentEdges);
       set({
         nodes: evalLogic.updatedNodes,
+        edges: currentEdges,
         logicEvaluation: evalLogic,
         activeStepIndex: 0,
       });
@@ -114,6 +142,7 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
       const evalSet = evaluateCanvasGraph(currentNodes, currentEdges);
       set({
         nodes: evalSet.updatedNodes,
+        edges: currentEdges,
         graphEvaluation: evalSet,
         activeStepIndex: 0,
       });
@@ -177,6 +206,15 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
   selectNode: (id) => set({ selectedNodeId: id }),
   toggleAiPanel: () => set({ aiPanelOpen: !get().aiPanelOpen }),
   toggleOutputPanel: () => set({ outputPanelOpen: !get().outputPanelOpen }),
+  togglePalette: () => set({ paletteOpen: !get().paletteOpen }),
+  setPaletteOpen: (open) => set({ paletteOpen: open }),
+  toggleExpressionModal: () => set({ expressionModalOpen: !get().expressionModalOpen }),
+  setExpressionModalOpen: (open) => set({ expressionModalOpen: open }),
+
+  setLeftPanelWidth: (w) => set({ leftPanelWidth: Math.max(180, Math.min(w, 480)) }),
+  setRightPanelWidth: (w) => set({ rightPanelWidth: Math.max(220, Math.min(w, 600)) }),
+  setBottomPanelHeight: (h) => set({ bottomPanelHeight: Math.max(140, Math.min(h, 550)) }),
+
   setOutputTab: (tab) => set({ outputTab: tab, outputPanelOpen: true }),
 
   setStepIndex: (idx) => set({ activeStepIndex: idx }),

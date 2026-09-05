@@ -16,7 +16,12 @@ LogicVerse turns Discrete Mathematics and Theory of Computation into an interact
 - **Interactive 2-Set & 3-Set SVG Venn Diagrams**: Dynamic 8-region mathematical partitioning with element distribution.
 - **Principle of Inclusion & Exclusion (PIE) Solver**: Step-by-step arithmetic and cardinality solver with real-world survey presets.
 - **Cantor's Diagonalization & Countability Explorer**: Interactive uncountability proof of $\mathbb{R}$ with live anti-diagonal construction, plus Cantor's snake path for $\mathbb{Q}^+$.
-- **Mathematical Induction Visualizer**: Step-by-step interactive derivation for summation theorems.
+- **DFA / NFA Automata Theory Suite**:
+  - Interactive state graph canvas ($q_0, q_1$), start state indicator ($\to q_0$), accept state double ring ($((q_f))$), and active state glowing highlight.
+  - Step-by-step string simulation playback with transition rules ($\delta(q, a)$) and multi-string test suite.
+  - **NFA $\to$ DFA Subset Construction Solver**: $2^Q$ powerset construction visualizer with 1-click load to canvas.
+  - **DFA Minimization Solver**: Hopcroft partition refinement visualizer with distinguishability matrix.
+  - **Moore ⇄ Mealy Transducers**: Input string $\to$ output sequence transduction simulator.
 - **Context-Aware LogicAI**: Pedagogical math assistant that inspects your live canvas to answer questions, explain steps, and diagnose mistakes.
 - **Model Validation**: Real-time error detection for cycle prevention, disconnected handles, and duplicate sets.
 - **Export & Persistence**: LocalStorage autosave and export to JSON, Markdown, and LaTeX.

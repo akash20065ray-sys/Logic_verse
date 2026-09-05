@@ -37,6 +37,10 @@ import { RelationMatrixView } from "./relation-matrix-view";
 import { HasseDiagramView } from "./hasse-diagram-view";
 import { WarshallView } from "./warshall-view";
 import { FunctionMapperView } from "./function-mapper-view";
+import { AutomataView } from "./automata-view";
+import { NfaToDfaView } from "./nfa-to-dfa-view";
+import { DfaMinimizationView } from "./dfa-minimization-view";
+import { MooreMealyView } from "./moore-mealy-view";
 
 export function OutputPanel() {
   const activeModuleId = useWorkspaceStore((s) => s.activeModuleId);
@@ -45,6 +49,7 @@ export function OutputPanel() {
 
   const isLogic = activeModuleId === "logic";
   const isRelations = activeModuleId === "relations-functions";
+  const isAutomata = activeModuleId === "automata";
 
   // Set Theory store data
   const graphEvaluation = useWorkspaceStore((s) => s.graphEvaluation);
@@ -73,7 +78,7 @@ export function OutputPanel() {
   // Auto-play step simulation for Set Theory
   useEffect(() => {
     let timer: NodeJS.Timeout;
-    if (!isLogic && isPlayingSteps && allSteps.length > 0) {
+    if (!isLogic && !isAutomata && isPlayingSteps && allSteps.length > 0) {
       timer = setInterval(() => {
         if (activeStepIndex < allSteps.length - 1) {
           stepForward();
@@ -83,7 +88,7 @@ export function OutputPanel() {
       }, 1500);
     }
     return () => clearInterval(timer);
-  }, [isLogic, isPlayingSteps, activeStepIndex, allSteps.length, stepForward, setIsPlayingSteps]);
+  }, [isLogic, isAutomata, isPlayingSteps, activeStepIndex, allSteps.length, stepForward, setIsPlayingSteps]);
 
   function copyToClipboard(text: string, id: string) {
     navigator.clipboard.writeText(text);
@@ -129,7 +134,7 @@ export function OutputPanel() {
   function handleCloseTab(tabId: string) {
     setClosedTabs((prev) => new Set(prev).add(tabId));
     if (outputTab === tabId) {
-      setOutputTab(isRelations ? "matrix" : "output");
+      setOutputTab(isAutomata ? "automata-sim" : isRelations ? "matrix" : "output");
     }
   }
 
@@ -147,6 +152,14 @@ export function OutputPanel() {
         { id: "output" as const, label: "Truth Table", icon: Table, closable: false },
         { id: "induction" as const, label: "Induction", icon: Sigma, closable: false },
         { id: "formal-model" as const, label: "Formal WFF", icon: Code2, closable: false },
+        { id: "errors" as const, label: "Errors", icon: AlertTriangle, closable: false },
+      ]
+    : isAutomata
+    ? [
+        { id: "automata-sim" as const, label: "String Simulator & Matrix", icon: Play, closable: false },
+        { id: "nfa-dfa" as const, label: "NFA → DFA Conversion", icon: GitBranch, closable: true },
+        { id: "minimization" as const, label: "DFA Minimization", icon: Sparkles, closable: true },
+        { id: "moore-mealy" as const, label: "Moore ⇄ Mealy Transducer", icon: ArrowRightLeft, closable: true },
         { id: "errors" as const, label: "Errors", icon: AlertTriangle, closable: false },
       ]
     : isRelations
@@ -282,6 +295,26 @@ export function OutputPanel() {
         {/* RELATIONS: FUNCTION ANALYZER TAB */}
         {isRelations && outputTab === "functions" && (
           <FunctionMapperView />
+        )}
+
+        {/* AUTOMATA: STRING SIMULATOR & MATRIX TAB */}
+        {isAutomata && (outputTab === "automata-sim" || outputTab === "output") && (
+          <AutomataView />
+        )}
+
+        {/* AUTOMATA: NFA -> DFA TAB */}
+        {isAutomata && outputTab === "nfa-dfa" && (
+          <NfaToDfaView />
+        )}
+
+        {/* AUTOMATA: DFA MINIMIZATION TAB */}
+        {isAutomata && outputTab === "minimization" && (
+          <DfaMinimizationView />
+        )}
+
+        {/* AUTOMATA: MOORE MEALY TAB */}
+        {isAutomata && outputTab === "moore-mealy" && (
+          <MooreMealyView />
         )}
 
         {/* LOGIC: TRUTH TABLE TAB */}

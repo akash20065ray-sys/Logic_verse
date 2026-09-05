@@ -12,6 +12,7 @@ import {
   generateLogicExplanation,
   generateLogicExample,
   generateLogicHint,
+  generateAutomataExplanation,
   type AiResponse,
 } from "@/lib/algorithms/logic-ai-engine";
 
@@ -28,7 +29,7 @@ const INITIAL_MESSAGES: ChatMessage[] = [
     id: "welcome",
     role: "assistant",
     content:
-      "Hello! I am **LogicAI**, your context-aware Discrete Mathematics & Set Theory tutor. I can see your live canvas, analyze your operations, explain steps, and generate examples.",
+      "Hello! I am **LogicAI**, your context-aware Discrete Mathematics & Automata tutor. I can inspect your live canvas, analyze state transitions, explain step-by-step simulations, and answer theory questions.",
   },
 ];
 
@@ -42,24 +43,38 @@ const QUICK_ACTIONS = [
 export function LogicAiPanel() {
   const graphEvaluation = useWorkspaceStore((s) => s.graphEvaluation);
   const logicEvaluation = useWorkspaceStore((s) => s.logicEvaluation);
+  const automataSimulation = useWorkspaceStore((s) => s.automataSimulation);
+  const activeAutomataStepIndex = useWorkspaceStore((s) => s.activeAutomataStepIndex);
   const activeModuleId = useWorkspaceStore((s) => s.activeModuleId);
   const loadTemplate = useWorkspaceStore((s) => s.loadTemplate);
   const [messages, setMessages] = useState<ChatMessage[]>(INITIAL_MESSAGES);
   const [input, setInput] = useState("");
 
   const isLogic = activeModuleId === "logic";
+  const isAutomata = activeModuleId === "automata";
 
   function processQuery(text: string) {
     let response: AiResponse;
 
     if (text === "Explain this step") {
-      response = isLogic ? generateLogicExplanation(logicEvaluation) : generateExplanation(graphEvaluation);
+      response = isAutomata
+        ? generateAutomataExplanation(automataSimulation, activeAutomataStepIndex)
+        : isLogic
+        ? generateLogicExplanation(logicEvaluation)
+        : generateExplanation(graphEvaluation);
     } else if (text === "Generate example") {
       response = isLogic ? generateLogicExample() : generateExample();
     } else if (text === "Give me a hint") {
       response = isLogic ? generateLogicHint(logicEvaluation) : generateHint(graphEvaluation);
     } else {
-      response = answerDiscreteMathQuestion(text, graphEvaluation, logicEvaluation, activeModuleId);
+      response = answerDiscreteMathQuestion(
+        text,
+        graphEvaluation,
+        logicEvaluation,
+        activeModuleId,
+        automataSimulation,
+        activeAutomataStepIndex
+      );
     }
 
     setMessages((prev) => [

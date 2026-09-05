@@ -4,9 +4,15 @@ import { applyNodeChanges, applyEdgeChanges } from "@xyflow/react";
 import { evaluateCanvasGraph, type GraphEvaluation } from "@/lib/algorithms/graph-evaluator";
 import { evaluateLogicGraph, type LogicEvaluation } from "@/lib/algorithms/logic-graph-evaluator";
 import {
+  parseCanvasToAutomaton,
+  simulateAutomaton,
+  type AutomatonSimulation,
+} from "@/lib/algorithms/automata";
+import {
   WORKSPACE_TEMPLATES,
   DEFAULT_STARTER_TEMPLATE,
   DEFAULT_LOGIC_TEMPLATE,
+  DEFAULT_AUTOMATA_TEMPLATE,
 } from "@/lib/templates";
 
 interface WorkspaceState {
@@ -31,7 +37,11 @@ interface WorkspaceState {
     | "matrix"
     | "hasse"
     | "warshall"
-    | "functions";
+    | "functions"
+    | "automata-sim"
+    | "nfa-dfa"
+    | "minimization"
+    | "moore-mealy";
 
   leftPanelWidth: number;
   rightPanelWidth: number;
@@ -41,6 +51,14 @@ interface WorkspaceState {
   isPlayingSteps: boolean;
   graphEvaluation: GraphEvaluation;
   logicEvaluation: LogicEvaluation;
+
+  // Automata Store Slice
+  automataInputString: string;
+  automataSimulation: AutomatonSimulation;
+  activeAutomataStepIndex: number;
+  setAutomataInputString: (str: string) => void;
+  setAutomataStepIndex: (idx: number) => void;
+
   saveStatus: string | null;
   activeTemplateId: string | null;
 
@@ -86,6 +104,12 @@ const initialLogicEval = evaluateLogicGraph(
   DEFAULT_LOGIC_TEMPLATE.edges
 );
 
+const initialAutomatonDef = parseCanvasToAutomaton(
+  DEFAULT_AUTOMATA_TEMPLATE.nodes,
+  DEFAULT_AUTOMATA_TEMPLATE.edges
+);
+const initialAutomataSim = simulateAutomaton(initialAutomatonDef, "101");
+
 export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
   activeModuleId: "set-theory",
   nodes: initialSetEval.updatedNodes,
@@ -106,6 +130,20 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
   isPlayingSteps: false,
   graphEvaluation: initialSetEval,
   logicEvaluation: initialLogicEval,
+
+  automataInputString: "101",
+  automataSimulation: initialAutomataSim,
+  activeAutomataStepIndex: 0,
+
+  setAutomataInputString: (str: string) => {
+    set({ automataInputString: str });
+    get().recomputeGraph();
+  },
+
+  setAutomataStepIndex: (idx: number) => {
+    set({ activeAutomataStepIndex: idx });
+  },
+
   saveStatus: null,
   activeTemplateId: DEFAULT_STARTER_TEMPLATE.id,
 
@@ -123,6 +161,18 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
         activeTemplateId: DEFAULT_LOGIC_TEMPLATE.id,
         activeStepIndex: 0,
         outputTab: "output",
+      });
+    } else if (id === "automata") {
+      const automaton = parseCanvasToAutomaton(DEFAULT_AUTOMATA_TEMPLATE.nodes, DEFAULT_AUTOMATA_TEMPLATE.edges);
+      const sim = simulateAutomaton(automaton, get().automataInputString);
+      set({
+        activeModuleId: id,
+        nodes: DEFAULT_AUTOMATA_TEMPLATE.nodes,
+        edges: DEFAULT_AUTOMATA_TEMPLATE.edges,
+        automataSimulation: sim,
+        activeAutomataStepIndex: 0,
+        activeTemplateId: DEFAULT_AUTOMATA_TEMPLATE.id,
+        outputTab: "automata-sim",
       });
     } else if (id === "relations-functions") {
       const evalSet = evaluateCanvasGraph(DEFAULT_STARTER_TEMPLATE.nodes, DEFAULT_STARTER_TEMPLATE.edges);
@@ -152,15 +202,24 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
   recomputeGraph: (nodesOverride?: Node[], edgesOverride?: Edge[]) => {
     const currentNodes = nodesOverride ?? get().nodes;
     const currentEdges = edgesOverride ?? get().edges;
-    const isLogic = get().activeModuleId === "logic";
+    const module = get().activeModuleId;
 
-    if (isLogic) {
+    if (module === "logic") {
       const evalLogic = evaluateLogicGraph(currentNodes, currentEdges);
       set({
         nodes: evalLogic.updatedNodes,
         edges: currentEdges,
         logicEvaluation: evalLogic,
         activeStepIndex: 0,
+      });
+    } else if (module === "automata") {
+      const automaton = parseCanvasToAutomaton(currentNodes, currentEdges);
+      const sim = simulateAutomaton(automaton, get().automataInputString);
+      set({
+        nodes: currentNodes,
+        edges: currentEdges,
+        automataSimulation: sim,
+        activeAutomataStepIndex: Math.min(get().activeAutomataStepIndex, Math.max(0, sim.steps.length - 1)),
       });
     } else {
       const evalSet = evaluateCanvasGraph(currentNodes, currentEdges);

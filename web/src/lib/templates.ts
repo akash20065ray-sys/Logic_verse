@@ -392,10 +392,133 @@ export const LOGIC_TEMPLATES: Record<string, TemplateDefinition> = {
   },
 };
 
+export const AUTOMATA_TEMPLATES: Record<string, TemplateDefinition> = {
+  "dfa-ending-01": {
+    id: "dfa-ending-01",
+    title: "DFA: Strings Ending in '01'",
+    description: "Deterministic finite automaton that accepts all binary strings ending in '01'.",
+    moduleId: "automata",
+    topicId: "dfa-builder",
+    nodes: [
+      {
+        id: "q0",
+        type: "automata-state",
+        position: { x: 100, y: 150 },
+        data: { label: "q0", isStart: true, isAccept: false, kind: "state" },
+      },
+      {
+        id: "q1",
+        type: "automata-state",
+        position: { x: 320, y: 150 },
+        data: { label: "q1", isStart: false, isAccept: false, kind: "state" },
+      },
+      {
+        id: "q2",
+        type: "automata-state",
+        position: { x: 540, y: 150 },
+        data: { label: "q2", isStart: false, isAccept: true, kind: "state" },
+      },
+    ],
+    edges: [
+      { id: "e0-1", source: "q0", target: "q1", label: "0", animated: true, style: { stroke: "#38BDF8", strokeWidth: 2 } },
+      { id: "e0-0", source: "q0", target: "q0", label: "1", animated: true, style: { stroke: "#38BDF8", strokeWidth: 2 } },
+      { id: "e1-1", source: "q1", target: "q1", label: "0", animated: true, style: { stroke: "#38BDF8", strokeWidth: 2 } },
+      { id: "e1-2", source: "q1", target: "q2", label: "1", animated: true, style: { stroke: "#38BDF8", strokeWidth: 2 } },
+      { id: "e2-1", source: "q2", target: "q1", label: "0", animated: true, style: { stroke: "#38BDF8", strokeWidth: 2 } },
+      { id: "e2-0", source: "q2", target: "q0", label: "1", animated: true, style: { stroke: "#38BDF8", strokeWidth: 2 } },
+    ],
+  },
+  "dfa-even-ones": {
+    id: "dfa-even-ones",
+    title: "DFA: Even Number of '1's",
+    description: "Accepts binary strings containing an even count of '1' bits.",
+    moduleId: "automata",
+    topicId: "dfa-builder",
+    nodes: [
+      {
+        id: "qEven",
+        type: "automata-state",
+        position: { x: 150, y: 150 },
+        data: { label: "qEven", isStart: true, isAccept: true, kind: "state" },
+      },
+      {
+        id: "qOdd",
+        type: "automata-state",
+        position: { x: 420, y: 150 },
+        data: { label: "qOdd", isStart: false, isAccept: false, kind: "state" },
+      },
+    ],
+    edges: [
+      { id: "e-ev-od", source: "qEven", target: "qOdd", label: "1", animated: true, style: { stroke: "#38BDF8", strokeWidth: 2 } },
+      { id: "e-od-ev", source: "qOdd", target: "qEven", label: "1", animated: true, style: { stroke: "#38BDF8", strokeWidth: 2 } },
+      { id: "e-ev-ev", source: "qEven", target: "qEven", label: "0", animated: true, style: { stroke: "#38BDF8", strokeWidth: 2 } },
+      { id: "e-od-od", source: "qOdd", target: "qOdd", label: "0", animated: true, style: { stroke: "#38BDF8", strokeWidth: 2 } },
+    ],
+  },
+  "nfa-substring-101": {
+    id: "nfa-substring-101",
+    title: "NFA: Contains Substring '101'",
+    description: "Non-deterministic finite automaton searching for substring pattern '101'.",
+    moduleId: "automata",
+    topicId: "dfa-builder",
+    nodes: [
+      { id: "q0", type: "automata-state", position: { x: 100, y: 150 }, data: { label: "q0", isStart: true, isAccept: false, kind: "state" } },
+      { id: "q1", type: "automata-state", position: { x: 280, y: 150 }, data: { label: "q1", isStart: false, isAccept: false, kind: "state" } },
+      { id: "q2", type: "automata-state", position: { x: 460, y: 150 }, data: { label: "q2", isStart: false, isAccept: false, kind: "state" } },
+      { id: "q3", type: "automata-state", position: { x: 640, y: 150 }, data: { label: "q3", isStart: false, isAccept: true, kind: "state" } },
+    ],
+    edges: [
+      { id: "e00", source: "q0", target: "q0", label: "0, 1", animated: true, style: { stroke: "#A855F7", strokeWidth: 2 } },
+      { id: "e01", source: "q0", target: "q1", label: "1", animated: true, style: { stroke: "#A855F7", strokeWidth: 2 } },
+      { id: "e12", source: "q1", target: "q2", label: "0", animated: true, style: { stroke: "#A855F7", strokeWidth: 2 } },
+      { id: "e23", source: "q2", target: "q3", label: "1", animated: true, style: { stroke: "#A855F7", strokeWidth: 2 } },
+      { id: "e33", source: "q3", target: "q3", label: "0, 1", animated: true, style: { stroke: "#A855F7", strokeWidth: 2 } },
+    ],
+  },
+  "epsilon-nfa-ab": {
+    id: "epsilon-nfa-ab",
+    title: "ε-NFA: Spontaneous Transitions",
+    description: "Automaton with null/spontaneous ε-transitions demonstrating ε-closures.",
+    moduleId: "automata",
+    topicId: "epsilon-nfa",
+    nodes: [
+      { id: "q0", type: "automata-state", position: { x: 100, y: 150 }, data: { label: "q0", isStart: true, isAccept: false, kind: "state" } },
+      { id: "q1", type: "automata-state", position: { x: 300, y: 150 }, data: { label: "q1", isStart: false, isAccept: false, kind: "state" } },
+      { id: "q2", type: "automata-state", position: { x: 500, y: 150 }, data: { label: "q2", isStart: false, isAccept: true, kind: "state" } },
+    ],
+    edges: [
+      { id: "e01", source: "q0", target: "q1", label: "ε", animated: true, style: { stroke: "#38BDF8", strokeWidth: 2 } },
+      { id: "e12", source: "q1", target: "q2", label: "a", animated: true, style: { stroke: "#38BDF8", strokeWidth: 2 } },
+      { id: "e22", source: "q2", target: "q2", label: "b", animated: true, style: { stroke: "#38BDF8", strokeWidth: 2 } },
+    ],
+  },
+  "moore-mod3": {
+    id: "moore-mod3",
+    title: "Moore Machine: Modulo-3 Counter",
+    description: "State machine whose output depends strictly on the current state.",
+    moduleId: "automata",
+    topicId: "moore-mealy",
+    nodes: [
+      { id: "S0", type: "automata-state", position: { x: 120, y: 150 }, data: { label: "S0", isStart: true, isAccept: false, mooreOutput: "0", kind: "state" } },
+      { id: "S1", type: "automata-state", position: { x: 340, y: 150 }, data: { label: "S1", isStart: false, isAccept: false, mooreOutput: "1", kind: "state" } },
+      { id: "S2", type: "automata-state", position: { x: 560, y: 150 }, data: { label: "S2", isStart: false, isAccept: false, mooreOutput: "2", kind: "state" } },
+    ],
+    edges: [
+      { id: "e00", source: "S0", target: "S0", label: "0", animated: true, style: { stroke: "#38BDF8", strokeWidth: 2 } },
+      { id: "e01", source: "S0", target: "S1", label: "1", animated: true, style: { stroke: "#38BDF8", strokeWidth: 2 } },
+      { id: "e12", source: "S1", target: "S2", label: "1", animated: true, style: { stroke: "#38BDF8", strokeWidth: 2 } },
+      { id: "e20", source: "S2", target: "S0", label: "1", animated: true, style: { stroke: "#38BDF8", strokeWidth: 2 } },
+    ],
+  },
+};
+
 export const WORKSPACE_TEMPLATES: Record<string, TemplateDefinition> = {
   ...SET_THEORY_TEMPLATES,
   ...LOGIC_TEMPLATES,
+  ...AUTOMATA_TEMPLATES,
 };
 
 export const DEFAULT_STARTER_TEMPLATE = SET_THEORY_TEMPLATES["union-intersection"];
 export const DEFAULT_LOGIC_TEMPLATE = LOGIC_TEMPLATES["modus-ponens"];
+export const DEFAULT_AUTOMATA_TEMPLATE = AUTOMATA_TEMPLATES["dfa-ending-01"];
+

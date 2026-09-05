@@ -20,9 +20,12 @@ import { ResultNode } from "./nodes/result-node";
 import { LogicVarNode } from "./nodes/logic-var-node";
 import { LogicOpNode } from "./nodes/logic-op-node";
 import { LogicResultNode } from "./nodes/logic-result-node";
+import { AutomataStateNode } from "./nodes/automata-state-node";
 import { SetFormModal, type SetFormValues } from "./set-form-modal";
+import { AutomataStateModal, type AutomataStateFormValues } from "./automata-state-modal";
 import { CanvasPalette } from "./canvas-palette";
 import { LogicPalette } from "./logic-palette";
+import { AutomataPalette } from "./automata-palette";
 
 const NODE_TYPES = {
   set: SetNode,
@@ -31,6 +34,7 @@ const NODE_TYPES = {
   "logic-var": LogicVarNode,
   "logic-op": LogicOpNode,
   "logic-result": LogicResultNode,
+  "automata-state": AutomataStateNode,
 };
 
 export function WorkspaceCanvas() {
@@ -47,7 +51,12 @@ export function WorkspaceCanvas() {
   const loadSavedProject = useWorkspaceStore((s) => s.loadSavedProject);
   const loadTemplate = useWorkspaceStore((s) => s.loadTemplate);
 
-  const [editingNode, setEditingNode] = useState<Node | null>(null);
+  const automataSimulation = useWorkspaceStore((s) => s.automataSimulation);
+  const activeAutomataStepIndex = useWorkspaceStore((s) => s.activeAutomataStepIndex);
+
+  const [editingSetNode, setEditingSetNode] = useState<Node | null>(null);
+  const [editingAutomataNode, setEditingAutomataNode] = useState<Node | null>(null);
+
   const nodeTypes = useMemo(() => NODE_TYPES, []);
 
   // Try loading saved project on first mount or load default starter
@@ -56,11 +65,33 @@ export function WorkspaceCanvas() {
     if (!loaded && nodes.length === 0) {
       if (activeModuleId === "logic") {
         loadTemplate("modus-ponens");
+      } else if (activeModuleId === "automata") {
+        loadTemplate("dfa-ending-01");
       } else {
         loadTemplate("union-intersection");
       }
     }
   }, [activeModuleId]);
+
+  // Dynamic active transition edge highlighting during simulation
+  const currentStep = automataSimulation?.steps?.[activeAutomataStepIndex];
+  const activeEdgeIds = currentStep?.activeEdgeIds || [];
+
+  const styledEdges = useMemo(() => {
+    if (activeModuleId !== "automata" || activeEdgeIds.length === 0) {
+      return edges;
+    }
+    return edges.map((e) => {
+      const isActive = activeEdgeIds.includes(e.id);
+      return {
+        ...e,
+        animated: isActive,
+        style: isActive
+          ? { stroke: "#38BDF8", strokeWidth: 4, filter: "drop-shadow(0 0 6px #38BDF8)" }
+          : { stroke: "#1E293B", strokeWidth: 1.5, opacity: 0.5 },
+      };
+    });
+  }, [edges, activeModuleId, activeEdgeIds]);
 
   // Keyboard shortcut: Delete or Backspace to delete selected node
   useEffect(() => {
@@ -80,12 +111,16 @@ export function WorkspaceCanvas() {
   const onConnect = useCallback(
     (connection: Connection) => {
       const isLogic = activeModuleId === "logic";
+      const isAutomata = activeModuleId === "automata";
+      const symbol = isAutomata ? prompt("Transition Symbol (e.g. 0, 1, ε):", "0") || "0" : "";
+
       const newEdge: Edge = {
         ...connection,
         id: `e-${connection.source}-${connection.target}-${Date.now()}`,
         animated: true,
+        label: isAutomata ? symbol : undefined,
         style: {
-          stroke: isLogic ? "var(--lv-cyan)" : "var(--lv-blue)",
+          stroke: isAutomata ? "#38BDF8" : isLogic ? "var(--lv-cyan)" : "var(--lv-blue)",
           strokeWidth: 2,
         },
       };
@@ -95,30 +130,57 @@ export function WorkspaceCanvas() {
     [edges, setEdges, activeModuleId]
   );
 
-  function handleEditSubmit(values: SetFormValues) {
-    if (!editingNode) return;
+  function handleSetEditSubmit(values: SetFormValues) {
+    if (!editingSetNode) return;
     const currentNodes = useWorkspaceStore.getState().nodes;
     const updatedNodes = currentNodes.map((n) =>
-      n.id === editingNode.id
+      n.id === editingSetNode.id
         ? { ...n, data: { ...n.data, label: values.label, elements: values.elements } }
         : n
     );
     setNodes(updatedNodes);
-    setEditingNode(null);
+    setEditingSetNode(null);
+  }
+
+  function handleAutomataEditSubmit(values: AutomataStateFormValues) {
+    if (!editingAutomataNode) return;
+    const currentNodes = useWorkspaceStore.getState().nodes;
+    const updatedNodes = currentNodes.map((n) => {
+      if (n.id === editingAutomataNode.id) {
+        return {
+          ...n,
+          data: {
+            ...n.data,
+            label: values.label,
+            isStart: values.isStart,
+            isAccept: values.isAccept,
+            mooreOutput: values.mooreOutput,
+          },
+        };
+      }
+      // Unset start flag if editing to be start
+      if (values.isStart) {
+        return { ...n, data: { ...n.data, isStart: false } };
+      }
+      return n;
+    });
+    setNodes(updatedNodes);
+    setEditingAutomataNode(null);
   }
 
   return (
     <div className="relative h-full w-full">
       <ReactFlow
         nodes={nodes}
-        edges={edges}
+        edges={styledEdges}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         onPaneClick={() => selectNode(null)}
         onNodeClick={(_, node) => selectNode(node.id)}
         onNodeDoubleClick={(_, node) => {
-          if (node.type === "set") setEditingNode(node);
+          if (node.type === "set") setEditingSetNode(node);
+          if (node.type === "automata-state") setEditingAutomataNode(node);
         }}
         nodeTypes={nodeTypes}
         fitView
@@ -143,20 +205,42 @@ export function WorkspaceCanvas() {
       </ReactFlow>
 
       {/* Floating Dynamic Palette according to active module */}
-      {activeModuleId === "logic" ? <LogicPalette /> : <CanvasPalette />}
+      {activeModuleId === "logic" ? (
+        <LogicPalette />
+      ) : activeModuleId === "automata" ? (
+        <AutomataPalette />
+      ) : (
+        <CanvasPalette />
+      )}
 
-      {editingNode && (
+      {editingSetNode && (
         <SetFormModal
-          open={!!editingNode}
-          title={`Edit set ${(editingNode.data as unknown as SetNodeData).label}`}
+          open={!!editingSetNode}
+          title={`Edit set ${(editingSetNode.data as unknown as SetNodeData).label}`}
           initial={{
-            label: (editingNode.data as unknown as SetNodeData).label,
-            elements: (editingNode.data as unknown as SetNodeData).elements,
+            label: (editingSetNode.data as unknown as SetNodeData).label,
+            elements: (editingSetNode.data as unknown as SetNodeData).elements,
           }}
-          onSubmit={handleEditSubmit}
-          onClose={() => setEditingNode(null)}
+          onSubmit={handleSetEditSubmit}
+          onClose={() => setEditingSetNode(null)}
+        />
+      )}
+
+      {editingAutomataNode && (
+        <AutomataStateModal
+          open={!!editingAutomataNode}
+          title={`Edit state ${(editingAutomataNode.data as unknown as AutomataStateFormValues).label}`}
+          initial={{
+            label: (editingAutomataNode.data as unknown as AutomataStateFormValues).label || "",
+            isStart: Boolean(editingAutomataNode.data?.isStart),
+            isAccept: Boolean(editingAutomataNode.data?.isAccept),
+            mooreOutput: (editingAutomataNode.data?.mooreOutput as string) || "0",
+          }}
+          onSubmit={handleAutomataEditSubmit}
+          onClose={() => setEditingAutomataNode(null)}
         />
       )}
     </div>
   );
 }
+

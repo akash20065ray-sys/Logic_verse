@@ -1,5 +1,6 @@
 import type { GraphEvaluation } from "./graph-evaluator";
 import type { LogicEvaluation } from "./logic-graph-evaluator";
+import type { AutomatonSimulation } from "./automata";
 
 export interface AiResponse {
   message: string;
@@ -83,7 +84,7 @@ export function generateExplanation(evalResult: GraphEvaluation): AiResponse {
 }
 
 export function generateLogicExplanation(evalResult: LogicEvaluation): AiResponse {
-  const { activeExpression, truthTable, currentTruthValue, isTautology, isContradiction, isContingent, errors } =
+  const { activeExpression, truthTable, currentTruthValue, isTautology, isContradiction, errors } =
     evalResult;
 
   if (errors.some((e) => e.type === "error")) {
@@ -117,6 +118,37 @@ export function generateLogicExplanation(evalResult: LogicEvaluation): AiRespons
       isTautology ? "Valid theorem" : isContradiction ? "Unsatisfiable" : "Satisfiable",
       `Canonical DNF: ${truthTable.dnf}`,
       `Canonical CNF: ${truthTable.cnf}`,
+    ],
+  };
+}
+
+export function generateAutomataExplanation(
+  automataSim?: AutomatonSimulation,
+  activeStepIdx: number = 0
+): AiResponse {
+  if (!automataSim || automataSim.steps.length === 0) {
+    return {
+      message:
+        "The Automata canvas has no active simulation. Add states ($q_0, q_1$), connect transition edges with input symbols ('0', '1', 'ε'), and type a test string in the top palette to see live diagram step highlighting!",
+    };
+  }
+
+  const { inputString, isAccepted, steps, explanation } = automataSim;
+  const currentStep = steps[Math.min(activeStepIdx, steps.length - 1)];
+
+  const stepList = steps
+    .map(
+      (s) =>
+        `- **Step ${s.stepIndex}**: \`${s.transitionRule}\` → active state(s) **{ ${s.activeStateIds.join(", ")} }** (remaining string: "${s.remainingString}")`
+    )
+    .join("\n");
+
+  return {
+    message: `### Automata Simulation Step-by-Step Breakdown for "${inputString}"\n\n${explanation}\n\n#### Active Step ${currentStep.stepIndex} Highlight:\n- **Transition Fired**: \`${currentStep.transitionRule}\`\n- **Consumed Symbol**: \`${currentStep.charConsumed !== null ? `'${currentStep.charConsumed}'` : "Start Configuration"}\`\n- **Explanation**: ${currentStep.description}\n\n#### Complete Step-wise Computation Trace:\n${stepList}\n\n*Observe your canvas: the active state node(s) and active transition edge are glowing in real time as you step forward/backward!*`,
+    keyTakeaways: [
+      isAccepted ? "String Accepted by Machine" : "String Rejected by Machine",
+      `Active Step: ${currentStep.stepIndex} of ${steps.length - 1}`,
+      `Current State(s): { ${currentStep.activeStateIds.join(", ")} }`,
     ],
   };
 }
@@ -184,16 +216,6 @@ export function generateExample(): AiResponse {
       title: "Power Set Visualizer",
       desc: "Witness the exponential 2^n growth of subsets of A.",
     },
-    {
-      id: "de-morgan",
-      title: "De Morgan's Laws",
-      desc: "Verify that (A ∪ B)ᶜ = Aᶜ ∩ Bᶜ visually on the canvas.",
-    },
-    {
-      id: "cartesian-product",
-      title: "Cartesian Product",
-      desc: "Generate coordinate pairs A × B and explore relation domains.",
-    },
   ];
 
   const picked = templates[Math.floor(Math.random() * templates.length)];
@@ -220,16 +242,6 @@ export function generateLogicExample(): AiResponse {
       title: "De Morgan's Law",
       desc: "Demonstrates that ¬(P ∧ Q) ≡ ¬P ∨ ¬Q.",
     },
-    {
-      id: "material-implication",
-      title: "Material Implication",
-      desc: "Explores why P → Q ≡ ¬P ∨ Q.",
-    },
-    {
-      id: "excluded-middle",
-      title: "Law of Excluded Middle",
-      desc: "Classic tautology: P ∨ ¬P.",
-    },
   ];
 
   const picked = templates[Math.floor(Math.random() * templates.length)];
@@ -248,10 +260,37 @@ export function answerDiscreteMathQuestion(
   query: string,
   evalResult: GraphEvaluation,
   logicEval?: LogicEvaluation,
-  moduleId?: string
+  moduleId?: string,
+  automataSim?: AutomatonSimulation,
+  activeAutomataStepIndex?: number
 ): AiResponse {
   const q = query.toLowerCase();
+  const isAutomata = moduleId === "automata" || q.includes("dfa") || q.includes("nfa") || q.includes("automat") || q.includes("state") || q.includes("transition") || q.includes("string") || q.includes("minimization") || q.includes("moore") || q.includes("mealy");
   const isLogic = moduleId === "logic" || q.includes("logic") || q.includes("truth table") || q.includes("tautology") || q.includes("modus") || q.includes("induction");
+
+  if (isAutomata) {
+    if (q.includes("explain") || q.includes("step") || q.includes("what is happening") || q.includes("why") || q.includes("current")) {
+      return generateAutomataExplanation(automataSim, activeAutomataStepIndex);
+    }
+    if (q.includes("dfa") && q.includes("nfa")) {
+      return {
+        message:
+          "### DFA vs NFA Comparison\n\n- **DFA (Deterministic Finite Automaton)**: For every state $q \\in Q$ and input symbol $a \\in \\Sigma$, there is **exactly one** deterministic next state transition $\\delta(q, a) = q'$. No spontaneous $\\varepsilon$-transitions allowed.\n- **NFA (Non-deterministic Finite Automaton)**: Can transition to **multiple states** simultaneously $\\delta(q, a) = \\{q_1, q_2\\}$, or take spontaneous $\\varepsilon$-transitions without consuming input symbols.\n- **Equivalence**: Every NFA can be converted to an equivalent DFA via **Subset Construction (Powerset algorithm)**!",
+        suggestedAction: {
+          label: "View NFA → DFA Conversion Tab",
+          actionType: "load-template",
+          templateId: "dfa-ending-01",
+        },
+      };
+    }
+    if (q.includes("minimization") || q.includes("minimize") || q.includes("hopcroft")) {
+      return {
+        message:
+          "### DFA Minimization (Hopcroft Partition Refinement)\n\nDFA minimization finds the unique **minimal state DFA** accepting the exact same regular language:\n\n1. Start with 0-equivalence partition splitting accepting states $F$ from non-accepting states $Q \\setminus F$.\n2. Iteratively refine partitions by splitting states that transition to different partition groups under input symbols.\n3. Merge indistinguishable states into single macro-states.",
+      };
+    }
+    return generateAutomataExplanation(automataSim, activeAutomataStepIndex);
+  }
 
   if (isLogic && logicEval) {
     if (q.includes("explain") || q.includes("what is happening") || q.includes("current")) {
@@ -263,60 +302,10 @@ export function answerDiscreteMathQuestion(
     if (q.includes("example") || q.includes("generate") || q.includes("template")) {
       return generateLogicExample();
     }
-    if (q.includes("tautology")) {
-      return {
-        message:
-          "### What is a Tautology?\n\nA **Tautology** is a propositional formula that is **True under every possible truth assignment** (every row of its truth table is $T$).\n\nExamples:\n- Law of Excluded Middle: $P \\lor \\neg P$\n- Law of Non-Contradiction: $\\neg(P \\land \\neg P)$\n- Modus Ponens: $((P \\to Q) \\land P) \\to Q$\n\nIf even a single row in the truth table is False, the formula is not a tautology.",
-        suggestedAction: {
-          label: "Load Modus Ponens Tautology",
-          actionType: "load-template",
-          templateId: "modus-ponens",
-        },
-      };
-    }
-    if (q.includes("modus ponens") || q.includes("inference")) {
-      return {
-        message:
-          "### Modus Ponens (Law of Detachment)\n\n$$\\frac{P \\to Q, \\quad P}{\\therefore Q}$$\n\nIf statement $P \\to Q$ is true, and premise $P$ is true, then conclusion $Q$ must necessarily be true. The conditional statement $((P \\to Q) \\land P) \\to Q$ is a **Tautology**.",
-        suggestedAction: {
-          label: "Load Modus Ponens",
-          actionType: "load-template",
-          templateId: "modus-ponens",
-        },
-      };
-    }
-    if (q.includes("implication") || q.includes("->") || q.includes("implies")) {
-      return {
-        message:
-          "### Material Implication (P → Q)\n\n$P \\to Q$ asserts: *\"If P is true, then Q must be true.\"*\n\n- When $P = \\text{True}$ and $Q = \\text{False}$, the promise is broken: **False**.\n- When $P = \\text{False}$, the statement is **vacuously True**, regardless of $Q$!\n- Equivalent to: $\\neg P \\lor Q$ (Material Implication equivalence).",
-        suggestedAction: {
-          label: "Load Material Implication",
-          actionType: "load-template",
-          templateId: "material-implication",
-        },
-      };
-    }
-    if (q.includes("induction")) {
-      return {
-        message:
-          "### Principle of Mathematical Induction\n\nTo prove a statement $P(n)$ is true for all natural numbers $n \\ge 1$:\n\n1. **Base Step**: Prove $P(1)$ is true.\n2. **Inductive Hypothesis**: Assume $P(k)$ is true for an arbitrary integer $k \\ge 1$.\n3. **Inductive Step**: Prove that $P(k) \\implies P(k + 1)$.\n\nClick the **Induction tab** in the output dock to step through visual induction proofs!",
-      };
-    }
+    return generateLogicExplanation(logicEval);
   }
 
   // Set Theory or General queries
-  if (q.includes("explain") || q.includes("what is happening") || q.includes("current")) {
-    return generateExplanation(evalResult);
-  }
-
-  if (q.includes("hint") || q.includes("help") || q.includes("clue")) {
-    return generateHint(evalResult);
-  }
-
-  if (q.includes("example") || q.includes("generate") || q.includes("template")) {
-    return generateExample();
-  }
-
   if (q.includes("de morgan") || q.includes("demorgan")) {
     return {
       message:
@@ -352,11 +341,18 @@ export function answerDiscreteMathQuestion(
     };
   }
 
-  return {
-    message: `I understand you're asking about: "${query}".\n\n${
-      isLogic && logicEval
-        ? generateLogicExplanation(logicEval).message
-        : generateExplanation(evalResult).message
-    }\n\nYou can ask about **Truth tables**, **Tautologies**, **Material Implication**, **De Morgan's laws**, or **Mathematical Induction**!`,
-  };
+  if (q.includes("explain") || q.includes("what is happening") || q.includes("current")) {
+    return generateExplanation(evalResult);
+  }
+
+  if (q.includes("hint") || q.includes("help") || q.includes("clue")) {
+    return generateHint(evalResult);
+  }
+
+  if (q.includes("example") || q.includes("generate") || q.includes("template")) {
+    return generateExample();
+  }
+
+  return generateExplanation(evalResult);
 }
+

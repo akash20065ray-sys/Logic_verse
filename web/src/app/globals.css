@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+:root {
+  /* Core surfaces */
+  --lv-bg: #070B14;
+  --lv-panel: #0B111D;
+  --lv-surface: #131D2E;
+  --lv-surface-hover: #182640;
+  --lv-border: #1D2A40;
+  --lv-border-soft: #16202F;
+
+  /* Accents — mapped to product philosophy */
+  --lv-blue: #2563EB;      /* Build */
+  --lv-purple: #8B5CF6;    /* Simulate */
+  --lv-cyan: #22D3EE;      /* Understand */
+  --lv-success: #22C55E;
+  --lv-warning: #F59E0B;
+  --lv-error: #EF4444;
+
+  /* Text */
+  --lv-text: #EEF4FF;
+  --lv-muted: #8491A7;
+  --lv-faint: #4C5A72;
+
+  /* System font stacks — see layout.tsx note on next/font/google */
+  --font-display: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono-ui: "JetBrains Mono", ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
+}
+
+@theme inline {
+  --color-lv-bg: var(--lv-bg);
+  --color-lv-panel: var(--lv-panel);
+  --color-lv-surface: var(--lv-surface);
+  --color-lv-surface-hover: var(--lv-surface-hover);
+  --color-lv-border: var(--lv-border);
+  --color-lv-border-soft: var(--lv-border-soft);
+  --color-lv-blue: var(--lv-blue);
+  --color-lv-purple: var(--lv-purple);
+  --color-lv-cyan: var(--lv-cyan);
+  --color-lv-success: var(--lv-success);
+  --color-lv-warning: var(--lv-warning);
+  --color-lv-error: var(--lv-error);
+  --color-lv-text: var(--lv-text);
+  --color-lv-muted: var(--lv-muted);
+  --color-lv-faint: var(--lv-faint);
+  --font-sans: var(--font-display);
+  --font-mono: var(--font-mono-ui);
+}
+
+* {
+  border-color: var(--lv-border);
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--lv-bg);
+  color: var(--lv-text);
+  font-family: var(--font-display);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Fine grid backdrop used behind the canvas and hero */
+.lv-grid-bg {
+  background-image:
+    linear-gradient(to right, rgba(139, 92, 246, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(139, 92, 246, 0.06) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.lv-glass {
+  background: rgba(11, 17, 29, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.lv-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.lv-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.lv-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--lv-border);
+  border-radius: 8px;
+}
+.lv-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--lv-faint);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* Focus visibility for accessibility */
+:focus-visible {
+  outline: 2px solid var(--lv-cyan);
+  outline-offset: 2px;
+  border-radius: 4px;
+}

@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: logicverse
+    runtime: node
+    rootDir: web
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    plan: free
+    envVars:
+      - key: NODE_VERSION
+        value: 20.18.0
+      - key: GEMINI_API_KEY
+        sync: false

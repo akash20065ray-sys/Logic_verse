@@ -83,10 +83,19 @@ Moreover, conversational chatbots are decoupled from the student's visual worksp
 
 ## III. System Architecture and Theoretical Formalisms
 
-LogicVerse is implemented in TypeScript utilizing Next.js 16 (App Router), React 19, Turbopack, and `@xyflow/react` for GPU-accelerated interactive graph visualization. State management is orchestrated through `zustand` to ensure sub-millisecond reactive dispatch across canvas interactions.
+![Fig. 1: End-to-end LogicVerse System Architecture Layout](images/architecture_diagram.png)
+
+*Fig. 1. End-to-end LogicVerse system architecture layout illustrating the multi-tiered reactive execution model. Layer 1 provides the user interface with interactive node-wire canvas components and dock analytics. Layer 2 executes the sub-millisecond client-side reactive DAG and AST compilers. Layer 3 orchestrates bi-directional canvas context serialization. Layer 4 hosts the LogicAI intelligent tutoring system, featuring intent classification routing to either Tier 1 (100% exact deterministic numerical solver) or Tier 2 (greedy-decoded, canvas-grounded LLM layer), culminating in the Universal Human-Readable Mathematical Sanitizer.*
+
+LogicVerse is implemented in TypeScript utilizing Next.js 16 (App Router), React 19, Turbopack, and `@xyflow/react` for GPU-accelerated interactive graph visualization. State management is orchestrated through `zustand` to ensure sub-millisecond reactive dispatch across canvas interactions (see Fig. 1).
 
 ### A. Unified Multi-Domain Formalisms
-LogicVerse unifies five core theoretical pillars into a single visual vocabulary:
+
+![Fig. 2: Unified Curricular and Mathematical Progression Pipeline](images/pipeline_diagram.png)
+
+*Fig. 2. The unified curricular and mathematical progression pipeline in LogicVerse. Primitives established in Set Theory ground boolean logic valuations, which construct Cartesian product relation matrices and Posets. These directly formalize automata transition relations ($\delta \subseteq Q \times \Sigma \times Q$), culminating in Context-Free CYK parsing and unbounded Turing computability.*
+
+As illustrated in Fig. 1 and Fig. 2, LogicVerse unifies five core theoretical pillars into a continuous visual and formal computing paradigm:
 
 #### 1) Set Theory & Boolean Algebra
 Students manipulate `SetNode` entities defining finite discrete sets $A, B \subset \mathcal{U}$, chaining them through operational nodes:

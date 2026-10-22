@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 140" width="100%" height="auto" style="font-family: 'Times New Roman', Times, serif; background: #ffffff;">
+  <defs>
+    <marker id="pipe-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#0f172a"/>
+    </marker>
+  </defs>
+
+  <!-- Box 1: Set Theory -->
+  <rect x="10" y="10" width="115" height="120" rx="3" fill="#f8fafc" stroke="#0284c7" stroke-width="1.2"/>
+  <rect x="10" y="10" width="115" height="22" rx="3" fill="#e0f2fe"/>
+  <text x="67" y="25" font-size="8.5" font-weight="bold" fill="#0369a1" text-anchor="middle">1. Set Theory</text>
+  <text x="18" y="46" font-size="7.5" fill="#334155">&bull; Finite Sets A, B</text>
+  <text x="18" y="60" font-size="7.5" fill="#334155">&bull; Operations: &cup;, &cap;, &minus;, &oplus;</text>
+  <text x="18" y="74" font-size="7.5" fill="#334155">&bull; Power Set P(A) = 2^|A|</text>
+  <text x="18" y="88" font-size="7.5" fill="#334155">&bull; Cartesian A &times; B</text>
+  <text x="18" y="106" font-size="7" font-style="italic" fill="#64748b">Topological DAG Eval</text>
+  <text x="18" y="118" font-size="7" font-weight="bold" fill="#0284c7">&rarr; Element Cardinality</text>
+
+  <!-- Arrow 1 -> 2 -->
+  <path d="M 125 70 L 143 70" stroke="#0f172a" stroke-width="1.4" marker-end="url(#pipe-arrow)"/>
+
+  <!-- Box 2: Formal Logic -->
+  <rect x="145" y="10" width="115" height="120" rx="3" fill="#f8fafc" stroke="#2563eb" stroke-width="1.2"/>
+  <rect x="145" y="10" width="115" height="22" rx="3" fill="#dbeafe"/>
+  <text x="202" y="25" font-size="8.5" font-weight="bold" fill="#1d4ed8" text-anchor="middle">2. Boolean Logic</text>
+  <text x="153" y="46" font-size="7.5" fill="#334155">&bull; Variables P, Q &isin; {0, 1}</text>
+  <text x="153" y="60" font-size="7.5" fill="#334155">&bull; Gates &and;, &or;, &not;, &rarr;, &harr;</text>
+  <text x="153" y="74" font-size="7.5" fill="#334155">&bull; 2^n Truth Table Rows</text>
+  <text x="153" y="88" font-size="7.5" fill="#334155">&bull; Tautology &amp; DNF/CNF</text>
+  <text x="153" y="106" font-size="7" font-style="italic" fill="#64748b">Semantic AST Compiler</text>
+  <text x="153" y="118" font-size="7" font-weight="bold" fill="#2563eb">&rarr; Modus Ponens Logic</text>
+
+  <!-- Arrow 2 -> 3 -->
+  <path d="M 260 70 L 278 70" stroke="#0f172a" stroke-width="1.4" marker-end="url(#pipe-arrow)"/>
+
+  <!-- Box 3: Relations & Posets -->
+  <rect x="280" y="10" width="115" height="120" rx="3" fill="#f8fafc" stroke="#4f46e5" stroke-width="1.2"/>
+  <rect x="280" y="10" width="115" height="22" rx="3" fill="#e0e7ff"/>
+  <text x="337" y="25" font-size="8.5" font-weight="bold" fill="#3730a3" text-anchor="middle">3. Relations &amp; Posets</text>
+  <text x="288" y="46" font-size="7.5" fill="#334155">&bull; Relation R &sube; A &times; A</text>
+  <text x="288" y="60" font-size="7.5" fill="#334155">&bull; 0/1 Adjacency Matrix</text>
+  <text x="288" y="74" font-size="7.5" fill="#334155">&bull; Hasse Reductions</text>
+  <text x="288" y="88" font-size="7.5" fill="#334155">&bull; Warshall Closures</text>
+  <text x="288" y="106" font-size="7" font-style="italic" fill="#64748b">Bell Numbers B(n)</text>
+  <text x="288" y="118" font-size="7" font-weight="bold" fill="#4f46e5">&rarr; Injective Permutations</text>
+
+  <!-- Arrow 3 -> 4 -->
+  <path d="M 395 70 L 413 70" stroke="#0f172a" stroke-width="1.4" marker-end="url(#pipe-arrow)"/>
+
+  <!-- Box 4: Automata Theory -->
+  <rect x="415" y="10" width="115" height="120" rx="3" fill="#f8fafc" stroke="#7c3aed" stroke-width="1.2"/>
+  <rect x="415" y="10" width="115" height="22" rx="3" fill="#ede9fe"/>
+  <text x="472" y="25" font-size="8.5" font-weight="bold" fill="#5b21b6" text-anchor="middle">4. Automata Theory</text>
+  <text x="423" y="46" font-size="7.5" fill="#334155">&bull; 5-Tuple (Q, &Sigma;, &delta;, q0, F)</text>
+  <text x="423" y="60" font-size="7.5" fill="#334155">&bull; &delta; as Binary Relation</text>
+  <text x="423" y="74" font-size="7.5" fill="#334155">&bull; NFA &rarr; DFA Powerset 2^Q</text>
+  <text x="423" y="88" font-size="7.5" fill="#334155">&bull; Hopcroft Minimization</text>
+  <text x="423" y="106" font-size="7" font-style="italic" fill="#64748b">String Path Simulator</text>
+  <text x="423" y="118" font-size="7" font-weight="bold" fill="#7c3aed">&rarr; Regular Languages</text>
+
+  <!-- Arrow 4 -> 5 -->
+  <path d="M 530 70 L 548 70" stroke="#0f172a" stroke-width="1.4" marker-end="url(#pipe-arrow)"/>
+
+  <!-- Box 5: Computability & Grammars -->
+  <rect x="550" y="10" width="120" height="120" rx="3" fill="#f8fafc" stroke="#9333ea" stroke-width="1.2"/>
+  <rect x="550" y="10" width="120" height="22" rx="3" fill="#fae8ff"/>
+  <text x="610" y="25" font-size="8.5" font-weight="bold" fill="#7e22ce" text-anchor="middle">5. Computability</text>
+  <text x="558" y="46" font-size="7.5" fill="#334155">&bull; 4-Step CNF Normalization</text>
+  <text x="558" y="60" font-size="7.5" fill="#334155">&bull; CYK Parse Table O(n&sup3;)</text>
+  <text x="558" y="74" font-size="7.5" fill="#334155">&bull; PDA LIFO Stack Memory</text>
+  <text x="558" y="88" font-size="7.5" fill="#334155">&bull; TM 2-Way Tape &amp; Halting</text>
+  <text x="558" y="106" font-size="7" font-style="italic" fill="#64748b">Chomsky Hierarchy</text>
+  <text x="558" y="118" font-size="7" font-weight="bold" fill="#9333ea">&rarr; Undecidable Problems</text>
+</svg>

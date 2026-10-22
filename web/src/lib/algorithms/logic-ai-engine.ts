@@ -256,6 +256,193 @@ export function generateLogicExample(): AiResponse {
   };
 }
 
+// -------------------------------------------------------------------------
+// EXACT NUMERICAL & COMBINATORIAL SOLVER (100% Deterministic Arithmetic)
+// -------------------------------------------------------------------------
+function extractNumbers(str: string): number[] {
+  const matches = str.match(/\d+/g);
+  return matches ? matches.map(Number) : [];
+}
+
+function factorial(n: number): number {
+  if (n <= 1) return 1;
+  let res = 1;
+  for (let i = 2; i <= n; i++) res *= i;
+  return res;
+}
+
+function combinations(n: number, k: number): number {
+  if (k < 0 || k > n) return 0;
+  if (k === 0 || k === n) return 1;
+  let c = 1;
+  for (let i = 1; i <= k; i++) {
+    c = (c * (n - i + 1)) / i;
+  }
+  return Math.round(c);
+}
+
+function bellNumber(n: number): number {
+  const bell: number[][] = Array.from({ length: n + 1 }, () => new Array(n + 1).fill(0));
+  bell[0][0] = 1;
+  for (let i = 1; i <= n; i++) {
+    bell[i][0] = bell[i - 1][i - 1];
+    for (let j = 1; j <= i; j++) {
+      bell[i][j] = bell[i][j - 1] + bell[i - 1][j - 1];
+    }
+  }
+  return bell[n][0];
+}
+
+export function solveDiscreteMathNumerical(query: string): AiResponse | null {
+  const q = query.toLowerCase();
+  const nums = extractNumbers(q);
+
+  // 1. Equivalence Relations on set of size n
+  if (q.includes("equivalence relation") && nums.length >= 1) {
+    const n = nums[0];
+    if (n > 15) return null;
+    const ans = bellNumber(n);
+    return {
+      message: `### Exact Solution: Number of Equivalence Relations\n\nFor a set $A$ with cardinality $|A| = ${n}$:\n\n- **Mathematical Law**: The number of distinct equivalence relations on a set of size $n$ equals the **Bell Number** $B_n$, which counts the number of partitions of a set of size $n$.\n- **Formula**: $B_n = \\sum_{k=0}^{n-1} \\binom{n-1}{k} B_k$, with $B_0 = 1$.\n- **Calculation**: For $n = ${n}$, the ${n}^{\\text{th}}$ Bell Number is:\n  $$B_{${n}} = ${ans}$$\n\n**Final Answer:** There are exactly **${ans}** equivalence relations on a set of size $n = ${n}$.`,
+      keyTakeaways: [`B_${n} = ${ans}`, "Equivalence Relations = Bell Numbers", "Partitions of a Set"],
+    };
+  }
+
+  // 2. Reflexive Relations on set of size n
+  if ((q.includes("reflexive relation") || q.includes("reflexive")) && !q.includes("symmetric") && nums.length >= 1) {
+    const n = nums[0];
+    if (n > 20) return null;
+    const power = n * (n - 1);
+    const ans = Math.pow(2, power);
+    return {
+      message: `### Exact Solution: Number of Reflexive Relations\n\nFor a set $A$ with $|A| = ${n}$ elements:\n\n- **Mathematical Derivation**:\n  - A relation $R$ is a subset of $A \\times A$, which has a total of $n^2 = ${n}^2 = ${n * n}$ ordered pairs.\n  - For $R$ to be **reflexive**, all $n$ diagonal pairs $(a, a)$ MUST be included in $R$.\n  - This leaves $n^2 - n = n(n-1) = ${n}(${n - 1}) = ${power}$ non-diagonal pairs $(a, b)$ with $a \\ne b$.\n  - Each of these ${power}$ pairs can be either included or excluded (2 choices each).\n- **Formula**: $$2^{n(n-1)} = 2^{${power}} = ${ans >= 1e15 ? ans.toExponential(4) : ans}$$\n\n**Final Answer:** Exactly **${ans >= 1e15 ? ans.toExponential(4) : ans.toLocaleString()}** reflexive relations can be formed on a set of size ${n}.`,
+      keyTakeaways: [`2^{n(n-1)} = 2^{${power}} = ${ans}`, "All diagonal pairs required", "Binary choices on off-diagonals"],
+    };
+  }
+
+  // 3. Symmetric Relations on set of size n
+  if ((q.includes("symmetric relation") || q.includes("symmetric")) && !q.includes("antisymmetric") && !q.includes("reflexive") && nums.length >= 1) {
+    const n = nums[0];
+    if (n > 20) return null;
+    const power = (n * (n + 1)) / 2;
+    const ans = Math.pow(2, power);
+    return {
+      message: `### Exact Solution: Number of Symmetric Relations\n\nFor a set $A$ with $|A| = ${n}$ elements:\n\n- **Mathematical Derivation**:\n  - In a relation matrix of size $n \\times n$, there are $n$ diagonal elements and $\\frac{n(n-1)}{2}$ pairs of off-diagonal elements.\n  - For $R$ to be **symmetric**, if $(a, b) \\in R$, then $(b, a) \\in R$. Thus, each off-diagonal pair $(a, b)$ and $(b, a)$ must be decided together (2 choices per pair).\n  - Each of the $n$ diagonal elements $(a, a)$ can also be independently included or excluded (2 choices).\n  - Total independent choices: $n + \\frac{n(n-1)}{2} = \\frac{n(n+1)}{2} = \\frac{${n}(${n + 1})}{2} = ${power}$.\n- **Formula**: $$2^{\\frac{n(n+1)}{2}} = 2^{${power}} = ${ans >= 1e15 ? ans.toExponential(4) : ans}$$\n\n**Final Answer:** Exactly **${ans >= 1e15 ? ans.toExponential(4) : ans.toLocaleString()}** symmetric relations can be formed on a set of size ${n}.`,
+      keyTakeaways: [`2^{n(n+1)/2} = 2^{${power}} = ${ans}`, "Pairs decided simultaneously", "Independent diagonals"],
+    };
+  }
+
+  // 4. Reflexive and Symmetric Relations
+  if (q.includes("reflexive") && q.includes("symmetric") && !q.includes("antisymmetric") && nums.length >= 1) {
+    const n = nums[0];
+    if (n > 20) return null;
+    const power = (n * (n - 1)) / 2;
+    const ans = Math.pow(2, power);
+    return {
+      message: `### Exact Solution: Number of Reflexive AND Symmetric Relations\n\nFor a set $A$ with $|A| = ${n}$ elements:\n\n- **Mathematical Derivation**:\n  - **Reflexive requirement**: All $n$ diagonal pairs $(a, a)$ MUST be included (1 choice).\n  - **Symmetric requirement**: For the remaining off-diagonal elements, pairs $(a, b)$ and $(b, a)$ must be decided together.\n  - The number of off-diagonal pairs is $\\frac{n(n-1)}{2} = \\frac{${n}(${n - 1})}{2} = ${power}$.\n- **Formula**: $$2^{\\frac{n(n-1)}{2}} = 2^{${power}} = ${ans}$$\n\n**Final Answer:** Exactly **${ans.toLocaleString()}** relations on a set of size ${n} are both reflexive and symmetric.`,
+      keyTakeaways: [`2^{n(n-1)/2} = 2^{${power}} = ${ans}`, "Diagonal fixed to 1", "Off-diagonal pairs symmetric"],
+    };
+  }
+
+  // 5. Antisymmetric Relations
+  if ((q.includes("antisymmetric relation") || q.includes("antisymmetric")) && nums.length >= 1) {
+    const n = nums[0];
+    if (n > 15) return null;
+    const offDiagPairs = (n * (n - 1)) / 2;
+    const ans = Math.pow(2, n) * Math.pow(3, offDiagPairs);
+    return {
+      message: `### Exact Solution: Number of Antisymmetric Relations\n\nFor a set $A$ with $|A| = ${n}$ elements:\n\n- **Mathematical Derivation**:\n  - For the $n$ diagonal elements $(a, a)$, each can be either in $R$ or not in $R$ (2 choices each $\\implies 2^n = 2^{${n}} = ${Math.pow(2, n)}$).\n  - For each of the $\\frac{n(n-1)}{2} = ${offDiagPairs}$ pairs of distinct elements $(a, b)$ with $a \\ne b$, antisymmetric forbids BOTH $(a, b)$ and $(b, a)$ from being in $R$. Thus there are **3 valid choices** for each pair: (1) only $(a, b) \\in R$, (2) only $(b, a) \\in R$, or (3) neither $\\in R$.\n- **Formula**: $$2^n \\times 3^{\\frac{n(n-1)}{2}} = 2^{${n}} \\times 3^{${offDiagPairs}} = ${ans >= 1e15 ? ans.toExponential(4) : ans}$$\n\n**Final Answer:** Exactly **${ans >= 1e15 ? ans.toExponential(4) : ans.toLocaleString()}** antisymmetric relations exist on a set of size ${n}.`,
+      keyTakeaways: [`2^n * 3^{n(n-1)/2} = ${ans}`, "3 choices for off-diagonal pairs", "2 choices for diagonals"],
+    };
+  }
+
+  // 6. Total Relations on set of size n
+  if (
+    q.includes("relations") &&
+    (q.includes("total") || q.includes("how many relations") || q.includes("number of relations")) &&
+    nums.length >= 1
+  ) {
+    const n = nums[0];
+    if (n > 10) return null;
+    const power = n * n;
+    const ans = Math.pow(2, power);
+    return {
+      message: `### Exact Solution: Total Number of Binary Relations\n\nFor a set $A$ with cardinality $|A| = ${n}$:\n\n- **Mathematical Derivation**:\n  - A binary relation on $A$ is any subset of the Cartesian product $A \\times A$.\n  - The cardinality of $A \\times A$ is $|A| \\times |A| = ${n} \\times ${n} = ${power}$.\n  - The number of subsets of a set of size ${power}$ is $2^{|A \\times A|}$.\n- **Formula**: $$2^{n^2} = 2^{${power}} = ${ans >= 1e15 ? ans.toExponential(4) : ans}$$\n\n**Final Answer:** Exactly **${ans >= 1e15 ? ans.toExponential(4) : ans.toLocaleString()}** relations can be formed on a set of size ${n}.`,
+      keyTakeaways: [`2^{n^2} = 2^{${power}} = ${ans}`, "Power set of A x A", "Exponential growth"],
+    };
+  }
+
+  // 7. Power Set size
+  if (
+    q.includes("power set") &&
+    (q.includes("size") || q.includes("cardinality") || q.includes("elements") || q.includes("how many")) &&
+    nums.length >= 1
+  ) {
+    const n = nums[0];
+    if (n > 30) return null;
+    const ans = Math.pow(2, n);
+    return {
+      message: `### Exact Solution: Power Set Cardinality\n\nFor a set $A$ with $|A| = ${n}$ elements:\n\n- **Mathematical Principle**: The power set $\\mathcal{P}(A)$ is the set of all subsets of $A$, including the empty set $\\emptyset$ and $A$ itself.\n- **Formula**: $$|\\mathcal{P}(A)| = 2^{|A|} = 2^{${n}} = ${ans}$$\n\n**Final Answer:** The power set contains exactly **${ans.toLocaleString()}** subsets.`,
+      keyTakeaways: [`|P(A)| = 2^n = 2^{${n}} = ${ans}`, "Includes empty set ∅", "Includes full set A"],
+    };
+  }
+
+  // 8. Functions from A to B
+  if (q.includes("function") && (q.includes("how many") || q.includes("number of")) && nums.length >= 2) {
+    const m = nums[0]; // size of domain
+    const n = nums[1]; // size of codomain
+
+    if (q.includes("injective") || q.includes("one-to-one")) {
+      const ans = m <= n ? factorial(n) / (factorial(n - m) || 1) : 0;
+      return {
+        message: `### Exact Solution: Number of Injective (One-to-One) Functions\n\nFor domain $|A| = ${m}$ and codomain $|B| = ${n}$:\n\n- **Pigeonhole Principle**: If $|A| > |B|$, at least two elements in $A$ must map to the same element in $B$, so NO injective function is possible.\n- **Permutation Formula**: For $|A| \\le |B|$:\n  $$P(|B|, |A|) = \\frac{|B|!}{(|B| - |A|)!} = \\frac{${n}!}{(${n} - ${m})!} = ${ans}$$\n\n**Final Answer:** There are exactly **${ans}** injective functions from a set of size ${m}$ to a set of size ${n}.`,
+        keyTakeaways: [`P(${n}, ${m}) = ${ans}`, "One-to-one mapping", m > n ? "Pigeonhole: 0 functions" : "Distinct elements map to distinct targets"],
+      };
+    }
+
+    if (q.includes("bijective") || q.includes("one-to-one and onto")) {
+      const ans = m === n ? factorial(n) : 0;
+      return {
+        message: `### Exact Solution: Number of Bijective Functions\n\nFor domain $|A| = ${m}$ and codomain $|B| = ${n}$:\n\n- **Bijective Requirement**: A function is bijective if and only if it is both injective and surjective, which strictly requires $|A| = |B|$.\n- **Formula**: If $|A| = |B| = n$, the number of bijections is $n! = ${n}! = ${ans}$. If $|A| \\ne |B|$, the number is **0**.\n\n**Final Answer:** There are exactly **${ans}** bijective functions between these sets.`,
+        keyTakeaways: [`n! = ${ans}`, "Requires |A| == |B|", "Invertible permutations"],
+      };
+    }
+
+    // Total Functions: |B|^|A| = n^m
+    const ans = Math.pow(n, m);
+    return {
+      message: `### Exact Solution: Total Number of Functions\n\nFor domain $|A| = ${m}$ and codomain $|B| = ${n}$:\n\n- **Rule of Product**: Each of the ${m}$ elements in the domain $A$ can independently be mapped to any of the ${n}$ elements in the codomain $B$.\n- **Formula**: $$|B|^{|A|} = ${n}^{${m}} = ${ans}$$\n\n**Final Answer:** There are exactly **${ans.toLocaleString()}** possible functions from $A$ to $B$.`,
+      keyTakeaways: [`|B|^{|A|} = ${n}^{${m}} = ${ans}`, "Each domain element chooses independent target", "Rule of product"],
+    };
+  }
+
+  // 9. Truth table rows for n variables
+  if (q.includes("truth table") && (q.includes("rows") || q.includes("how many")) && nums.length >= 1) {
+    const n = nums[0];
+    if (n > 20) return null;
+    const ans = Math.pow(2, n);
+    return {
+      message: `### Exact Solution: Number of Truth Table Rows\n\nFor a propositional logic formula with $n = ${n}$ distinct variables:\n\n- **Binary Values**: Each boolean variable can be either True (1) or False (0) — exactly 2 possible truth assignments.\n- **Formula**: $$2^n = 2^{${n}} = ${ans}$$\n\n**Final Answer:** The complete truth table requires exactly **${ans}** rows.`,
+      keyTakeaways: [`2^n = 2^{${n}} = ${ans} rows`, "Binary truth assignments", "Complete enumeration"],
+    };
+  }
+
+  // 10. Subsets of size k (Combinations)
+  if ((q.includes("subsets of size") || q.includes("combination")) && nums.length >= 2) {
+    const k = nums[0];
+    const n = nums[1];
+    const actualN = Math.max(k, n);
+    const actualK = Math.min(k, n);
+    const ans = combinations(actualN, actualK);
+    return {
+      message: `### Exact Solution: Combinations C(n, k)\n\nChoosing $k = ${actualK}$ elements from a set of $n = ${actualN}$ elements without regard to order:\n\n- **Formula**: $$\\binom{n}{k} = \\frac{n!}{k!(n-k)!} = \\frac{${actualN}!}{${actualK}! \\times ${actualN - actualK}!} = ${ans}$$\n\n**Final Answer:** There are exactly **${ans}** subsets of size ${actualK} from a set of size ${actualN}.`,
+      keyTakeaways: [`C(${actualN}, ${actualK}) = ${ans}`, "Order does not matter", "Binomial coefficient"],
+    };
+  }
+
+  return null;
+}
+
 export function answerDiscreteMathQuestion(
   query: string,
   evalResult: GraphEvaluation,
@@ -265,6 +452,14 @@ export function answerDiscreteMathQuestion(
   activeAutomataStepIndex?: number
 ): AiResponse {
   const q = query.toLowerCase();
+
+  // -------------------------------------------------------------------------
+  // 0. CHECK DETERMINISTIC NUMERICAL & COMBINATORIAL SOLVER FIRST (100% Exact)
+  // -------------------------------------------------------------------------
+  const numericalResult = solveDiscreteMathNumerical(query);
+  if (numericalResult) {
+    return numericalResult;
+  }
 
   // -------------------------------------------------------------------------
   // 0. CONVERSATIONAL & HELP QUERIES

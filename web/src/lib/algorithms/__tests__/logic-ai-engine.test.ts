@@ -46,4 +46,28 @@ describe("logic-ai-engine", () => {
     const answer = answerDiscreteMathQuestion("Tell me about De Morgan's laws", evalResult);
     expect(answer.message).toContain("De Morgan");
   });
+
+  it("answerDiscreteMathQuestion calculates exact reflexive relations for n=3", () => {
+    const answer = answerDiscreteMathQuestion("how many reflexive relations on a set of size 3?", evalResult);
+    expect(answer.message).toContain("64");
+    expect(answer.message).toContain("2^{n(n-1)}");
+  });
+
+  it("answerDiscreteMathQuestion calculates exact equivalence relations for n=3 (Bell number 5)", () => {
+    const answer = answerDiscreteMathQuestion("how many equivalence relations on a set of size 3?", evalResult);
+    expect(answer.message).toContain("5");
+    expect(answer.message).toContain("Bell Number");
+  });
+
+  it("answerDiscreteMathQuestion calculates exact injective functions from 3 to 4", () => {
+    const answer = answerDiscreteMathQuestion("how many injective functions from a set of size 3 to 4?", evalResult);
+    expect(answer.message).toContain("24");
+    expect(answer.keyTakeaways).toContain("P(4, 3) = 24");
+  });
+
+  it("answerDiscreteMathQuestion calculates exact power set size for n=5", () => {
+    const answer = answerDiscreteMathQuestion("what is the power set size of a set with 5 elements?", evalResult);
+    expect(answer.message).toContain("32");
+    expect(answer.message).toContain("2^{5} = 32");
+  });
 });

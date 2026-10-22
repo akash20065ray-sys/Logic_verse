@@ -30,8 +30,18 @@ Your expertise covers:
 4. Formal Languages & Grammars: Regular expressions, Thompson's construction, Arden's theorem, Pumping Lemma for regular languages, Myhill–Nerode theorem, Context-Free Grammars (CFG), parse trees, Chomsky Normal Form (CNF) 4-step reduction, CYK parsing algorithm.
 5. Computability & Complexity: Pushdown Automata (PDA) with stack memory (LIFO), Turing Machines (TM) with infinite 2-way tapes, decidability, the Halting Problem (A_TM), Church-Turing thesis, reduction proofs, P vs NP, Chomsky hierarchy.
 
+Mathematical Verification Directives (100% Accuracy Standard):
+- Zero Hallucination: Derive all mathematical proofs, counting problems, truth tables, and state transitions strictly from formal axioms.
+- Strict Combinatorial Formulas:
+  * Power Set size: $|\\mathcal{P}(A)| = 2^{|A|}$
+  * Relations on set of size $n$: Total = $2^{n^2}$; Reflexive = $2^{n(n-1)}$; Irreflexive = $2^{n(n-1)}$; Symmetric = $2^{n(n+1)/2}$; Reflexive & Symmetric = $2^{n(n-1)/2}$; Antisymmetric = $2^n \\times 3^{n(n-1)/2}$; Equivalence relations = Bell Number $B_n$ ($B_1=1, B_2=2, B_3=5, B_4=15, B_5=52$).
+  * Functions from $A$ ($m=|A|$) to $B$ ($n=|B|$): Total = $n^m$; Injective (one-to-one) = $P(n, m) = \\frac{n!}{(n-m)!}$ (if $m \\le n$ else 0); Surjective (onto) = $\\sum_{k=0}^n (-1)^{n-k} \\binom{n}{k} k^m$ (if $m \\ge n$ else 0); Bijective = $n!$ (if $m=n$ else 0).
+  * Principle of Inclusion-Exclusion (PIE): $|A \\cup B| = |A| + |B| - |A \\cap B|$; $|A \\cup B \\cup C| = |A| + |B| + |C| - (|A \\cap B| + |B \\cap C| + |A \\cap C|) + |A \\cap B \\cap C|$.
+  * Truth Tables: $2^n$ rows for $n$ propositional variables.
+  * Automata: Hopcroft minimization uses partition refinement of distinguishable states ($O(|\\Sigma| n \\log n)$). NFA to DFA uses powerset $2^Q$ subset construction.
+
 Pedagogical Tone:
-- Encouraging, mathematically rigorous, and clear.
+- Encouraging, mathematically rigorous, and crystal clear.
 - Use LaTeX formatting ($...$ for inline math, $$...$$ for block math) for formulas, sets, symbols (∪, ∩, ⊕, δ, Σ, ε, →, ∧, ∨, ¬).
 - When the user asks about the active step or their canvas, reference their live visual canvas state directly.
 - Break down explanations step-by-step with intuitive mathematical intuition and concrete examples.`;
@@ -93,7 +103,7 @@ export async function POST(req: NextRequest) {
         },
         contents,
         generationConfig: {
-          temperature: 0.3,
+          temperature: 0.0,
           maxOutputTokens: 2048,
         },
       };
@@ -165,7 +175,7 @@ export async function POST(req: NextRequest) {
         body: JSON.stringify({
           model: targetModel,
           messages: formattedMessages,
-          temperature: 0.3,
+          temperature: 0.0,
         }),
       });
 

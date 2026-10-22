@@ -1,8 +1,10 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Calculator, Sparkles, BookOpen, CheckCircle2, RotateCcw, X } from "lucide-react";
+import { Calculator, Sparkles, BookOpen, CheckCircle2, RotateCcw, X, Layers } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useWorkspaceStore } from "@/store/workspace-store";
+import type { SetNodeData } from "../canvas/nodes/set-node";
 
 interface ProblemPreset {
   name: string;
@@ -23,22 +25,22 @@ interface ProblemPreset {
 
 const PRESETS: ProblemPreset[] = [
   {
-    name: "Sports Survey (Cricket & Football)",
+    name: "Standard 2-Set Model (A & B Overlap)",
     type: "2-set",
-    labelA: "Cricket",
-    labelB: "Football",
+    labelA: "Set A",
+    labelB: "Set B",
     valA: 60,
     valB: 40,
     valAB: 25,
     universe: 100,
-    story: "In a group of 100 students: 60 like Cricket, 40 like Football, and 25 like both games.",
+    story: "Universe |𝒰| = 100 with subsets A and B, where |A| = 60, |B| = 40, and overlap |A ∩ B| = 25.",
   },
   {
-    name: "Tech Skills (Python, Web, AI)",
+    name: "3-Set Generalized PIE Model (A, B, C)",
     type: "3-set",
-    labelA: "Python",
-    labelB: "Web Dev",
-    labelC: "AI/ML",
+    labelA: "Set A",
+    labelB: "Set B",
+    labelC: "Set C",
     valA: 50,
     valB: 45,
     valC: 40,
@@ -47,7 +49,29 @@ const PRESETS: ProblemPreset[] = [
     valAC: 15,
     valABC: 10,
     universe: 100,
-    story: "Out of 100 engineers: 50 know Python, 45 Web Dev, 40 AI/ML; overlaps are measured across all disciplines.",
+    story: "Universe |𝒰| = 100 with three finite subsets A, B, and C having pairwise and triple intersections.",
+  },
+  {
+    name: "Mutually Disjoint Sets (A ∩ B = ∅)",
+    type: "2-set",
+    labelA: "Set A",
+    labelB: "Set B",
+    valA: 40,
+    valB: 35,
+    valAB: 0,
+    universe: 100,
+    story: "Mutually disjoint subsets where |A ∩ B| = 0, so |A ∪ B| = |A| + |B| without subtractive reduction.",
+  },
+  {
+    name: "Subset Inclusion Model (A ⊆ B)",
+    type: "2-set",
+    labelA: "Set A",
+    labelB: "Set B",
+    valA: 30,
+    valB: 70,
+    valAB: 30,
+    universe: 100,
+    story: "Subset containment where A ⊆ B, meaning |A ∩ B| = |A| = 30 and |A ∪ B| = |B| = 70.",
   },
 ];
 
@@ -56,27 +80,35 @@ interface PieSolverViewProps {
 }
 
 export function PieSolverView({ onClose }: PieSolverViewProps = {}) {
+  const nodes = useWorkspaceStore((s) => s.nodes);
+
   const [activePresetIdx, setActivePresetIdx] = useState<number>(0);
   const [numSets, setNumSets] = useState<2 | 3>(2);
 
   // 2-Set state
-  const [labelA, setLabelA] = useState("Cricket");
-  const [labelB, setLabelB] = useState("Football");
+  const [labelA, setLabelA] = useState("Set A");
+  const [labelB, setLabelB] = useState("Set B");
   const [valA, setValA] = useState(60);
   const [valB, setValB] = useState(40);
   const [valAB, setValAB] = useState(25);
   const [valU, setValU] = useState(100);
 
   // 3-Set additions
-  const [labelC, setLabelC] = useState("AI/ML");
+  const [labelC, setLabelC] = useState("Set C");
   const [valC, setValC] = useState(40);
   const [valBC, setValBC] = useState(18);
   const [valAC, setValAC] = useState(15);
   const [valABC, setValABC] = useState(10);
 
+  // Detect Set nodes on workspace canvas
+  const canvasSetNodes = useMemo(() => {
+    return nodes.filter((n) => n.type === "set" && n.data?.elements && Array.isArray(n.data.elements));
+  }, [nodes]);
+
   function loadPreset(idx: number) {
     setActivePresetIdx(idx);
     const p = PRESETS[idx];
+    if (!p) return;
     if (p.type === "2-set") {
       setNumSets(2);
       setLabelA(p.labelA);
@@ -89,7 +121,7 @@ export function PieSolverView({ onClose }: PieSolverViewProps = {}) {
       setNumSets(3);
       setLabelA(p.labelA);
       setLabelB(p.labelB);
-      setLabelC(p.labelC || "C");
+      setLabelC(p.labelC || "Set C");
       setValA(p.valA);
       setValB(p.valB);
       setValC(p.valC || 40);
@@ -98,6 +130,48 @@ export function PieSolverView({ onClose }: PieSolverViewProps = {}) {
       setValAC(p.valAC || 15);
       setValABC(p.valABC || 10);
       setValU(p.universe);
+    }
+  }
+
+  function handleImportFromCanvas() {
+    if (canvasSetNodes.length < 2) return;
+    const sA = canvasSetNodes[0].data as unknown as SetNodeData;
+    const sB = canvasSetNodes[1].data as unknown as SetNodeData;
+    const elemsA = sA.elements.map(String);
+    const elemsB = sB.elements.map(String);
+    const commonAB = elemsA.filter((x) => elemsB.includes(x));
+
+    if (canvasSetNodes.length >= 3) {
+      setNumSets(3);
+      const sC = canvasSetNodes[2].data as unknown as SetNodeData;
+      const elemsC = sC.elements.map(String);
+      const commonBC = elemsB.filter((x) => elemsC.includes(x));
+      const commonAC = elemsA.filter((x) => elemsC.includes(x));
+      const commonABC = commonAB.filter((x) => elemsC.includes(x));
+
+      setLabelA(sA.label || "Set A");
+      setLabelB(sB.label || "Set B");
+      setLabelC(sC.label || "Set C");
+      setValA(elemsA.length);
+      setValB(elemsB.length);
+      setValC(elemsC.length);
+      setValAB(commonAB.length);
+      setValBC(commonBC.length);
+      setValAC(commonAC.length);
+      setValABC(commonABC.length);
+
+      const allUnique = Array.from(new Set([...elemsA, ...elemsB, ...elemsC]));
+      setValU(Math.max(100, allUnique.length));
+    } else {
+      setNumSets(2);
+      setLabelA(sA.label || "Set A");
+      setLabelB(sB.label || "Set B");
+      setValA(elemsA.length);
+      setValB(elemsB.length);
+      setValAB(commonAB.length);
+
+      const allUnique = Array.from(new Set([...elemsA, ...elemsB]));
+      setValU(Math.max(100, allUnique.length));
     }
   }
 
@@ -136,34 +210,45 @@ export function PieSolverView({ onClose }: PieSolverViewProps = {}) {
           </h3>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
+          {canvasSetNodes.length >= 2 && (
+            <button
+              type="button"
+              onClick={handleImportFromCanvas}
+              className="rounded-lg border border-lv-cyan/40 bg-lv-cyan/10 px-2.5 py-1 text-xs font-mono text-lv-cyan hover:bg-lv-cyan/20 transition-colors"
+              title="Import set cardinalities directly from active canvas nodes"
+            >
+              ← Sync from Canvas Sets
+            </button>
+          )}
+
           <div className="flex rounded-lg border border-lv-border bg-lv-surface/60 p-0.5 text-xs font-mono">
             <button
               type="button"
               onClick={() => setNumSets(2)}
               className={cn(
-                "rounded-md px-2.5 py-1 transition-colors",
-                numSets === 2 ? "bg-lv-cyan/20 font-bold text-lv-cyan" : "text-lv-faint hover:text-lv-text"
+                "rounded px-2.5 py-1 transition-all",
+                numSets === 2 ? "bg-lv-cyan/20 text-lv-cyan font-bold" : "text-lv-muted hover:text-lv-text"
               )}
             >
-              2 Sets
+              2-Set PIE
             </button>
             <button
               type="button"
               onClick={() => setNumSets(3)}
               className={cn(
-                "rounded-md px-2.5 py-1 transition-colors",
-                numSets === 3 ? "bg-lv-cyan/20 font-bold text-lv-cyan" : "text-lv-faint hover:text-lv-text"
+                "rounded px-2.5 py-1 transition-all",
+                numSets === 3 ? "bg-lv-purple/20 text-lv-purple font-bold" : "text-lv-muted hover:text-lv-text"
               )}
             >
-              3 Sets
+              3-Set PIE
             </button>
           </div>
 
           <select
             value={activePresetIdx}
             onChange={(e) => loadPreset(Number(e.target.value))}
-            className="rounded-lg border border-lv-border bg-lv-surface px-2.5 py-1 text-xs text-lv-muted font-mono"
+            className="rounded-lg border border-lv-border bg-lv-surface px-2.5 py-1 text-xs text-lv-muted font-mono focus:border-lv-cyan focus:outline-hidden"
           >
             {PRESETS.map((p, idx) => (
               <option key={idx} value={idx}>
@@ -172,229 +257,285 @@ export function PieSolverView({ onClose }: PieSolverViewProps = {}) {
             ))}
           </select>
 
-          {onClose && (
-            <button
-              type="button"
-              onClick={onClose}
-              className="flex items-center gap-1 rounded-lg border border-lv-border bg-lv-surface px-2.5 py-1 text-xs text-lv-faint hover:text-lv-text hover:border-lv-border transition-colors ml-1 font-mono"
-              title="Close and cut PIE Solver tab"
-            >
-              <X className="h-3.5 w-3.5 text-lv-faint" />
-              <span>Close</span>
-            </button>
-          )}
+          <button
+            type="button"
+            onClick={() => loadPreset(activePresetIdx)}
+            className="flex items-center gap-1 rounded-lg border border-lv-border bg-lv-surface px-2 py-1 text-xs text-lv-muted hover:text-lv-text font-mono transition-colors"
+            title="Reset preset"
+          >
+            <RotateCcw className="h-3 w-3" />
+          </button>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
-        {/* Left Inputs Column */}
+        {/* Left Column: Interactive Input Values */}
         <div className="lg:col-span-5 space-y-4">
-          <div className="rounded-2xl border border-lv-border bg-lv-panel/70 p-4 shadow-xl space-y-3">
-            <div className="flex items-center justify-between text-xs font-mono font-bold text-lv-faint uppercase">
-              <span>Given Cardinalities</span>
-              <span>Universe |𝒰| = {valU}</span>
+          <div className="rounded-2xl border border-lv-border bg-lv-panel/70 p-4 shadow-xl space-y-3.5">
+            <div className="text-xs font-mono font-bold uppercase text-lv-text tracking-wider flex items-center justify-between">
+              <span>Set Cardinalities Input</span>
+              <span className="text-[10px] text-lv-cyan font-normal">Live Dynamic Recalculation</span>
             </div>
 
-            {/* Inputs Grid */}
-            <div className="grid grid-cols-2 gap-3 text-xs font-mono">
-              <label className="space-y-1">
-                <span className="text-lv-blue font-bold">|{labelA}|</span>
+            {/* Set Labels & Individual Cardinalities */}
+            <div className="space-y-2.5 text-xs font-mono">
+              <div className="grid grid-cols-12 gap-2 items-center">
+                <input
+                  type="text"
+                  value={labelA}
+                  onChange={(e) => setLabelA(e.target.value)}
+                  className="col-span-6 rounded-lg border border-lv-border bg-lv-surface px-2.5 py-1 text-lv-blue font-bold focus:border-lv-blue focus:outline-hidden"
+                  placeholder="Set A Label"
+                />
+                <span className="col-span-2 text-right text-lv-faint text-[11px]">|A| =</span>
                 <input
                   type="number"
-                  min={0}
+                  min="0"
                   value={valA}
                   onChange={(e) => setValA(Math.max(0, Number(e.target.value)))}
-                  className="w-full rounded-lg border border-lv-border bg-lv-surface px-2.5 py-1.5 text-lv-text focus:border-lv-cyan focus:outline-none"
+                  className="col-span-4 rounded-lg border border-lv-border bg-lv-surface px-2 py-1 text-right text-lv-text font-bold focus:border-lv-blue focus:outline-hidden"
                 />
-              </label>
+              </div>
 
-              <label className="space-y-1">
-                <span className="text-lv-purple font-bold">|{labelB}|</span>
+              <div className="grid grid-cols-12 gap-2 items-center">
+                <input
+                  type="text"
+                  value={labelB}
+                  onChange={(e) => setLabelB(e.target.value)}
+                  className="col-span-6 rounded-lg border border-lv-border bg-lv-surface px-2.5 py-1 text-lv-purple font-bold focus:border-lv-purple focus:outline-hidden"
+                  placeholder="Set B Label"
+                />
+                <span className="col-span-2 text-right text-lv-faint text-[11px]">|B| =</span>
                 <input
                   type="number"
-                  min={0}
+                  min="0"
                   value={valB}
                   onChange={(e) => setValB(Math.max(0, Number(e.target.value)))}
-                  className="w-full rounded-lg border border-lv-border bg-lv-surface px-2.5 py-1.5 text-lv-text focus:border-lv-cyan focus:outline-none"
+                  className="col-span-4 rounded-lg border border-lv-border bg-lv-surface px-2 py-1 text-right text-lv-text font-bold focus:border-lv-purple focus:outline-hidden"
                 />
-              </label>
+              </div>
 
               {numSets === 3 && (
-                <label className="space-y-1">
-                  <span className="text-lv-cyan font-bold">|{labelC}|</span>
+                <div className="grid grid-cols-12 gap-2 items-center">
+                  <input
+                    type="text"
+                    value={labelC}
+                    onChange={(e) => setLabelC(e.target.value)}
+                    className="col-span-6 rounded-lg border border-lv-border bg-lv-surface px-2.5 py-1 text-lv-emerald font-bold focus:border-lv-emerald focus:outline-hidden"
+                    placeholder="Set C Label"
+                  />
+                  <span className="col-span-2 text-right text-lv-faint text-[11px]">|C| =</span>
                   <input
                     type="number"
-                    min={0}
+                    min="0"
                     value={valC}
                     onChange={(e) => setValC(Math.max(0, Number(e.target.value)))}
-                    className="w-full rounded-lg border border-lv-border bg-lv-surface px-2.5 py-1.5 text-lv-text focus:border-lv-cyan focus:outline-none"
+                    className="col-span-4 rounded-lg border border-lv-border bg-lv-surface px-2 py-1 text-right text-lv-text font-bold focus:border-lv-emerald focus:outline-hidden"
                   />
-                </label>
+                </div>
               )}
+            </div>
 
-              <label className="space-y-1">
-                <span className="text-lv-muted font-bold">|{labelA} ∩ {labelB}|</span>
+            {/* Intersections Input */}
+            <div className="border-t border-lv-border-soft pt-3 space-y-2 text-xs font-mono">
+              <div className="text-[10px] uppercase text-lv-faint font-semibold">Intersection Cardinalities:</div>
+
+              <div className="grid grid-cols-12 gap-2 items-center">
+                <span className="col-span-8 text-lv-cyan">|{labelA} ∩ {labelB}| =</span>
                 <input
                   type="number"
-                  min={0}
+                  min="0"
                   value={valAB}
                   onChange={(e) => setValAB(Math.max(0, Number(e.target.value)))}
-                  className="w-full rounded-lg border border-lv-border bg-lv-surface px-2.5 py-1.5 text-lv-text focus:border-lv-cyan focus:outline-none"
+                  className="col-span-4 rounded-lg border border-lv-border bg-lv-surface px-2 py-1 text-right text-lv-text font-bold focus:border-lv-cyan focus:outline-hidden"
                 />
-              </label>
+              </div>
 
               {numSets === 3 && (
                 <>
-                  <label className="space-y-1">
-                    <span className="text-lv-muted font-bold">|{labelB} ∩ {labelC}|</span>
+                  <div className="grid grid-cols-12 gap-2 items-center">
+                    <span className="col-span-8 text-lv-cyan">|{labelB} ∩ {labelC}| =</span>
                     <input
                       type="number"
-                      min={0}
+                      min="0"
                       value={valBC}
                       onChange={(e) => setValBC(Math.max(0, Number(e.target.value)))}
-                      className="w-full rounded-lg border border-lv-border bg-lv-surface px-2.5 py-1.5 text-lv-text focus:border-lv-cyan focus:outline-none"
+                      className="col-span-4 rounded-lg border border-lv-border bg-lv-surface px-2 py-1 text-right text-lv-text font-bold focus:border-lv-cyan focus:outline-hidden"
                     />
-                  </label>
+                  </div>
 
-                  <label className="space-y-1">
-                    <span className="text-lv-muted font-bold">|{labelA} ∩ {labelC}|</span>
+                  <div className="grid grid-cols-12 gap-2 items-center">
+                    <span className="col-span-8 text-lv-cyan">|{labelA} ∩ {labelC}| =</span>
                     <input
                       type="number"
-                      min={0}
+                      min="0"
                       value={valAC}
                       onChange={(e) => setValAC(Math.max(0, Number(e.target.value)))}
-                      className="w-full rounded-lg border border-lv-border bg-lv-surface px-2.5 py-1.5 text-lv-text focus:border-lv-cyan focus:outline-none"
+                      className="col-span-4 rounded-lg border border-lv-border bg-lv-surface px-2 py-1 text-right text-lv-text font-bold focus:border-lv-cyan focus:outline-hidden"
                     />
-                  </label>
+                  </div>
 
-                  <label className="space-y-1 col-span-2">
-                    <span className="text-white font-bold">|{labelA} ∩ {labelB} ∩ {labelC}| (Center)</span>
+                  <div className="grid grid-cols-12 gap-2 items-center">
+                    <span className="col-span-8 text-lv-purple font-bold">|{labelA} ∩ {labelB} ∩ {labelC}| =</span>
                     <input
                       type="number"
-                      min={0}
+                      min="0"
                       value={valABC}
                       onChange={(e) => setValABC(Math.max(0, Number(e.target.value)))}
-                      className="w-full rounded-lg border border-lv-cyan/60 bg-lv-surface px-2.5 py-1.5 text-lv-cyan font-bold focus:border-lv-cyan focus:outline-none"
+                      className="col-span-4 rounded-lg border border-lv-border bg-lv-surface px-2 py-1 text-right text-lv-purple font-bold focus:border-lv-purple focus:outline-hidden"
                     />
-                  </label>
+                  </div>
                 </>
               )}
 
-              <label className="space-y-1 col-span-2">
-                <span className="text-lv-faint">Total Survey Sample Size (|𝒰|)</span>
+              {/* Total Universe */}
+              <div className="grid grid-cols-12 gap-2 items-center border-t border-lv-border-soft pt-2">
+                <span className="col-span-8 text-lv-faint">Total Universe Size (|𝒰|) =</span>
                 <input
                   type="number"
-                  min={0}
+                  min="0"
                   value={valU}
                   onChange={(e) => setValU(Math.max(0, Number(e.target.value)))}
-                  className="w-full rounded-lg border border-lv-border bg-lv-surface px-2.5 py-1.5 text-lv-text focus:border-lv-cyan focus:outline-none"
+                  className="col-span-4 rounded-lg border border-lv-border bg-lv-surface px-2 py-1 text-right text-lv-text font-bold focus:border-lv-border focus:outline-hidden"
                 />
-              </label>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Right Solved Derivation & Region Breakdown */}
+        {/* Right Column: Step-by-Step PIE Deductions & Region Breakdown */}
         <div className="lg:col-span-7 space-y-4">
-          {/* Main Formula Step-by-Step */}
-          <div className="rounded-2xl border border-lv-cyan/40 bg-lv-cyan/10 p-4 space-y-3 shadow-xl">
-            <div className="flex items-center justify-between text-xs font-mono font-bold text-lv-cyan uppercase">
-              <span>Principle of Inclusion-Exclusion Equation</span>
-              <Sparkles className="h-4 w-4" />
+          {/* Formal Formula Decomposition */}
+          <div className="rounded-2xl border border-lv-border bg-lv-surface/70 p-4 shadow-xl space-y-3 font-mono text-xs">
+            <div className="text-xs font-bold uppercase text-lv-cyan tracking-wider flex items-center justify-between">
+              <span>Step-by-Step PIE Solution</span>
+              <span className="rounded-full bg-lv-cyan/20 border border-lv-cyan/40 px-2 py-0.5 text-[10px] text-lv-cyan">
+                {numSets === 2 ? "2-Set Theorem" : "3-Set Generalized Theorem"}
+              </span>
             </div>
 
             {numSets === 2 ? (
-              <div className="space-y-2 font-mono text-xs">
-                <div className="text-lv-text font-bold text-sm">
+              <div className="space-y-2 bg-lv-panel/60 p-3 rounded-xl border border-lv-border">
+                <div className="text-[11px] text-lv-faint font-semibold">General 2-Set Formula:</div>
+                <div className="text-lv-cyan font-bold text-xs">
                   |A ∪ B| = |A| + |B| − |A ∩ B|
                 </div>
-                <div className="text-lv-muted">
-                  = {valA} + {valB} − {valAB}
-                </div>
-                <div className="text-lg font-bold text-lv-cyan">
-                  = {union2}
+                <div className="text-lv-muted text-xs">
+                  |{labelA} ∪ {labelB}| = {valA} + {valB} − {valAB} = <strong className="text-lv-success text-sm">{union2}</strong>
                 </div>
               </div>
             ) : (
-              <div className="space-y-2 font-mono text-xs">
-                <div className="text-lv-text font-bold text-sm">
-                  |A ∪ B ∪ C| = (|A| + |B| + |C|) − (|A∩B| + |B∩C| + |A∩C|) + |A∩B∩C|
+              <div className="space-y-2 bg-lv-panel/60 p-3 rounded-xl border border-lv-border">
+                <div className="text-[11px] text-lv-faint font-semibold">General 3-Set Inclusion-Exclusion Formula:</div>
+                <div className="text-lv-cyan font-bold text-xs">
+                  |A ∪ B ∪ C| = (|A| + |B| + |C|) − (|A ∩ B| + |B ∩ C| + |A ∩ C|) + |A ∩ B ∩ C|
                 </div>
-                <div className="text-lv-muted">
+                <div className="text-lv-muted text-xs">
                   = ({valA} + {valB} + {valC}) − ({valAB} + {valBC} + {valAC}) + {valABC}
                 </div>
-                <div className="text-lv-muted">
-                  = {sumSingles} − {sumPairs} + {valABC}
-                </div>
-                <div className="text-lg font-bold text-lv-cyan">
-                  = {union3}
+                <div className="text-lv-muted text-xs">
+                  = {sumSingles} − {sumPairs} + {valABC} = <strong className="text-lv-success text-sm">{union3}</strong>
                 </div>
               </div>
             )}
-          </div>
 
-          {/* Canonical Exam / Homework Answers Card */}
-          <div className="rounded-2xl border border-lv-border bg-lv-surface/70 p-4 space-y-3 shadow-xl">
-            <div className="text-xs font-mono font-bold text-lv-text uppercase tracking-wider flex items-center gap-2">
-              <CheckCircle2 className="h-4 w-4 text-lv-success" />
-              Direct Answers to Survey Questions
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-mono">
-              <div className="rounded-xl border border-lv-border bg-lv-panel/60 p-2.5">
-                <div className="text-lv-faint text-[10px]">At least one activity</div>
-                <div className="text-sm font-bold text-lv-text">
-                  |{labelA} ∪ {labelB}{numSets === 3 ? ` ∪ ${labelC}` : ""}| ={" "}
-                  <span className="text-lv-cyan">{numSets === 2 ? union2 : union3}</span>
-                </div>
-              </div>
-
-              <div className="rounded-xl border border-lv-border bg-lv-panel/60 p-2.5">
-                <div className="text-lv-faint text-[10px]">Neither activity</div>
-                <div className="text-sm font-bold text-lv-text">
-                  |𝒰| − Union ={" "}
-                  <span className="text-lv-error">{numSets === 2 ? neither2 : neither3}</span>
-                </div>
+            {/* Disjoint Venn Regions Breakdown */}
+            <div className="space-y-2 pt-2">
+              <div className="text-[11px] uppercase text-lv-faint font-bold">
+                Pairwise Disjoint Region Cardinalities:
               </div>
 
               {numSets === 2 ? (
-                <>
-                  <div className="rounded-xl border border-lv-border bg-lv-panel/60 p-2.5">
-                    <div className="text-lv-blue text-[10px]">Only {labelA}</div>
-                    <div className="text-sm font-bold text-lv-text">
-                      |A − B| = {valA} − {valAB} ={" "}
-                      <span className="text-lv-blue">{onlyA2}</span>
-                    </div>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+                  <div className="rounded-lg bg-lv-panel/70 p-2.5 border border-lv-border space-y-0.5">
+                    <div className="text-[10px] text-lv-blue font-bold">Only {labelA}</div>
+                    <div className="text-sm font-bold text-lv-text">{onlyA2}</div>
+                    <div className="text-[9px] text-lv-faint">|A \ B| = {valA} - {valAB}</div>
                   </div>
 
-                  <div className="rounded-xl border border-lv-border bg-lv-panel/60 p-2.5">
-                    <div className="text-lv-purple text-[10px]">Only {labelB}</div>
-                    <div className="text-sm font-bold text-lv-text">
-                      |B − A| = {valB} − {valAB} ={" "}
-                      <span className="text-lv-purple">{onlyB2}</span>
-                    </div>
+                  <div className="rounded-lg bg-lv-panel/70 p-2.5 border border-lv-border space-y-0.5">
+                    <div className="text-[10px] text-lv-purple font-bold">Only {labelB}</div>
+                    <div className="text-sm font-bold text-lv-text">{onlyB2}</div>
+                    <div className="text-[9px] text-lv-faint">|B \ A| = {valB} - {valAB}</div>
                   </div>
-                </>
+
+                  <div className="rounded-lg bg-lv-panel/70 p-2.5 border border-lv-border space-y-0.5">
+                    <div className="text-[10px] text-lv-cyan font-bold">Both ({labelA} ∩ {labelB})</div>
+                    <div className="text-sm font-bold text-lv-text">{valAB}</div>
+                    <div className="text-[9px] text-lv-faint">Overlap</div>
+                  </div>
+
+                  <div className="rounded-lg bg-lv-panel/70 p-2.5 border border-lv-border space-y-0.5">
+                    <div className="text-[10px] text-lv-faint font-bold">Neither (Complement)</div>
+                    <div className="text-sm font-bold text-lv-text">{neither2}</div>
+                    <div className="text-[9px] text-lv-faint">|𝒰| - |A ∪ B|</div>
+                  </div>
+                </div>
               ) : (
-                <>
-                  <div className="rounded-xl border border-lv-border bg-lv-panel/60 p-2.5">
-                    <div className="text-lv-blue text-[10px]">Strictly {labelA} only</div>
-                    <div className="text-sm font-bold text-lv-blue">{onlyA3}</div>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+                  <div className="rounded-lg bg-lv-panel/70 p-2 border border-lv-border">
+                    <div className="text-[10px] text-lv-blue font-bold">Only {labelA}</div>
+                    <div className="text-sm font-bold text-lv-text">{onlyA3}</div>
                   </div>
-                  <div className="rounded-xl border border-lv-border bg-lv-panel/60 p-2.5">
-                    <div className="text-lv-purple text-[10px]">Strictly {labelB} only</div>
-                    <div className="text-sm font-bold text-lv-purple">{onlyB3}</div>
+
+                  <div className="rounded-lg bg-lv-panel/70 p-2 border border-lv-border">
+                    <div className="text-[10px] text-lv-purple font-bold">Only {labelB}</div>
+                    <div className="text-sm font-bold text-lv-text">{onlyB3}</div>
                   </div>
-                  <div className="rounded-xl border border-lv-border bg-lv-panel/60 p-2.5">
-                    <div className="text-lv-cyan text-[10px]">Strictly {labelC} only</div>
-                    <div className="text-sm font-bold text-lv-cyan">{onlyC3}</div>
+
+                  <div className="rounded-lg bg-lv-panel/70 p-2 border border-lv-border">
+                    <div className="text-[10px] text-lv-emerald font-bold">Only {labelC}</div>
+                    <div className="text-sm font-bold text-lv-text">{onlyC3}</div>
                   </div>
-                  <div className="rounded-xl border border-lv-border bg-lv-panel/60 p-2.5">
-                    <div className="text-white text-[10px]">All Three Simultaneously</div>
-                    <div className="text-sm font-bold text-white">{centerABC}</div>
+
+                  <div className="rounded-lg bg-lv-panel/70 p-2 border border-lv-border">
+                    <div className="text-[10px] text-lv-cyan font-bold">Only A ∩ B</div>
+                    <div className="text-sm font-bold text-lv-text">{regionAB}</div>
                   </div>
-                </>
+
+                  <div className="rounded-lg bg-lv-panel/70 p-2 border border-lv-border">
+                    <div className="text-[10px] text-lv-cyan font-bold">Only B ∩ C</div>
+                    <div className="text-sm font-bold text-lv-text">{regionBC}</div>
+                  </div>
+
+                  <div className="rounded-lg bg-lv-panel/70 p-2 border border-lv-border">
+                    <div className="text-[10px] text-lv-cyan font-bold">Only A ∩ C</div>
+                    <div className="text-sm font-bold text-lv-text">{regionAC}</div>
+                  </div>
+
+                  <div className="rounded-lg bg-lv-panel/70 p-2 border border-lv-purple/40 bg-lv-purple/10">
+                    <div className="text-[10px] text-lv-purple font-bold">All 3 (A ∩ B ∩ C)</div>
+                    <div className="text-sm font-bold text-lv-purple">{centerABC}</div>
+                  </div>
+
+                  <div className="rounded-lg bg-lv-panel/70 p-2 border border-lv-border">
+                    <div className="text-[10px] text-lv-faint font-bold">Neither (Complement)</div>
+                    <div className="text-sm font-bold text-lv-text">{neither3}</div>
+                  </div>
+                </div>
               )}
+            </div>
+
+            {/* Direct Quantitative Answers */}
+            <div className="rounded-xl border border-lv-success/30 bg-lv-success/5 p-3 space-y-1.5 pt-2">
+              <div className="flex items-center gap-1 text-xs font-bold text-lv-success uppercase">
+                <CheckCircle2 className="h-4 w-4" />
+                Set Cardinality Results:
+              </div>
+              <ul className="list-disc pl-4 space-y-1 text-xs text-lv-muted">
+                <li>
+                  Total elements belonging to at least one set: <strong className="text-lv-text">{numSets === 2 ? union2 : union3}</strong>
+                </li>
+                <li>
+                  Elements belonging strictly to exactly one set:{" "}
+                  <strong className="text-lv-text">
+                    {numSets === 2 ? onlyA2 + onlyB2 : onlyA3 + onlyB3 + onlyC3}
+                  </strong>
+                </li>
+                <li>
+                  Elements outside all specified sets (in 𝒰 \ ∪): <strong className="text-lv-text">{numSets === 2 ? neither2 : neither3}</strong>
+                </li>
+              </ul>
             </div>
           </div>
         </div>

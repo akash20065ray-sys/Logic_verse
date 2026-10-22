@@ -22,6 +22,7 @@ import {
   X,
   ExternalLink,
   Zap,
+  Route,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useWorkspaceStore } from "@/store/workspace-store";
@@ -66,6 +67,9 @@ export function LogicAiPanel() {
   const edges = useWorkspaceStore((s) => s.edges);
   const automataInputString = useWorkspaceStore((s) => s.automataInputString);
   const loadTemplate = useWorkspaceStore((s) => s.loadTemplate);
+  const relationsElements = useWorkspaceStore((s) => s.relationsElements);
+  const relationsPairs = useWorkspaceStore((s) => s.relationsPairs);
+  const relationsSubMode = useWorkspaceStore((s) => s.relationsSubMode);
 
   const [messages, setMessages] = useState<ChatMessage[]>(INITIAL_MESSAGES);
   const [input, setInput] = useState("");
@@ -133,8 +137,10 @@ export function LogicAiPanel() {
         ]
       : activeModuleId === "relations-functions"
       ? [
-          { icon: ShieldCheck, label: "Transitive Property", query: "Explain relation matrix transitive property" },
-          { icon: GitBranch, label: "Hasse Poset Diagram", query: "Explain Hasse diagrams for posets" },
+          { icon: Route, label: "Warshall Algorithm", query: "Explain Warshall algorithm for transitive closure" },
+          { icon: GitBranch, label: "Hasse Poset Diagram", query: "What is Hasse diagram for Posets?" },
+          { icon: ArrowRight, label: "Injective vs Surjective", query: "Is this function injective or surjective?" },
+          { icon: ShieldCheck, label: "Equivalence Classes", query: "Explain equivalence relation and quotient classes" },
         ]
       : [
           { icon: Lightbulb, label: "Explain this step", query: "Explain this step" },
@@ -174,6 +180,13 @@ export function LogicAiPanel() {
       details = {
         primaryResult: graphEvaluation.primaryResult,
         sets: graphEvaluation.primarySets,
+      };
+    } else if (activeModuleId === "relations-functions") {
+      summary += `\nRelations & Functions active submode: "${relationsSubMode}". Set A Elements = [${relationsElements.join(", ")}]. Active pairs count = ${relationsPairs.length}. Pairs = ${relationsPairs.map(([a,b]) => `(${a},${b})`).slice(0, 10).join(", ")}.`;
+      details = {
+        subMode: relationsSubMode,
+        elements: relationsElements,
+        pairs: relationsPairs,
       };
     }
 

@@ -64,6 +64,9 @@ function RelationMatrixPalette() {
   const setPaletteOpen = useWorkspaceStore((s) => s.setPaletteOpen);
   const recomputeGraph = useWorkspaceStore((s) => s.recomputeGraph);
 
+  const setRelationsElements = useWorkspaceStore((s) => s.setRelationsElements);
+  const setRelationsPairs = useWorkspaceStore((s) => s.setRelationsPairs);
+
   function handleAddSetNode() {
     const count = nodes.filter((n) => n.type === "set").length;
     const label = String.fromCharCode(65 + count); // A, B, C...
@@ -102,22 +105,44 @@ function RelationMatrixPalette() {
   }
 
   function handleLoadDivisibilityPreset() {
+    const elems = ["1", "2", "3", "4", "6", "12"];
+    const pairs: [string, string][] = [];
+    for (const a of elems) {
+      for (const b of elems) {
+        if (Number(b) % Number(a) === 0) {
+          pairs.push([a, b]);
+        }
+      }
+    }
+    setRelationsElements(elems);
+    setRelationsPairs(pairs);
+
     const setA: Node = {
       id: "set-d12",
       type: "set",
       position: { x: 100, y: 120 },
-      data: { label: "D₁₂", kind: "set", elements: ["1", "2", "3", "4", "6", "12"], accent: "purple" },
+      data: { label: "D₁₂", kind: "set", elements: elems, accent: "purple" },
     };
     recomputeGraph([setA], []);
     setOutputTab("matrix");
   }
 
   function handleLoadLessEqualPreset() {
+    const elems = ["1", "2", "3", "4"];
+    const pairs: [string, string][] = [];
+    for (let i = 0; i < elems.length; i++) {
+      for (let j = i; j < elems.length; j++) {
+        pairs.push([elems[i], elems[j]]);
+      }
+    }
+    setRelationsElements(elems);
+    setRelationsPairs(pairs);
+
     const setA: Node = {
       id: "set-poset",
       type: "set",
       position: { x: 100, y: 120 },
-      data: { label: "S", kind: "set", elements: ["1", "2", "3", "4"], accent: "purple" },
+      data: { label: "S", kind: "set", elements: elems, accent: "purple" },
     };
     recomputeGraph([setA], []);
     setOutputTab("matrix");

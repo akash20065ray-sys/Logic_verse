@@ -35,6 +35,7 @@ export interface TruthTable {
 export interface InductionTheorem {
   id: string;
   title: string;
+  category?: "sums" | "divisibility" | "inequalities" | "powers";
   formula: string;
   lhsDescription: (n: number) => string;
   rhsDescription: (n: number) => string;
@@ -317,6 +318,7 @@ export const INDUCTION_THEOREMS: InductionTheorem[] = [
   {
     id: "sum-integers",
     title: "Sum of First n Natural Numbers",
+    category: "sums",
     formula: "1 + 2 + 3 + ... + n = \\frac{n(n + 1)}{2}",
     lhsDescription: (n) => `1 + 2 + ... + ${n}`,
     rhsDescription: (n) => `(${n} × ${n + 1}) / 2`,
@@ -346,8 +348,83 @@ export const INDUCTION_THEOREMS: InductionTheorem[] = [
     },
   },
   {
+    id: "sum-squares",
+    title: "Sum of First n Squares",
+    category: "sums",
+    formula: "1^2 + 2^2 + ... + n^2 = \\frac{n(n + 1)(2n + 1)}{6}",
+    lhsDescription: (n) => `1² + 2² + ... + ${n}²`,
+    rhsDescription: (n) => `(${n} × ${n + 1} × ${2 * n + 1}) / 6`,
+    evalLhs: (n) => {
+      let s = 0;
+      for (let i = 1; i <= n; i++) s += i * i;
+      return s;
+    },
+    evalRhs: (n) => (n * (n + 1) * (2 * n + 1)) / 6,
+    baseCase: {
+      n: 1,
+      lhs: "1² = 1",
+      rhs: "(1 × 2 × 3) / 6 = 1",
+      lhsVal: 1,
+      rhsVal: 1,
+      verified: true,
+    },
+    hypothesis: {
+      statement: "Assume P(k) is true: 1² + 2² + ... + k² = k(k + 1)(2k + 1) / 6 for some k ≥ 1.",
+    },
+    inductiveStep: {
+      goal: "Prove P(k + 1): 1² + 2² + ... + k² + (k + 1)² = (k + 1)(k + 2)(2k + 3) / 6",
+      derivationSteps: [
+        "LHS = [1² + 2² + ... + k²] + (k + 1)²",
+        "By Inductive Hypothesis, substitute [k(k + 1)(2k + 1) / 6]:",
+        "= k(k + 1)(2k + 1) / 6 + 6(k + 1)² / 6",
+        "= (k + 1) [k(2k + 1) + 6(k + 1)] / 6",
+        "= (k + 1) (2k² + 7k + 6) / 6",
+        "= (k + 1)(k + 2)(2k + 3) / 6 = RHS",
+      ],
+      conclusion: "By Mathematical Induction, the sum of squares identity holds for all n ≥ 1.",
+    },
+  },
+  {
+    id: "sum-cubes",
+    title: "Sum of First n Cubes (Nicomachus' Identity)",
+    category: "sums",
+    formula: "1^3 + 2^3 + ... + n^3 = \\left(\\frac{n(n + 1)}{2}\\right)^2",
+    lhsDescription: (n) => `1³ + 2³ + ... + ${n}³`,
+    rhsDescription: (n) => `[(${n} × ${n + 1}) / 2]²`,
+    evalLhs: (n) => {
+      let s = 0;
+      for (let i = 1; i <= n; i++) s += i * i * i;
+      return s;
+    },
+    evalRhs: (n) => Math.pow((n * (n + 1)) / 2, 2),
+    baseCase: {
+      n: 1,
+      lhs: "1³ = 1",
+      rhs: "[(1 × 2) / 2]² = 1² = 1",
+      lhsVal: 1,
+      rhsVal: 1,
+      verified: true,
+    },
+    hypothesis: {
+      statement: "Assume P(k) is true: 1³ + 2³ + ... + k³ = [k(k + 1) / 2]² for some k ≥ 1.",
+    },
+    inductiveStep: {
+      goal: "Prove P(k + 1): 1³ + ... + k³ + (k + 1)³ = [(k + 1)(k + 2) / 2]²",
+      derivationSteps: [
+        "LHS = [1³ + ... + k³] + (k + 1)³",
+        "By Inductive Hypothesis, substitute [k(k + 1) / 2]²:",
+        "= k²(k + 1)² / 4 + 4(k + 1)³ / 4",
+        "= (k + 1)² [k² + 4(k + 1)] / 4",
+        "= (k + 1)² (k² + 4k + 4) / 4",
+        "= (k + 1)² (k + 2)² / 4 = [(k + 1)(k + 2) / 2]² = RHS",
+      ],
+      conclusion: "Thus, the sum of the first n cubes equals the square of the sum of the first n integers.",
+    },
+  },
+  {
     id: "sum-odds",
     title: "Sum of First n Odd Integers",
+    category: "sums",
     formula: "1 + 3 + 5 + ... + (2n - 1) = n^2",
     lhsDescription: (n) => `1 + 3 + ... + ${2 * n - 1}`,
     rhsDescription: (n) => `${n}²`,
@@ -376,8 +453,40 @@ export const INDUCTION_THEOREMS: InductionTheorem[] = [
     },
   },
   {
+    id: "sum-evens",
+    title: "Sum of First n Even Numbers",
+    category: "sums",
+    formula: "2 + 4 + 6 + ... + 2n = n(n + 1)",
+    lhsDescription: (n) => `2 + 4 + ... + ${2 * n}`,
+    rhsDescription: (n) => `${n} × (${n} + 1)`,
+    evalLhs: (n) => n * (n + 1),
+    evalRhs: (n) => n * (n + 1),
+    baseCase: {
+      n: 1,
+      lhs: "2(1) = 2",
+      rhs: "1(1 + 1) = 2",
+      lhsVal: 2,
+      rhsVal: 2,
+      verified: true,
+    },
+    hypothesis: {
+      statement: "Assume P(k) is true: 2 + 4 + ... + 2k = k(k + 1).",
+    },
+    inductiveStep: {
+      goal: "Prove P(k + 1): 2 + 4 + ... + 2k + 2(k + 1) = (k + 1)(k + 2)",
+      derivationSteps: [
+        "LHS = [2 + 4 + ... + 2k] + 2(k + 1)",
+        "By Inductive Hypothesis, replace bracketed sum with k(k + 1):",
+        "= k(k + 1) + 2(k + 1)",
+        "= (k + 1)(k + 2) = RHS",
+      ],
+      conclusion: "By Induction, the sum of first n even integers is always n(n + 1).",
+    },
+  },
+  {
     id: "sum-powers-two",
     title: "Sum of Powers of Two",
+    category: "powers",
     formula: "2^0 + 2^1 + 2^2 + ... + 2^n = 2^{n + 1} - 1",
     lhsDescription: (n) => `1 + 2 + 4 + ... + 2^${n}`,
     rhsDescription: (n) => `2^${n + 1} - 1`,
@@ -406,4 +515,136 @@ export const INDUCTION_THEOREMS: InductionTheorem[] = [
       conclusion: "The inductive step holds. By Mathematical Induction, the identity is true for all n ≥ 0.",
     },
   },
+  {
+    id: "divisibility-3",
+    title: "Divisibility: 3 | (n³ + 2n)",
+    category: "divisibility",
+    formula: "3 \\mid (n^3 + 2n) \\quad \\text{for all } n \\ge 1",
+    lhsDescription: (n) => `${n}³ + 2(${n}) = ${n * n * n + 2 * n}`,
+    rhsDescription: (n) => `3 × ${(n * n * n + 2 * n) / 3}`,
+    evalLhs: (n) => n * n * n + 2 * n,
+    evalRhs: (n) => 3 * Math.floor((n * n * n + 2 * n) / 3),
+    baseCase: {
+      n: 1,
+      lhs: "1³ + 2(1) = 3",
+      rhs: "3 × 1 = 3 (Remainder 0)",
+      lhsVal: 3,
+      rhsVal: 3,
+      verified: true,
+    },
+    hypothesis: {
+      statement: "Assume P(k) is true: k³ + 2k = 3m for some integer m ≥ 1.",
+    },
+    inductiveStep: {
+      goal: "Prove P(k + 1): (k + 1)³ + 2(k + 1) is a multiple of 3",
+      derivationSteps: [
+        "Expand (k + 1)³ + 2(k + 1):",
+        "= (k³ + 3k² + 3k + 1) + (2k + 2)",
+        "Regroup into [k³ + 2k] + [3k² + 3k + 3]:",
+        "= [k³ + 2k] + 3(k² + k + 1)",
+        "By Inductive Hypothesis, [k³ + 2k] = 3m:",
+        "= 3m + 3(k² + k + 1) = 3 [m + k² + k + 1] = 3 · M",
+        "Since M is an integer, (k + 1)³ + 2(k + 1) is divisible by 3.",
+      ],
+      conclusion: "By Mathematical Induction, 3 divides n³ + 2n for all positive integers n.",
+    },
+  },
+  {
+    id: "divisibility-6",
+    title: "Divisibility: 6 | (n³ - n)",
+    category: "divisibility",
+    formula: "6 \\mid (n^3 - n) \\quad \\text{for all } n \\ge 1",
+    lhsDescription: (n) => `${n}³ - ${n} = ${n * n * n - n}`,
+    rhsDescription: (n) => `6 × ${(n * n * n - n) / 6}`,
+    evalLhs: (n) => n * n * n - n,
+    evalRhs: (n) => 6 * Math.floor((n * n * n - n) / 6),
+    baseCase: {
+      n: 1,
+      lhs: "1³ - 1 = 0",
+      rhs: "6 × 0 = 0 (Remainder 0)",
+      lhsVal: 0,
+      rhsVal: 0,
+      verified: true,
+    },
+    hypothesis: {
+      statement: "Assume P(k) is true: k³ - k = 6m for some integer m ≥ 0.",
+    },
+    inductiveStep: {
+      goal: "Prove P(k + 1): (k + 1)³ - (k + 1) is divisible by 6",
+      derivationSteps: [
+        "Expand (k + 1)³ - (k + 1):",
+        "= k³ + 3k² + 3k + 1 - k - 1",
+        "= (k³ - k) + 3(k² + k) = (k³ - k) + 3k(k + 1)",
+        "By Hypothesis, (k³ - k) = 6m.",
+        "Since k(k + 1) is product of two consecutive integers, it is even (2p):",
+        "= 6m + 3(2p) = 6m + 6p = 6(m + p)",
+        "Since m + p is an integer, 6 divides (k + 1)³ - (k + 1).",
+      ],
+      conclusion: "By Mathematical Induction, 6 divides n³ - n for every positive integer n.",
+    },
+  },
+  {
+    id: "inequality-2n",
+    title: "Inequality: 2^n > n",
+    category: "inequalities",
+    formula: "2^n > n \\quad \\text{for all } n \\ge 1",
+    lhsDescription: (n) => `2^${n} = ${Math.pow(2, n)}`,
+    rhsDescription: (n) => `n = ${n}`,
+    evalLhs: (n) => Math.pow(2, n),
+    evalRhs: (n) => Math.pow(2, n),
+    baseCase: {
+      n: 1,
+      lhs: "2¹ = 2",
+      rhs: "n = 1 (2 > 1 holds)",
+      lhsVal: 2,
+      rhsVal: 2,
+      verified: true,
+    },
+    hypothesis: {
+      statement: "Assume P(k) is true: 2^k > k for some integer k ≥ 1.",
+    },
+    inductiveStep: {
+      goal: "Prove P(k + 1): 2^{k + 1} > k + 1",
+      derivationSteps: [
+        "LHS = 2^{k + 1} = 2 · 2^k",
+        "By Inductive Hypothesis, substitute 2^k > k:",
+        "2 · 2^k > 2k = k + k",
+        "Since k ≥ 1, we have k + k ≥ k + 1:",
+        "Thus 2^{k + 1} > k + 1 = RHS",
+      ],
+      conclusion: "The inductive step holds. By Mathematical Induction, 2^n > n for all n ≥ 1.",
+    },
+  },
+  {
+    id: "inequality-powers",
+    title: "Inequality: 2^n ≥ n² (n ≥ 4)",
+    category: "inequalities",
+    formula: "2^n \\ge n^2 \\quad \\text{for all } n \\ge 4",
+    lhsDescription: (n) => `2^${n} = ${Math.pow(2, n)}`,
+    rhsDescription: (n) => `${n}² = ${n * n}`,
+    evalLhs: (n) => Math.pow(2, n),
+    evalRhs: (n) => Math.pow(2, n),
+    baseCase: {
+      n: 4,
+      lhs: "2⁴ = 16",
+      rhs: "4² = 16 (16 ≥ 16 holds)",
+      lhsVal: 16,
+      rhsVal: 16,
+      verified: true,
+    },
+    hypothesis: {
+      statement: "Assume P(k) is true: 2^k ≥ k² for some integer k ≥ 4.",
+    },
+    inductiveStep: {
+      goal: "Prove P(k + 1): 2^{k + 1} ≥ (k + 1)²",
+      derivationSteps: [
+        "LHS = 2^{k + 1} = 2 · 2^k ≥ 2k² = k² + k²",
+        "For k ≥ 4, we have k² ≥ 4k > 2k + 1:",
+        "Therefore k² + k² ≥ k² + 2k + 1 = (k + 1)²",
+        "Hence 2^{k + 1} ≥ (k + 1)² = RHS",
+      ],
+      conclusion: "By Mathematical Induction, 2^n ≥ n² holds for all integers n ≥ 4.",
+    },
+  },
 ];
+

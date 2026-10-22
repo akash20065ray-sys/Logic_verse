@@ -100,7 +100,12 @@ interface WorkspaceState {
 
   // Relations Store Slice
   relationsSubMode: "matrix" | "hasse" | "warshall" | "functions";
+  relationsElements: string[];
+  relationsPairs: [string, string][];
   setRelationsSubMode: (mode: "matrix" | "hasse" | "warshall" | "functions") => void;
+  setRelationsElements: (elements: string[]) => void;
+  setRelationsPairs: (pairs: [string, string][]) => void;
+  toggleRelationPair: (a: string, b: string) => void;
 
   // CFG Store Slice
   cfgSubMode: "grammar-builder" | "parse-tree" | "cnf-gnf" | "cyk";
@@ -237,7 +242,27 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
   setRegexTestString: (str: string) => set({ regexTestString: str }),
 
   relationsSubMode: "matrix",
+  relationsElements: ["1", "2", "3", "4"],
+  relationsPairs: [
+    ["1", "1"],
+    ["2", "2"],
+    ["3", "3"],
+    ["4", "4"],
+    ["1", "2"],
+    ["2", "1"],
+  ],
   setRelationsSubMode: (mode) => set({ relationsSubMode: mode }),
+  setRelationsElements: (elements) => set({ relationsElements: elements }),
+  setRelationsPairs: (pairs) => set({ relationsPairs: pairs }),
+  toggleRelationPair: (a, b) =>
+    set((state) => {
+      const exists = state.relationsPairs.some(([x, y]) => x === a && y === b);
+      return {
+        relationsPairs: exists
+          ? state.relationsPairs.filter(([x, y]) => !(x === a && y === b))
+          : [...state.relationsPairs, [a, b]],
+      };
+    }),
 
   cfgSubMode: "grammar-builder",
   cfgRawRules: "S -> A B | a\nA -> a S | a\nB -> b",

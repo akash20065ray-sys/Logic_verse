@@ -1,126 +1,325 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 380" width="100%" height="auto" style="font-family: 'Times New Roman', Times, serif; background: #ffffff;">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 540" width="100%" height="auto" style="background:#ffffff; font-family:'Times New Roman',Times,serif;">
   <defs>
-    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#1e293b"/>
+    <!-- Crisp Arrow Markers -->
+    <marker id="arr-main" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#0f172a"/>
     </marker>
-    <marker id="arrow-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#0284c7"/>
+    <marker id="arr-blue" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#1d4ed8"/>
     </marker>
-    <marker id="arrow-purple" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <marker id="arr-green" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#047857"/>
+    </marker>
+    <marker id="arr-purple" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
       <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#7c3aed"/>
     </marker>
-    <filter id="soft-shadow" x="-5%" y="-5%" width="110%" height="110%">
-      <feDropShadow dx="0" dy="1.5" stdDeviation="2" flood-opacity="0.08"/>
+    <marker id="arr-amber" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#b45309"/>
+    </marker>
+
+    <!-- Subtle Shadows for Technical Layers -->
+    <filter id="box-shadow" x="-3%" y="-3%" width="106%" height="106%">
+      <feDropShadow dx="0" dy="1.5" stdDeviation="1.5" flood-opacity="0.06"/>
     </filter>
   </defs>
 
-  <!-- Title / Outer IEEE Box -->
-  <rect x="2" y="2" width="696" height="376" rx="4" fill="#ffffff" stroke="#0f172a" stroke-width="1.2"/>
+  <!-- Outer Technical Border (IEEE Spec) -->
+  <rect x="2" y="2" width="916" height="536" rx="4" fill="#ffffff" stroke="#0f172a" stroke-width="1.2"/>
 
-  <!-- ================= LAYER 1: CLIENT PRESENTATION (TOP) ================= -->
-  <g id="layer-presentation">
-    <rect x="14" y="14" width="672" height="74" rx="3" fill="#f8fafc" stroke="#475569" stroke-width="0.8" stroke-dasharray="3,2"/>
-    <text x="24" y="28" font-size="9" font-weight="bold" fill="#0f172a" letter-spacing="0.5">LAYER 1: REACTIVE USER INTERFACE &amp; INTERACTIVE WORKSPACE (NEXT.JS 16 / REACT 19)</text>
-    
-    <!-- Box 1A: Node-Wire Canvas -->
-    <rect x="24" y="36" width="316" height="42" rx="3" fill="#ffffff" stroke="#0284c7" stroke-width="1" filter="url(#soft-shadow)"/>
-    <text x="32" y="50" font-size="8.5" font-weight="bold" fill="#0369a1">Visual Node-Wire Graph Canvas (@xyflow/react)</text>
-    <text x="32" y="63" font-size="7.5" fill="#334155">&bull; Set Nodes (A, B) &bull; Logic Gates (&and;, &or;, &rarr;) &bull; Automata States (DFA/NFA)</text>
-    <text x="32" y="73" font-size="7.5" fill="#334155">&bull; Pushdown LIFO Stack Probes &bull; Infinite 2-Way Turing Machine Tape</text>
+  <!-- ========================================================================= -->
+  <!-- LAYER 1: CLIENT PRESENTATION & INTERACTIVE CANVAS (TOP)                  -->
+  <!-- ========================================================================= -->
+  <rect x="14" y="12" width="892" height="118" rx="3" fill="#f8fafc" stroke="#334155" stroke-width="1" stroke-dasharray="4,2"/>
+  <rect x="24" y="6" width="390" height="14" fill="#ffffff" rx="2"/>
+  <text x="28" y="17" font-size="9.5" font-weight="bold" fill="#0f172a" letter-spacing="0.5">LAYER 1: REACTIVE USER INTERFACE &amp; INTERACTIVE WORKSPACE</text>
 
-    <!-- Box 1B: Dock Analytics -->
-    <rect x="350" y="36" width="326" height="42" rx="3" fill="#ffffff" stroke="#7c3aed" stroke-width="1" filter="url(#soft-shadow)"/>
-    <text x="358" y="50" font-size="8.5" font-weight="bold" fill="#6d28d9">Dock Inspection &amp; Analytical Verification Panels</text>
-    <text x="358" y="63" font-size="7.5" fill="#334155">&bull; Venn Cardinality Probes &bull; Truth Tables (DNF/CNF) &bull; Adjacency Matrix</text>
-    <text x="358" y="73" font-size="7.5" fill="#334155">&bull; Hasse Poset Reductions &bull; Warshall Closures &bull; CYK Parse Table</text>
+  <!-- Box 1A: Visual Node-Wire Canvas (@xyflow/react) -->
+  <rect x="24" y="26" width="470" height="96" rx="3" fill="#ffffff" stroke="#1d4ed8" stroke-width="1" filter="url(#box-shadow)"/>
+  <text x="32" y="40" font-size="9" font-weight="bold" fill="#1e40af">Interactive Node-Wire Canvas Substrate (@xyflow/react + WebGL)</text>
+  
+  <!-- Mini Node Schematics inside Canvas -->
+  <!-- Set Node A -->
+  <rect x="34" y="48" width="84" height="30" rx="3" fill="#eff6ff" stroke="#3b82f6" stroke-width="0.8"/>
+  <text x="40" y="60" font-size="7.5" font-weight="bold" fill="#1e3a8a">SetNode: A</text>
+  <text x="40" y="72" font-size="7" fill="#1e40af">A = {1, 2, 3}</text>
+  <circle cx="118" cy="63" r="3" fill="#2563eb"/>
+
+  <!-- Set Node B -->
+  <rect x="34" y="84" width="84" height="30" rx="3" fill="#eff6ff" stroke="#3b82f6" stroke-width="0.8"/>
+  <text x="40" y="96" font-size="7.5" font-weight="bold" fill="#1e3a8a">SetNode: B</text>
+  <text x="40" y="108" font-size="7" fill="#1e40af">B = {3, 4, 5}</text>
+  <circle cx="118" cy="99" r="3" fill="#2563eb"/>
+
+  <!-- Wire 1 & Wire 2 to Union Node -->
+  <path d="M 121 63 C 145 63, 145 80, 160 80" stroke="#3b82f6" stroke-width="1.2" fill="none"/>
+  <path d="M 121 99 C 145 99, 145 82, 160 82" stroke="#3b82f6" stroke-width="1.2" fill="none"/>
+
+  <!-- Union Op Node -->
+  <rect x="160" y="66" width="70" height="32" rx="3" fill="#dbeafe" stroke="#1d4ed8" stroke-width="1"/>
+  <circle cx="160" cy="81" r="3" fill="#2563eb"/>
+  <text x="174" y="80" font-size="8" font-weight="bold" fill="#1e40af">Op: A &cup; B</text>
+  <text x="167" y="92" font-size="6.8" fill="#1e3a8a">|A &cup; B| = 5</text>
+  <circle cx="230" cy="81" r="3" fill="#2563eb"/>
+
+  <!-- Automata State Nodes (q0 -> q1) -->
+  <g transform="translate(244, 46)">
+    <circle cx="22" cy="22" r="14" fill="#fdf4ff" stroke="#a855f7" stroke-width="1"/>
+    <text x="16" y="25" font-size="8" font-weight="bold" fill="#6b21a8">q0</text>
+    <path d="M 0 22 L 8 22" stroke="#6b21a8" stroke-width="1" marker-end="url(#arr-purple)"/>
+
+    <path d="M 36 22 L 66 22" stroke="#9333ea" stroke-width="1.2" marker-end="url(#arr-purple)"/>
+    <text x="46" y="16" font-size="7" font-weight="bold" fill="#7e22ce">a, 0</text>
+
+    <!-- Accepting State q1 (Double circle) -->
+    <circle cx="82" cy="22" r="14" fill="#fdf4ff" stroke="#a855f7" stroke-width="1"/>
+    <circle cx="82" cy="22" r="11" fill="none" stroke="#a855f7" stroke-width="0.8"/>
+    <text x="76" y="25" font-size="8" font-weight="bold" fill="#6b21a8">q1</text>
+    <text x="24" y="52" font-size="7" fill="#581c87">&delta;: Q &times; &Sigma; &rarr; Q</text>
   </g>
 
-  <!-- Connectors Layer 1 to Layer 2 -->
-  <path d="M 182 88 L 182 108" stroke="#0284c7" stroke-width="1.2" marker-end="url(#arrow-blue)"/>
-  <path d="M 513 88 L 513 108" stroke="#7c3aed" stroke-width="1.2" marker-end="url(#arrow-purple)"/>
+  <!-- Pushdown Stack & Turing Tape Micro-Diagram -->
+  <g transform="translate(366, 46)">
+    <!-- Stack Probe -->
+    <rect x="0" y="4" width="34" height="48" fill="#f8fafc" stroke="#475569" stroke-width="0.8"/>
+    <rect x="3" y="7" width="28" height="11" fill="#e2e8f0" stroke="#64748b" stroke-width="0.5"/>
+    <text x="13" y="15" font-size="6.5" font-weight="bold" fill="#0f172a">a</text>
+    <rect x="3" y="20" width="28" height="11" fill="#e2e8f0" stroke="#64748b" stroke-width="0.5"/>
+    <text x="13" y="28" font-size="6.5" font-weight="bold" fill="#0f172a">0</text>
+    <rect x="3" y="33" width="28" height="11" fill="#cbd5e1" stroke="#64748b" stroke-width="0.5"/>
+    <text x="13" y="41" font-size="6.5" font-weight="bold" fill="#0f172a">$</text>
+    <text x="3" y="60" font-size="6.8" fill="#334155">LIFO Stack</text>
 
-  <!-- ================= LAYER 2: REACTIVE AST & EVALUATION ENGINE ================= -->
-  <g id="layer-evaluator">
-    <rect x="14" y="110" width="672" height="78" rx="3" fill="#f1f5f9" stroke="#334155" stroke-width="1"/>
-    <text x="24" y="124" font-size="9" font-weight="bold" fill="#0f172a" letter-spacing="0.5">LAYER 2: CLIENT-SIDE REACTIVE DAG &amp; AST EVALUATION ENGINE (SUB-MILLISECOND EXECUTION)</text>
-
-    <!-- Sub-module 2A -->
-    <rect x="24" y="132" width="154" height="46" rx="2.5" fill="#ffffff" stroke="#64748b" stroke-width="0.8"/>
-    <text x="30" y="145" font-size="8" font-weight="bold" fill="#0f172a">Sets &amp; Logic Compiler</text>
-    <text x="30" y="157" font-size="7" fill="#475569">&bull; DAG Topological Sort</text>
-    <text x="30" y="167" font-size="7" fill="#475569">&bull; Cycle &amp; Error Detection</text>
-    <text x="30" y="175" font-size="7" fill="#475569">&bull; Tautology Verification</text>
-
-    <!-- Sub-module 2B -->
-    <rect x="186" y="132" width="158" height="46" rx="2.5" fill="#ffffff" stroke="#64748b" stroke-width="0.8"/>
-    <text x="192" y="145" font-size="8" font-weight="bold" fill="#0f172a">Relations &amp; Posets</text>
-    <text x="192" y="157" font-size="7" fill="#475569">&bull; Adjacency Matrix Tests</text>
-    <text x="192" y="167" font-size="7" fill="#475569">&bull; Transitive Reduction (Hasse)</text>
-    <text x="192" y="175" font-size="7" fill="#475569">&bull; Warshall Reachability</text>
-
-    <!-- Sub-module 2C -->
-    <rect x="352" y="132" width="158" height="46" rx="2.5" fill="#ffffff" stroke="#64748b" stroke-width="0.8"/>
-    <text x="358" y="145" font-size="8" font-weight="bold" fill="#0f172a">Automata Algorithms</text>
-    <text x="358" y="157" font-size="7" fill="#475569">&bull; &epsilon;-NFA to DFA Powerset 2^Q</text>
-    <text x="358" y="167" font-size="7" fill="#475569">&bull; Hopcroft Partition Minimizer</text>
-    <text x="358" y="175" font-size="7" fill="#475569">&bull; Interactive Step Simulation</text>
-
-    <!-- Sub-module 2D -->
-    <rect x="518" y="132" width="158" height="46" rx="2.5" fill="#ffffff" stroke="#64748b" stroke-width="0.8"/>
-    <text x="524" y="145" font-size="8" font-weight="bold" fill="#0f172a">Grammars &amp; Computability</text>
-    <text x="524" y="157" font-size="7" fill="#475569">&bull; 4-Step CNF Normalization</text>
-    <text x="524" y="167" font-size="7" fill="#475569">&bull; CYK Dynamic Parser O(n&sup3;)</text>
-    <text x="524" y="175" font-size="7" fill="#475569">&bull; TM 2-Way Tape Head Control</text>
+    <!-- Turing Tape -->
+    <rect x="42" y="16" width="60" height="16" fill="#f1f5f9" stroke="#334155" stroke-width="0.8"/>
+    <line x1="54" y1="16" x2="54" y2="32" stroke="#64748b" stroke-width="0.5"/>
+    <line x1="66" y1="16" x2="66" y2="32" stroke="#64748b" stroke-width="0.5"/>
+    <line x1="78" y1="16" x2="78" y2="32" stroke="#64748b" stroke-width="0.5"/>
+    <line x1="90" y1="16" x2="90" y2="32" stroke="#64748b" stroke-width="0.5"/>
+    <text x="44" y="27" font-size="7" fill="#0f172a">B</text>
+    <text x="58" y="27" font-size="7" font-weight="bold" fill="#0f172a">1</text>
+    <text x="70" y="27" font-size="7" font-weight="bold" fill="#0f172a">0</text>
+    <text x="82" y="27" font-size="7" fill="#0f172a">B</text>
+    <!-- Tape Head -->
+    <polygon points="72,10 68,14 76,14" fill="#0f172a"/>
+    <text x="50" y="44" font-size="6.8" fill="#334155">2-Way Head</text>
   </g>
 
-  <!-- Connectors Layer 2 to Layer 3 -->
-  <path d="M 350 188 L 350 206" stroke="#0f172a" stroke-width="1.2" marker-end="url(#arrow)"/>
-  <text x="358" y="201" font-size="7.5" font-style="italic" fill="#475569">AST State Serialization</text>
+  <!-- Box 1B: Dock Analytics & Verification Panels -->
+  <rect x="504" y="26" width="392" height="96" rx="3" fill="#ffffff" stroke="#7c3aed" stroke-width="1" filter="url(#box-shadow)"/>
+  <text x="512" y="40" font-size="9" font-weight="bold" fill="#6d28d9">Dock Analytics &amp; Analytical Verification Panels</text>
 
-  <!-- ================= LAYER 3: CONTEXT INGESTION BUS ================= -->
-  <g id="layer-context">
-    <rect x="14" y="208" width="672" height="30" rx="3" fill="#e2e8f0" stroke="#475569" stroke-width="0.8"/>
-    <text x="24" y="222" font-size="8" font-weight="bold" fill="#0f172a">LAYER 3: BI-DIRECTIONAL CANVAS CONTEXT INGESTION BUS</text>
-    <text x="24" y="233" font-size="7" fill="#334155">Transmits: { Module ID, Active Topology, Node Elements, Step Index, Input String, Formula AST, Truth Values }</text>
+  <!-- Mini Venn Diagram inside Dock -->
+  <g transform="translate(516, 48)">
+    <circle cx="16" cy="18" r="14" fill="#3b82f6" fill-opacity="0.25" stroke="#1d4ed8" stroke-width="0.8"/>
+    <circle cx="30" cy="18" r="14" fill="#8b5cf6" fill-opacity="0.25" stroke="#6d28d9" stroke-width="0.8"/>
+    <text x="7" y="21" font-size="6.5" font-weight="bold" fill="#1e3a8a">A</text>
+    <text x="35" y="21" font-size="6.5" font-weight="bold" fill="#581c87">B</text>
+    <text x="7" y="44" font-size="6.8" fill="#334155">Venn Probe</text>
   </g>
 
-  <!-- Connector Layer 3 to Layer 4 -->
-  <path d="M 350 238 L 350 256" stroke="#0f172a" stroke-width="1.2" marker-end="url(#arrow)"/>
-
-  <!-- ================= LAYER 4: LOGICAI DUAL-ENGINE TUTOR ================= -->
-  <g id="layer-tutor">
-    <rect x="14" y="258" width="672" height="110" rx="3" fill="#f8fafc" stroke="#0f172a" stroke-width="1.2"/>
-    <text x="24" y="272" font-size="9" font-weight="bold" fill="#0f172a" letter-spacing="0.5">LAYER 4: LOGICAI DUAL-ENGINE INTELLIGENT TUTORING SYSTEM</text>
-
-    <!-- Dispatch Router -->
-    <rect x="24" y="280" width="134" height="78" rx="2.5" fill="#f1f5f9" stroke="#64748b" stroke-width="0.8"/>
-    <text x="30" y="295" font-size="8" font-weight="bold" fill="#0f172a">Intent Classifier</text>
-    <text x="30" y="308" font-size="7" fill="#475569">&bull; Regex Entity Extraction</text>
-    <text x="30" y="319" font-size="7" fill="#475569">&bull; Combinatorial Matcher</text>
-    <text x="30" y="330" font-size="7" fill="#475569">&bull; Theory/Hint Classifier</text>
-    <text x="30" y="348" font-size="7" font-weight="bold" fill="#0369a1">&rarr; Deterministic vs LLM</text>
-
-    <!-- Branch A: Tier 1 -->
-    <path d="M 158 305 L 180 305" stroke="#059669" stroke-width="1.2" marker-end="url(#arrow)"/>
-    <rect x="182" y="280" width="224" height="78" rx="2.5" fill="#ecfdf5" stroke="#059669" stroke-width="1"/>
-    <text x="190" y="295" font-size="8" font-weight="bold" fill="#065f46">Tier 1: Deterministic Symbolic Solver</text>
-    <text x="190" y="307" font-size="7" font-weight="bold" fill="#047857">&bull; 100% Exact Arithmetic (0.0% Hallucination)</text>
-    <text x="190" y="318" font-size="7" fill="#065f46">&bull; Bell Numbers B(n) (Set Partitions)</text>
-    <text x="190" y="328" font-size="7" fill="#065f46">&bull; Relations: 2^(n(n-1)), 2^(n(n+1)/2), 2^n &times; 3^(...)</text>
-    <text x="190" y="338" font-size="7" fill="#065f46">&bull; Functions: Injective P(n, m), Bijective n!, n^m</text>
-    <text x="190" y="348" font-size="7" fill="#065f46">&bull; Truth Table Rows 2^n &amp; Combinations C(n, k)</text>
-
-    <!-- Branch B: Tier 2 -->
-    <path d="M 158 335 L 420 335" stroke="#7c3aed" stroke-width="1.2" marker-end="url(#arrow-purple)"/>
-    <rect x="422" y="280" width="254" height="42" rx="2.5" fill="#faf5ff" stroke="#7c3aed" stroke-width="1"/>
-    <text x="430" y="295" font-size="8" font-weight="bold" fill="#5b21b6">Tier 2: Grounded LLM Layer (Gemini / Groq / OpenAI)</text>
-    <text x="430" y="307" font-size="7" fill="#6d28d9">&bull; Greedy Decoding (temp = 0.0) &bull; Zero Stochastic Drift</text>
-    <text x="430" y="317" font-size="7" fill="#6d28d9">&bull; Context-Injected Step Explanations &bull; Induction Proof Ladders</text>
-
-    <!-- Sanitizer Box -->
-    <path d="M 549 322 L 549 332" stroke="#d97706" stroke-width="1" marker-end="url(#arrow)"/>
-    <rect x="422" y="332" width="254" height="26" rx="2" fill="#fffbeb" stroke="#d97706" stroke-width="0.9"/>
-    <text x="430" y="343" font-size="7.5" font-weight="bold" fill="#92400e">Universal Human-Readable Mathematical Sanitizer</text>
-    <text x="430" y="353" font-size="6.8" fill="#78350f">Purges $, $$, \frac, \mathcal{P} &rarr; Clean Unicode (A &cap; B, 2^n, P(n,m))</text>
+  <!-- Mini Truth Table inside Dock -->
+  <g transform="translate(584, 46)">
+    <rect x="0" y="0" width="80" height="50" fill="#fdf4ff" stroke="#a855f7" stroke-width="0.6"/>
+    <line x1="0" y1="12" x2="80" y2="12" stroke="#a855f7" stroke-width="0.8"/>
+    <line x1="26" y1="0" x2="26" y2="50" stroke="#d8b4fe" stroke-width="0.5"/>
+    <line x1="52" y1="0" x2="52" y2="50" stroke="#d8b4fe" stroke-width="0.5"/>
+    <text x="4" y="9" font-size="6.5" font-weight="bold" fill="#581c87">P</text>
+    <text x="30" y="9" font-size="6.5" font-weight="bold" fill="#581c87">Q</text>
+    <text x="55" y="9" font-size="6.5" font-weight="bold" fill="#581c87">P &and; Q</text>
+    <text x="6" y="21" font-size="6" fill="#334155">0</text><text x="32" y="21" font-size="6" fill="#334155">0</text><text x="63" y="21" font-size="6" font-weight="bold" fill="#dc2626">0</text>
+    <text x="6" y="31" font-size="6" fill="#334155">0</text><text x="32" y="31" font-size="6" fill="#334155">1</text><text x="63" y="31" font-size="6" font-weight="bold" fill="#dc2626">0</text>
+    <text x="6" y="41" font-size="6" fill="#334155">1</text><text x="32" y="41" font-size="6" fill="#334155">1</text><text x="63" y="41" font-size="6" font-weight="bold" fill="#16a34a">1</text>
+    <text x="14" y="60" font-size="6.8" fill="#334155">DNF/CNF Table</text>
   </g>
+
+  <!-- Mini Adjacency Matrix & Poset Lattice -->
+  <g transform="translate(686, 46)">
+    <rect x="0" y="0" width="60" height="50" fill="#f8fafc" stroke="#475569" stroke-width="0.6"/>
+    <text x="16" y="10" font-size="7" font-weight="bold" fill="#0f172a">M_R [i, j]</text>
+    <text x="14" y="24" font-size="7" font-family="'Courier New', Courier, monospace" fill="#0f172a">[ 1  1 ]</text>
+    <text x="14" y="36" font-size="7" font-family="'Courier New', Courier, monospace" fill="#0f172a">[ 0  1 ]</text>
+    <text x="7" y="46" font-size="6" fill="#059669">Reflexive: TRUE</text>
+    <text x="10" y="60" font-size="6.8" fill="#334155">Matrix Probe</text>
+  </g>
+
+  <!-- CYK Table Probe -->
+  <g transform="translate(770, 46)">
+    <rect x="0" y="0" width="114" height="50" fill="#f1f5f9" stroke="#475569" stroke-width="0.6"/>
+    <text x="10" y="12" font-size="7" font-weight="bold" fill="#0f172a">CYK Table V[i, j]</text>
+    <text x="8" y="24" font-size="6.5" fill="#334155">&bull; 4-Step CNF Converter</text>
+    <text x="8" y="34" font-size="6.5" fill="#334155">&bull; Warshall Reachability W^k</text>
+    <text x="8" y="44" font-size="6.5" fill="#334155">&bull; String Accepted: YES</text>
+    <text x="24" y="60" font-size="6.8" fill="#334155">Formal Parser</text>
+  </g>
+
+  <!-- Inter-Layer Arrow (Layer 1 -> Layer 2) -->
+  <path d="M 259 122 L 259 146" stroke="#1d4ed8" stroke-width="1.4" marker-end="url(#arr-blue)"/>
+  <text x="265" y="138" font-size="7.5" font-style="italic" fill="#1e40af">Interactive Node/Wire Mutations</text>
+
+  <path d="M 700 122 L 700 146" stroke="#7c3aed" stroke-width="1.4" marker-end="url(#arr-purple)"/>
+  <text x="706" y="138" font-size="7.5" font-style="italic" fill="#6d28d9">Analytical Probe Re-evaluations</text>
+
+  <!-- ========================================================================= -->
+  <!-- LAYER 2: CLIENT-SIDE REACTIVE DAG & AST COMPILER ENGINE                 -->
+  <!-- ========================================================================= -->
+  <rect x="14" y="148" width="892" height="106" rx="3" fill="#f1f5f9" stroke="#0f172a" stroke-width="1"/>
+  <rect x="24" y="142" width="460" height="14" fill="#ffffff" rx="2"/>
+  <text x="28" y="153" font-size="9.5" font-weight="bold" fill="#0f172a" letter-spacing="0.5">LAYER 2: CLIENT-SIDE REACTIVE DAG &amp; AST EVALUATION ENGINE (SUB-MILLISECOND)</text>
+
+  <!-- Component 2A: Set & Logic DAG Engine + Visual AST Tree -->
+  <rect x="24" y="162" width="224" height="82" rx="3" fill="#ffffff" stroke="#475569" stroke-width="0.8"/>
+  <text x="32" y="176" font-size="8.5" font-weight="bold" fill="#0f172a">Sets &amp; Boolean AST Compiler</text>
+  
+  <!-- Mini AST Tree Drawing -->
+  <g transform="translate(32, 182)">
+    <circle cx="40" cy="12" r="8" fill="#dbeafe" stroke="#1d4ed8" stroke-width="0.8"/>
+    <text x="37" y="15" font-size="7" font-weight="bold" fill="#1e40af">&cup;</text>
+    <line x1="34" y1="18" x2="18" y2="32" stroke="#64748b" stroke-width="0.8"/>
+    <line x1="46" y1="18" x2="62" y2="32" stroke="#64748b" stroke-width="0.8"/>
+    <circle cx="16" cy="36" r="7" fill="#eff6ff" stroke="#3b82f6" stroke-width="0.6"/>
+    <text x="13" y="39" font-size="6.5" fill="#1e3a8a">A</text>
+    <circle cx="64" cy="36" r="7" fill="#eff6ff" stroke="#3b82f6" stroke-width="0.6"/>
+    <text x="61" y="39" font-size="6.5" fill="#1e3a8a">B</text>
+    <text x="88" y="20" font-size="6.8" fill="#334155">&bull; Topological Sort</text>
+    <text x="88" y="32" font-size="6.8" fill="#334155">&bull; Cycle Detection</text>
+    <text x="88" y="44" font-size="6.8" fill="#334155">&bull; Tautology &models; &phi;</text>
+  </g>
+
+  <!-- Component 2B: Binary Relations & Poset Reductions -->
+  <rect x="256" y="162" width="210" height="82" rx="3" fill="#ffffff" stroke="#475569" stroke-width="0.8"/>
+  <text x="264" y="176" font-size="8.5" font-weight="bold" fill="#0f172a">Relations &amp; Poset Reductions</text>
+  <text x="264" y="190" font-size="7" fill="#334155">&bull; Reflexivity: diag(M_R) == 1</text>
+  <text x="264" y="202" font-size="7" fill="#334155">&bull; Symmetry: M_R == M_R^T</text>
+  <text x="264" y="214" font-size="7" fill="#334155">&bull; Transitive Reduction (Hasse)</text>
+  <text x="264" y="226" font-size="7" fill="#334155">&bull; Warshall Reachability W^(k)[i, j]</text>
+  <text x="264" y="238" font-size="6.5" font-weight="bold" fill="#047857">Latency: 0.22 ms (sub-millisecond)</text>
+
+  <!-- Component 2C: Automata Determinization & Minimization -->
+  <rect x="474" y="162" width="210" height="82" rx="3" fill="#ffffff" stroke="#475569" stroke-width="0.8"/>
+  <text x="482" y="176" font-size="8.5" font-weight="bold" fill="#0f172a">Automata Algorithms Engine</text>
+  <text x="482" y="190" font-size="7" fill="#334155">&bull; &epsilon;-Closure Reachability</text>
+  <text x="482" y="202" font-size="7" fill="#334155">&bull; Powerset Subset 2^Q Construction</text>
+  <text x="482" y="214" font-size="7" fill="#334155">&bull; Hopcroft Partition Minimizer O(|&Sigma;| n log n)</text>
+  <text x="482" y="226" font-size="7" fill="#334155">&bull; Step-by-Step String Path Evaluator</text>
+  <text x="482" y="238" font-size="6.5" font-weight="bold" fill="#047857">State Reduction: Optimal</text>
+
+  <!-- Component 2D: Formal Languages & Computability -->
+  <rect x="692" y="162" width="204" height="82" rx="3" fill="#ffffff" stroke="#475569" stroke-width="0.8"/>
+  <text x="700" y="176" font-size="8.5" font-weight="bold" fill="#0f172a">Grammars &amp; Computability Engine</text>
+  <text x="700" y="190" font-size="7" fill="#334155">&bull; 4-Step CNF Normalization Pipeline</text>
+  <text x="700" y="202" font-size="7" fill="#334155">&bull; CYK Dynamic Parser O(n&sup3;) Execution</text>
+  <text x="700" y="214" font-size="7" fill="#334155">&bull; Pushdown Automata LIFO Execution</text>
+  <text x="700" y="226" font-size="7" fill="#334155">&bull; Turing Machine 2-Way Tape Control</text>
+  <text x="700" y="238" font-size="6.5" font-weight="bold" fill="#047857">Turing-Complete Simulation</text>
+
+  <!-- Inter-Layer Arrow (Layer 2 -> Layer 3) -->
+  <path d="M 460 254 L 460 274" stroke="#0f172a" stroke-width="1.4" marker-end="url(#arr-main)"/>
+  <text x="468" y="267" font-size="7.5" font-style="italic" fill="#0f172a">Graph AST &amp; State Vector Serialization</text>
+
+  <!-- ========================================================================= -->
+  <!-- LAYER 3: BI-DIRECTIONAL CONTEXT SERIALIZATION BUS                        -->
+  <!-- ========================================================================= -->
+  <rect x="14" y="276" width="892" height="46" rx="3" fill="#e2e8f0" stroke="#334155" stroke-width="1"/>
+  <rect x="24" y="270" width="370" height="14" fill="#ffffff" rx="2"/>
+  <text x="28" y="281" font-size="9" font-weight="bold" fill="#0f172a" letter-spacing="0.5">LAYER 3: BI-DIRECTIONAL CANVAS CONTEXT INGESTION BUS</text>
+
+  <!-- JSON Payload Representation (Realistic Research Data Flow) -->
+  <g transform="translate(30, 288)">
+    <rect x="0" y="0" width="860" height="26" rx="2" fill="#1e293b"/>
+    <text x="12" y="17" font-size="7.8" font-family="'Courier New', Courier, monospace" fill="#38bdf8">JSON Context Payload: </text>
+    <text x="135" y="17" font-size="7.8" font-family="'Courier New', Courier, monospace" fill="#f1f5f9">{ "module": "set_theory", "selectedNodes": ["SetA", "SetB"], "ast": "Union(A, B)", "elements": [1,2,3,4,5], "simStep": 2, "isTautology": false }</text>
+  </g>
+
+  <!-- Inter-Layer Arrow (Layer 3 -> Layer 4) -->
+  <path d="M 460 322 L 460 342" stroke="#0f172a" stroke-width="1.4" marker-end="url(#arr-main)"/>
+  <text x="468" y="335" font-size="7.5" font-style="italic" fill="#0f172a">Context-Grounded IPC Dispatch to Tutor</text>
+
+  <!-- ========================================================================= -->
+  <!-- LAYER 4: LOGICAI DUAL-ENGINE PEDAGOGICAL TUTOR                          -->
+  <!-- ========================================================================= -->
+  <rect x="14" y="344" width="892" height="182" rx="3" fill="#f8fafc" stroke="#0f172a" stroke-width="1.2"/>
+  <rect x="24" y="338" width="410" height="14" fill="#ffffff" rx="2"/>
+  <text x="28" y="349" font-size="9.5" font-weight="bold" fill="#0f172a" letter-spacing="0.5">LAYER 4: LOGICAI DUAL-ENGINE INTELLIGENT TUTORING SYSTEM</text>
+
+  <!-- Sub-block 4A: Intent Classification Decision Diamond -->
+  <g transform="translate(30, 360)">
+    <!-- Decision Diamond -->
+    <polygon points="75,10 150,55 75,100 0,55" fill="#f1f5f9" stroke="#0f172a" stroke-width="1.2"/>
+    <text x="42" y="48" font-size="8" font-weight="bold" fill="#0f172a">Query Intent</text>
+    <text x="40" y="58" font-size="7.5" font-weight="bold" fill="#0f172a">Classifier?</text>
+    <text x="25" y="68" font-size="6.5" fill="#475569">Regex + Semantics</text>
+
+    <!-- Student Query Bubble Input -->
+    <rect x="-8" y="-4" width="70" height="24" rx="2" fill="#eff6ff" stroke="#3b82f6" stroke-width="0.8"/>
+    <text x="-4" y="6" font-size="6.5" font-weight="bold" fill="#1e40af">Student Query: </text>
+    <text x="-4" y="15" font-size="6" fill="#1e3a8a">"How many partitions..."</text>
+    <path d="M 62 8 L 75 10" stroke="#3b82f6" stroke-width="1" fill="none" marker-end="url(#arr-blue)"/>
+
+    <!-- Branch [YES] Combinatorial Numerical -->
+    <path d="M 150 55 L 240 55" stroke="#047857" stroke-width="1.4" fill="none" marker-end="url(#arr-green)"/>
+    <text x="156" y="48" font-size="7.5" font-weight="bold" fill="#047857">[YES] Numerical</text>
+
+    <!-- Branch [NO] Open-Ended Conceptual -->
+    <path d="M 75 100 L 75 142 L 500 142" stroke="#7c3aed" stroke-width="1.4" fill="none" marker-end="url(#arr-purple)"/>
+    <text x="85" y="136" font-size="7.5" font-weight="bold" fill="#7c3aed">[NO] Proof / Concept Explanation</text>
+  </g>
+
+  <!-- Sub-block 4B: Tier 1 - Deterministic Symbolic Engine (GREEN BOX) -->
+  <rect x="245" y="362" width="270" height="114" rx="3" fill="#ecfdf5" stroke="#047857" stroke-width="1.2" filter="url(#box-shadow)"/>
+  <rect x="255" y="356" width="220" height="12" fill="#ffffff" rx="1.5"/>
+  <text x="258" y="365" font-size="8" font-weight="bold" fill="#065f46">Tier 1: Deterministic Symbolic &amp; Numerical Solver</text>
+  
+  <text x="255" y="380" font-size="7.5" font-weight="bold" fill="#047857">&bull; 100% Mathematical Accuracy (0.0% Hallucination)</text>
+  
+  <!-- Recurrence Formula Display -->
+  <rect x="255" y="386" width="250" height="24" rx="2" fill="#ffffff" stroke="#a7f3d0" stroke-width="0.8"/>
+  <text x="262" y="397" font-size="7.2" font-style="italic" fill="#064e3b">Bell Numbers: B(n) = &sum; C(n-1, k) B(k), B(0)=1</text>
+  <text x="262" y="406" font-size="6.8" fill="#047857">Exact Evaluation: B(5) = 52, B(6) = 203</text>
+
+  <text x="255" y="422" font-size="7" fill="#065f46">&bull; Reflexive Relations: 2^(n(n-1)) &bull; Symmetric: 2^(n(n+1)/2)</text>
+  <text x="255" y="433" font-size="7" fill="#065f46">&bull; Antisymmetric: 2^n &times; 3^(n(n-1)/2)</text>
+  <text x="255" y="444" font-size="7" fill="#065f46">&bull; Injective P(n, m) with Pigeonhole Principle (m&gt;n &rarr; 0)</text>
+  <text x="255" y="455" font-size="7" fill="#065f46">&bull; Bijective Permutations n! &bull; Truth Rows 2^n &bull; C(n, k)</text>
+  <text x="255" y="468" font-size="6.8" font-weight="bold" fill="#047857">&check; Zero Hallucination Guarantee</text>
+
+  <!-- Sub-block 4C: Tier 2 - Grounded LLM Layer (PURPLE BOX) -->
+  <rect x="532" y="362" width="362" height="66" rx="3" fill="#faf5ff" stroke="#7c3aed" stroke-width="1.2" filter="url(#box-shadow)"/>
+  <rect x="542" y="356" width="240" height="12" fill="#ffffff" rx="1.5"/>
+  <text x="546" y="365" font-size="8" font-weight="bold" fill="#5b21b6">Tier 2: Canvas-Grounded LLM Reasoning Layer</text>
+
+  <text x="542" y="380" font-size="7.2" fill="#6d28d9">&bull; <tspan font-weight="bold">Greedy Decoding (temp = 0.0):</tspan> Eliminates stochastic token variance.</text>
+  <text x="542" y="391" font-size="7.2" fill="#6d28d9">&bull; <tspan font-weight="bold">Live Canvas Context Injection:</tspan> Merges Layer 3 JSON into system prompt.</text>
+  <text x="542" y="402" font-size="7.2" fill="#6d28d9">&bull; <tspan font-weight="bold">Socratic Pedagogical Ladders:</tspan> Modus Ponens, Induction, DFA traces.</text>
+  <text x="542" y="415" font-size="6.8" font-weight="bold" fill="#7c3aed">&check; Visual Topology-Aware Conversational Feedback</text>
+
+  <!-- Tier 1 to Sanitizer Arrow -->
+  <path d="M 515 419 L 532 445" stroke="#047857" stroke-width="1.2" fill="none" marker-end="url(#arr-green)"/>
+
+  <!-- Tier 2 to Sanitizer Arrow -->
+  <path d="M 713 428 L 713 438" stroke="#7c3aed" stroke-width="1.2" fill="none" marker-end="url(#arr-purple)"/>
+
+  <!-- Sub-block 4D: Universal Human-Readable Mathematical Sanitizer (GOLD / CHARCOAL BOX) -->
+  <rect x="532" y="440" width="362" height="74" rx="3" fill="#fffbeb" stroke="#b45309" stroke-width="1.2" filter="url(#box-shadow)"/>
+  <rect x="542" y="434" width="290" height="12" fill="#ffffff" rx="1.5"/>
+  <text x="546" y="443" font-size="8" font-weight="bold" fill="#92400e">Universal Human-Readable Mathematical Sanitizer</text>
+
+  <!-- Before / After Transformation Box -->
+  <g transform="translate(542, 452)">
+    <!-- Raw LaTeX Input snippet -->
+    <rect x="0" y="2" width="168" height="24" rx="2" fill="#fee2e2" stroke="#ef4444" stroke-width="0.7"/>
+    <text x="4" y="11" font-size="6.5" font-weight="bold" fill="#991b1b">Raw LLM Output (Unrendered LaTeX):</text>
+    <text x="4" y="21" font-size="6.2" font-family="'Courier New', Courier, monospace" fill="#7f1d1d">"$$mathcal{P}(A) = 2^{|A|}$$ and $emptyset$"</text>
+
+    <!-- Transformation Arrow -->
+    <path d="M 172 14 L 186 14" stroke="#b45309" stroke-width="1.4" fill="none" marker-end="url(#arr-amber)"/>
+
+    <!-- Clean Unicode Output snippet -->
+    <rect x="190" y="2" width="156" height="24" rx="2" fill="#dcfce7" stroke="#22c55e" stroke-width="0.7"/>
+    <text x="194" y="11" font-size="6.5" font-weight="bold" fill="#14532d">Sanitized Human Unicode:</text>
+    <text x="194" y="21" font-size="6.5" font-family="'Times New Roman', Times, serif" font-weight="bold" fill="#166534">"P(A) = 2^|A| and &empty;"</text>
+
+    <text x="4" y="38" font-size="6.5" fill="#78350f">&bull; Multi-pass regex strips $, $$, rac, inom, mathcal{P} &bull; 0.0% Residual '$' Tokens</text>
+    <text x="4" y="48" font-size="6.5" font-weight="bold" fill="#047857">&bull; Result: 100% Clean, Readable Natural Language Math Output to Student</text>
+  </g>
+
 </svg>

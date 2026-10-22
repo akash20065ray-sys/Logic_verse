@@ -28,6 +28,7 @@ import { cn } from "@/lib/utils";
 import { useWorkspaceStore } from "@/store/workspace-store";
 import {
   answerDiscreteMathQuestion,
+  formatHumanReadableMath,
   generateExplanation,
   generateExample,
   generateHint,
@@ -230,7 +231,7 @@ export function LogicAiPanel() {
           {
             id: crypto.randomUUID(),
             role: "assistant",
-            content: data.content,
+            content: formatHumanReadableMath(data.content),
             source: "ai-live",
           },
         ]);
@@ -402,7 +403,7 @@ export function LogicAiPanel() {
               )}
             </div>
 
-            <div className="whitespace-pre-wrap font-sans text-[13px] leading-relaxed">{msg.content}</div>
+            <div className="whitespace-pre-wrap font-sans text-[13px] leading-relaxed">{formatHumanReadableMath(msg.content)}</div>
 
             {/* Key takeaways pills if provided */}
             {msg.keyTakeaways && msg.keyTakeaways.length > 0 && (
@@ -411,7 +412,7 @@ export function LogicAiPanel() {
                 {msg.keyTakeaways.map((k, i) => (
                   <div key={i} className="text-[11px] font-mono text-lv-cyan flex items-center gap-1.5">
                     <span className="h-1 w-1 rounded-full bg-lv-cyan" />
-                    {k}
+                    {formatHumanReadableMath(k)}
                   </div>
                 ))}
               </div>

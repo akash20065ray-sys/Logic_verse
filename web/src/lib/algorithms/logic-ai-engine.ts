@@ -17,30 +17,30 @@ export function generateExplanation(evalResult: GraphEvaluation): AiResponse {
 
   if (errors.some((e) => e.type === "error")) {
     const err = errors.find((e) => e.type === "error");
-    return {
+    return humanizeResponse({
       message: `I notice an issue with the canvas graph: **${err?.message}**.\n\n${err?.remedy || "Please adjust your node connections so the graph flows in one direction without circular loops."}`,
       suggestedAction: {
         label: "Fix canvas connections",
         actionType: "fix-error",
       },
-    };
+    });
   }
 
   if (primarySets.length === 0) {
-    return {
+    return humanizeResponse({
       message:
-        "Your canvas is currently empty. To get started, click **Add Set** on the palette to define sets (e.g. $A = \\{1, 2, 3\\}$), drop an operation like **Union (∪)** or **Intersection (∩)**, and connect them to a **Result** node!",
+        "Your canvas is currently empty. To get started, click **Add Set** on the palette to define sets (e.g. A = {1, 2, 3}), drop an operation like **Union (∪)** or **Intersection (∩)**, and connect them to a **Result** node!",
       suggestedAction: {
         label: "Load Union Example",
         actionType: "load-template",
         templateId: "union-intersection",
       },
-    };
+    });
   }
 
   if (!primaryResult) {
     const warning = errors.find((e) => e.type === "warning");
-    return {
+    return humanizeResponse({
       message: `You have ${primarySets.length} set(s) on the canvas (${primarySets.map((s) => `${s.label} = {${s.elements.join(", ")}}`).join(", ")}). ${
         warning
           ? `However, **${warning.message}** ${warning.remedy || ""}`
@@ -50,7 +50,7 @@ export function generateExplanation(evalResult: GraphEvaluation): AiResponse {
         label: "Connect Result Node",
         actionType: "add-node",
       },
-    };
+    });
   }
 
   const [setA, setB] = primarySets;
@@ -58,29 +58,29 @@ export function generateExplanation(evalResult: GraphEvaluation): AiResponse {
 
   let details = "";
   if (primaryResult.notation.includes("∪")) {
-    details = `The **Union (∪)** collects every distinct element that belongs to **${setA?.label ?? "A"}**, **${setB?.label ?? "B"}**, or both. Since elements already present are not duplicated, the result has cardinality $|${primaryResult.notation}| = ${primaryResult.cardinality}$.`;
+    details = `The **Union (∪)** collects every distinct element that belongs to **${setA?.label ?? "A"}**, **${setB?.label ?? "B"}**, or both. Since elements already present are not duplicated, the result has cardinality |${primaryResult.notation}| = ${primaryResult.cardinality}.`;
   } else if (primaryResult.notation.includes("∩")) {
     details = `The **Intersection (∩)** filters for elements simultaneously present in both **${setA?.label ?? "A"}** and **${setB?.label ?? "B"}**. ${
       primaryResult.elements.length === 0
-        ? `Since they share no common elements, the sets are **disjoint** and the intersection is the empty set $\\emptyset$.`
+        ? `Since they share no common elements, the sets are **disjoint** and the intersection is the empty set ∅.`
         : `Shared elements found: ${elementsFormatted}.`
     }`;
   } else if (primaryResult.notation.includes("−")) {
-    details = `The **Difference (−)** (or relative complement) starts with **${setA?.label ?? "A"}** and strips away any element also in **${setB?.label ?? "B"}**. Note that set difference is **non-commutative**: $A - B \\ne B - A$ whenever $A \\ne B$.`;
+    details = `The **Difference (−)** (or relative complement) starts with **${setA?.label ?? "A"}** and strips away any element also in **${setB?.label ?? "B"}**. Note that set difference is **non-commutative**: A - B ≠ B - A whenever A ≠ B.`;
   } else if (primaryResult.notation.includes("⊕")) {
-    details = `The **Symmetric Difference (⊕)** computes the exclusive OR: elements in either set, but strictly **not in both**. It is equivalent to $(A \\cup B) - (A \\cap B)$.`;
+    details = `The **Symmetric Difference (⊕)** computes the exclusive OR: elements in either set, but strictly **not in both**. It is equivalent to (A ∪ B) - (A ∩ B).`;
   } else if (primaryResult.notation.includes("×")) {
-    details = `The **Cartesian Product (×)** constructs ordered pairs $(a, b)$ where $a \\in A$ and $b \\in B$. The total number of pairs is exactly $|A| \\times |B| = ${setA?.elements.length ?? 0} \\times ${setB?.elements.length ?? 0} = ${primaryResult.cardinality}$.`;
+    details = `The **Cartesian Product (×)** constructs ordered pairs (a, b) where a ∈ A and b ∈ B. The total number of pairs is exactly |A| × |B| = ${setA?.elements.length ?? 0} × ${setB?.elements.length ?? 0} = ${primaryResult.cardinality}.`;
   } else if (primaryResult.notation.includes("𝒫")) {
-    details = `The **Power Set 𝒫** is the set of all subsets. For a set of size $n = ${setA?.elements.length ?? 0}$, there are exactly $2^n = ${primaryResult.cardinality}$ subsets.`;
+    details = `The **Power Set 𝒫** is the set of all subsets. For a set of size n = ${setA?.elements.length ?? 0}, there are exactly 2^n = ${primaryResult.cardinality} subsets.`;
   } else {
     details = `Computed expression: **${primaryResult.notation}** = ${elementsFormatted}.`;
   }
 
-  return {
-    message: `### Current Model Analysis: **${primaryResult.notation}**\n\n- **Input Sets**: ${primarySets.map((s) => `${s.label} = \\{${s.elements.join(", ")}\\} (|${s.label}| = ${s.elements.length})`).join(", ")}\n- **Result**: ${primaryResult.notation} = **${elementsFormatted}**\n- **Cardinality**: $|${primaryResult.notation}| = ${primaryResult.cardinality}$\n\n${details}`,
+  return humanizeResponse({
+    message: `### Current Model Analysis: **${primaryResult.notation}**\n\n- **Input Sets**: ${primarySets.map((s) => `${s.label} = {${s.elements.join(", ")}} (|${s.label}| = ${s.elements.length})`).join(", ")}\n- **Result**: ${primaryResult.notation} = **${elementsFormatted}**\n- **Cardinality**: |${primaryResult.notation}| = ${primaryResult.cardinality}\n\n${details}`,
     keyTakeaways: primaryResult.properties.slice(0, 3),
-  };
+  });
 }
 
 export function generateLogicExplanation(evalResult: LogicEvaluation): AiResponse {
@@ -89,21 +89,21 @@ export function generateLogicExplanation(evalResult: LogicEvaluation): AiRespons
 
   if (errors.some((e) => e.type === "error")) {
     const err = errors.find((e) => e.type === "error");
-    return {
+    return humanizeResponse({
       message: `Logic Error detected: **${err?.message}**.\n\n${err?.remedy || "Please review your connections."}`,
-    };
+    });
   }
 
   if (!truthTable || truthTable.rows.length === 0) {
-    return {
+    return humanizeResponse({
       message:
-        "Your logic canvas has no active formula probe. Add proposition variables (e.g. $P, Q$), connect them with logic gates like **AND (∧)** or **IMPLIES (→)**, and link to a **Result Probe** to see the full Truth Table!",
+        "Your logic canvas has no active formula probe. Add proposition variables (e.g. P, Q), connect them with logic gates like **AND (∧)** or **IMPLIES (→)**, and link to a **Result Probe** to see the full Truth Table!",
       suggestedAction: {
         label: "Load Modus Ponens",
         actionType: "load-template",
         templateId: "modus-ponens",
       },
-    };
+    });
   }
 
   const classification = isTautology
@@ -112,14 +112,14 @@ export function generateLogicExplanation(evalResult: LogicEvaluation): AiRespons
     ? "an unsatisfiable **CONTRADICTION (⊥)** (false under all truth assignments)"
     : "a **CONTINGENCY** (its truth value depends on the variable assignments)";
 
-  return {
+  return humanizeResponse({
     message: `### Propositional Logic Analysis: **${activeExpression}**\n\n- **Current Value**: ${currentTruthValue ? "TRUE (T)" : "FALSE (F)"}\n- **Classification**: This proposition is ${classification}.\n- **Variables**: ${truthTable.variables.join(", ")} (${truthTable.rows.length} total interpretations)\n\nCheck the **Truth Table** tab in the dock below to inspect each row and see the canonical DNF/CNF expansions!`,
     keyTakeaways: [
       isTautology ? "Valid theorem" : isContradiction ? "Unsatisfiable" : "Satisfiable",
       `Canonical DNF: ${truthTable.dnf}`,
       `Canonical CNF: ${truthTable.cnf}`,
     ],
-  };
+  });
 }
 
 export function generateAutomataExplanation(
@@ -127,10 +127,10 @@ export function generateAutomataExplanation(
   activeStepIdx: number = 0
 ): AiResponse {
   if (!automataSim || automataSim.steps.length === 0) {
-    return {
+    return humanizeResponse({
       message:
-        "The Automata canvas has no active simulation. Add states ($q_0, q_1$), connect transition edges with input symbols ('0', '1', 'ε'), and type a test string in the top palette to see live diagram step highlighting!",
-    };
+        "The Automata canvas has no active simulation. Add states (q0, q1), connect transition edges with input symbols ('0', '1', 'ε'), and type a test string in the top palette to see live diagram step highlighting!",
+    });
   }
 
   const { inputString, isAccepted, steps, explanation } = automataSim;
@@ -143,14 +143,14 @@ export function generateAutomataExplanation(
     )
     .join("\n");
 
-  return {
+  return humanizeResponse({
     message: `### Automata Simulation Step-by-Step Breakdown for "${inputString}"\n\n${explanation}\n\n#### Active Step ${currentStep.stepIndex} Highlight:\n- **Transition Fired**: \`${currentStep.transitionRule}\`\n- **Consumed Symbol**: \`${currentStep.charConsumed !== null ? `'${currentStep.charConsumed}'` : "Start Configuration"}\`\n- **Explanation**: ${currentStep.description}\n\n#### Complete Step-wise Computation Trace:\n${stepList}\n\n*Observe your canvas: the active state node(s) and active transition edge are glowing in real time as you step forward/backward!*`,
     keyTakeaways: [
       isAccepted ? "String Accepted by Machine" : "String Rejected by Machine",
       `Active Step: ${currentStep.stepIndex} of ${steps.length - 1}`,
       `Current State(s): { ${currentStep.activeStateIds.join(", ")} }`,
     ],
-  };
+  });
 }
 
 export function generateHint(evalResult: GraphEvaluation): AiResponse {
@@ -161,42 +161,42 @@ export function generateHint(evalResult: GraphEvaluation): AiResponse {
     const common = setA.elements.filter((x) => setB.elements.includes(x));
 
     if (common.length === 0) {
-      return {
-        message: `💡 **Pedagogical Hint**: Notice that **${setA.label}** and **${setB.label}** have no common elements (${setA.label} ∩ ${setB.label} = ∅). They are **mutually disjoint**. In this special case, $|${setA.label} ∪ ${setB.label}| = |${setA.label}| + |${setB.label}|$. Try changing an element to see how inclusion-exclusion subtracts the overlap!`,
-      };
+      return humanizeResponse({
+        message: `💡 **Pedagogical Hint**: Notice that **${setA.label}** and **${setB.label}** have no common elements (${setA.label} ∩ ${setB.label} = ∅). They are **mutually disjoint**. In this special case, |${setA.label} ∪ ${setB.label}| = |${setA.label}| + |${setB.label}|. Try changing an element to see how inclusion-exclusion subtracts the overlap!`,
+      });
     } else {
-      return {
-        message: `💡 **Pedagogical Hint**: The elements \\{${common.join(", ")}\\} are shared between ${setA.label} and ${setB.label}. In the Principle of Inclusion-Exclusion, we subtract $|${setA.label} ∩ ${setB.label}| = ${common.length}$ so those elements aren't counted twice in the union!`,
-      };
+      return humanizeResponse({
+        message: `💡 **Pedagogical Hint**: The elements {${common.join(", ")}} are shared between ${setA.label} and ${setB.label}. In the Principle of Inclusion-Exclusion, we subtract |${setA.label} ∩ ${setB.label}| = ${common.length} so those elements aren't counted twice in the union!`,
+      });
     }
   }
 
-  return {
+  return humanizeResponse({
     message:
-      "💡 **Pedagogical Hint**: Explore chaining operations! Connect the output of a Union into an Intersection with a third set to visualize complex expressions like $(A \\cup B) \\cap C$.",
-  };
+      "💡 **Pedagogical Hint**: Explore chaining operations! Connect the output of a Union into an Intersection with a third set to visualize complex expressions like (A ∪ B) ∩ C.",
+  });
 }
 
 export function generateLogicHint(evalResult: LogicEvaluation): AiResponse {
   const { truthTable, activeExpression } = evalResult;
 
   if (truthTable?.isTautology) {
-    return {
+    return humanizeResponse({
       message: `💡 **Pedagogical Hint**: Notice that **${activeExpression}** is a **Tautology**! Every row in the truth table evaluates to True. That means it represents a universally valid law of inference or identity.`,
-    };
+    });
   }
 
   if (activeExpression.includes("→")) {
-    return {
+    return humanizeResponse({
       message:
-        "💡 **Pedagogical Hint**: Remember the Material Implication rule: $P \\to Q$ is False **only when $P = \\text{True}$ and $Q = \\text{False}$**. If the premise $P$ is False, the conditional is vacuously True!",
-    };
+        "💡 **Pedagogical Hint**: Remember the Material Implication rule: P → Q is False **only when P = True and Q = False**. If the premise P is False, the conditional is vacuously True!",
+    });
   }
 
-  return {
+  return humanizeResponse({
     message:
       "💡 **Pedagogical Hint**: Try clicking the (T / F) toggle buttons directly on your variable nodes to observe how truth values propagate live through your logic gates!",
-  };
+  });
 }
 
 export function generateExample(): AiResponse {
@@ -220,14 +220,14 @@ export function generateExample(): AiResponse {
 
   const picked = templates[Math.floor(Math.random() * templates.length)];
 
-  return {
+  return humanizeResponse({
     message: `✨ Here is an illustrative concept for your workspace:\n\n**${picked.title}**\n${picked.desc}\n\nWould you like me to load this template onto your canvas?`,
     suggestedAction: {
       label: `Load "${picked.title}"`,
       actionType: "load-template",
       templateId: picked.id,
     },
-  };
+  });
 }
 
 export function generateLogicExample(): AiResponse {
@@ -246,14 +246,14 @@ export function generateLogicExample(): AiResponse {
 
   const picked = templates[Math.floor(Math.random() * templates.length)];
 
-  return {
+  return humanizeResponse({
     message: `✨ Logic Theorem Suggestion:\n\n**${picked.title}**\n${picked.desc}\n\nWould you like me to load this theorem onto your canvas?`,
     suggestedAction: {
       label: `Load "${picked.title}"`,
       actionType: "load-template",
       templateId: picked.id,
     },
-  };
+  });
 }
 
 // -------------------------------------------------------------------------
@@ -293,6 +293,80 @@ function bellNumber(n: number): number {
   return bell[n][0];
 }
 
+// -------------------------------------------------------------------------
+// HUMAN READABLE MATH CLEANER (Zero Dollar Signs)
+// -------------------------------------------------------------------------
+export function formatHumanReadableMath(text: string): string {
+  if (!text) return "";
+  let out = text;
+  // 1. Remove block math $$ ... $$ and inline math $ ... $
+  out = out.replace(/\$\$([\s\S]*?)\$\$/g, "$1");
+  out = out.replace(/\$([^\$\n]+?)\$/g, "$1");
+  // 2. Fractions and Combinations
+  out = out.replace(/\\frac\{([^{}]+)\}\{([^{}]+)\}/g, "($1) / ($2)");
+  out = out.replace(/\\binom\{([^{}]+)\}\{([^{}]+)\}/g, "C($1, $2)");
+  // 3. LaTeX symbols to pure Unicode
+  out = out
+    .replace(/\\mathcal\{P\}/g, "P")
+    .replace(/\\emptyset/g, "∅")
+    .replace(/\\ne\b|\\neq\b/g, "≠")
+    .replace(/\\le\b|\\leq\b/g, "≤")
+    .replace(/\\ge\b|\\geq\b/g, "≥")
+    .replace(/\\notin\b/g, "∉")
+    .replace(/\\in\b/g, "∈")
+    .replace(/\\subseteq\b/g, "⊆")
+    .replace(/\\subset\b/g, "⊂")
+    .replace(/\\cup\b/g, "∪")
+    .replace(/\\cap\b/g, "∩")
+    .replace(/\\oplus\b/g, "⊕")
+    .replace(/\\Delta\b/g, "Δ")
+    .replace(/\\times\b/g, "×")
+    .replace(/\\cdot\b/g, "·")
+    .replace(/\\land\b/g, "∧")
+    .replace(/\\lor\b/g, "∨")
+    .replace(/\\neg\b/g, "¬")
+    .replace(/\\to\b|\\rightarrow\b/g, "→")
+    .replace(/\\iff\b|\\leftrightarrow\b/g, "↔")
+    .replace(/\\implies\b/g, "⇒")
+    .replace(/\\delta\b/g, "δ")
+    .replace(/\\Sigma\b/g, "Σ")
+    .replace(/\\Gamma\b/g, "Γ")
+    .replace(/\\varepsilon\b|\\epsilon\b/g, "ε")
+    .replace(/\\forall\b/g, "∀")
+    .replace(/\\exists\b/g, "∃")
+    .replace(/\\top\b/g, "⊤")
+    .replace(/\\bot\b/g, "⊥")
+    .replace(/\\mid\b/g, "|")
+    .replace(/\\equiv\b/g, "≡")
+    .replace(/\\circ\b/g, "∘")
+    .replace(/\\sum(_\{[^{}]+\})?(\^\{[^{}]+\})?/g, "sum")
+    .replace(/\\dots\b|\\cdots\b/g, "...")
+    .replace(/\\mathbb\{R\}/g, "ℝ")
+    .replace(/\\mathbb\{N\}/g, "ℕ")
+    .replace(/\\mathbb\{Z\}/g, "ℤ")
+    .replace(/\\mathbb\{Q\}/g, "ℚ")
+    .replace(/\\mathbb\{([^{}]+)\}/g, "$1")
+    .replace(/\\text\{([^{}]+)\}/g, "$1")
+    .replace(/\\textbf\{([^{}]+)\}/g, "**$1**")
+    .replace(/\\textit\{([^{}]+)\}/g, "*$1*");
+  // 4. Clean subscript braces and exponent braces
+  out = out.replace(/([A-Za-z0-9])_\{([^{}]+)\}/g, "$1($2)");
+  out = out.replace(/\^\{([^{}]+)\}/g, (match, p1) => (p1.length === 1 ? `^${p1}` : `^(${p1})`));
+  out = out.replace(/\\\{/g, "{").replace(/\\\}/g, "}");
+  // 5. Remove any leftover dollar signs
+  out = out.replace(/\$/g, "");
+  return out;
+}
+
+export function humanizeResponse<T extends AiResponse | null>(res: T): T {
+  if (!res) return res;
+  return {
+    ...res,
+    message: formatHumanReadableMath(res.message),
+    keyTakeaways: res.keyTakeaways ? res.keyTakeaways.map(formatHumanReadableMath) : undefined,
+  } as T;
+}
+
 export function solveDiscreteMathNumerical(query: string): AiResponse | null {
   const q = query.toLowerCase();
   const nums = extractNumbers(q);
@@ -303,8 +377,8 @@ export function solveDiscreteMathNumerical(query: string): AiResponse | null {
     if (n > 15) return null;
     const ans = bellNumber(n);
     return {
-      message: `### Exact Solution: Number of Equivalence Relations\n\nFor a set $A$ with cardinality $|A| = ${n}$:\n\n- **Mathematical Law**: The number of distinct equivalence relations on a set of size $n$ equals the **Bell Number** $B_n$, which counts the number of partitions of a set of size $n$.\n- **Formula**: $B_n = \\sum_{k=0}^{n-1} \\binom{n-1}{k} B_k$, with $B_0 = 1$.\n- **Calculation**: For $n = ${n}$, the ${n}^{\\text{th}}$ Bell Number is:\n  $$B_{${n}} = ${ans}$$\n\n**Final Answer:** There are exactly **${ans}** equivalence relations on a set of size $n = ${n}$.`,
-      keyTakeaways: [`B_${n} = ${ans}`, "Equivalence Relations = Bell Numbers", "Partitions of a Set"],
+      message: `### Exact Solution: Number of Equivalence Relations\n\nFor a set A with size |A| = ${n}:\n\n- **Mathematical Law**: The number of distinct equivalence relations on a set of size ${n} equals the **Bell Number** B(${n}), which counts the total partitions of the set.\n- **Formula**: B(n) = sum from k = 0 to n - 1 of C(n - 1, k) × B(k), with B(0) = 1.\n- **Calculation**: For n = ${n}, the Bell Number is:\n  B(${n}) = ${ans}\n\n**Final Answer:** There are exactly **${ans}** equivalence relations on a set of size ${n}.`,
+      keyTakeaways: [`B(${n}) = ${ans}`, "Equivalence Relations = Bell Numbers", "Partitions of a Set"],
     };
   }
 
@@ -315,8 +389,8 @@ export function solveDiscreteMathNumerical(query: string): AiResponse | null {
     const power = n * (n - 1);
     const ans = Math.pow(2, power);
     return {
-      message: `### Exact Solution: Number of Reflexive Relations\n\nFor a set $A$ with $|A| = ${n}$ elements:\n\n- **Mathematical Derivation**:\n  - A relation $R$ is a subset of $A \\times A$, which has a total of $n^2 = ${n}^2 = ${n * n}$ ordered pairs.\n  - For $R$ to be **reflexive**, all $n$ diagonal pairs $(a, a)$ MUST be included in $R$.\n  - This leaves $n^2 - n = n(n-1) = ${n}(${n - 1}) = ${power}$ non-diagonal pairs $(a, b)$ with $a \\ne b$.\n  - Each of these ${power}$ pairs can be either included or excluded (2 choices each).\n- **Formula**: $$2^{n(n-1)} = 2^{${power}} = ${ans >= 1e15 ? ans.toExponential(4) : ans}$$\n\n**Final Answer:** Exactly **${ans >= 1e15 ? ans.toExponential(4) : ans.toLocaleString()}** reflexive relations can be formed on a set of size ${n}.`,
-      keyTakeaways: [`2^{n(n-1)} = 2^{${power}} = ${ans}`, "All diagonal pairs required", "Binary choices on off-diagonals"],
+      message: `### Exact Solution: Number of Reflexive Relations\n\nFor a set A with |A| = ${n} elements:\n\n- **Mathematical Derivation**:\n  - A relation R is a subset of A × A, which has a total of n² = ${n}² = ${n * n} ordered pairs.\n  - For R to be reflexive, all ${n} diagonal pairs (a, a) MUST be included in R.\n  - This leaves n² - n = n(n - 1) = ${n}(${n - 1}) = ${power} non-diagonal pairs (a, b) with a ≠ b.\n  - Each of these ${power} pairs can be either included or excluded (2 choices each).\n- **Formula**:\n  2^(n(n - 1)) = 2^${power} = ${ans >= 1e15 ? ans.toExponential(4) : ans}\n\n**Final Answer:** Exactly **${ans >= 1e15 ? ans.toExponential(4) : ans.toLocaleString()}** reflexive relations can be formed on a set of size ${n}.`,
+      keyTakeaways: [`2^(n(n - 1)) = 2^${power} = ${ans}`, "All diagonal pairs required", "Binary choices on off-diagonals"],
     };
   }
 
@@ -327,8 +401,8 @@ export function solveDiscreteMathNumerical(query: string): AiResponse | null {
     const power = (n * (n + 1)) / 2;
     const ans = Math.pow(2, power);
     return {
-      message: `### Exact Solution: Number of Symmetric Relations\n\nFor a set $A$ with $|A| = ${n}$ elements:\n\n- **Mathematical Derivation**:\n  - In a relation matrix of size $n \\times n$, there are $n$ diagonal elements and $\\frac{n(n-1)}{2}$ pairs of off-diagonal elements.\n  - For $R$ to be **symmetric**, if $(a, b) \\in R$, then $(b, a) \\in R$. Thus, each off-diagonal pair $(a, b)$ and $(b, a)$ must be decided together (2 choices per pair).\n  - Each of the $n$ diagonal elements $(a, a)$ can also be independently included or excluded (2 choices).\n  - Total independent choices: $n + \\frac{n(n-1)}{2} = \\frac{n(n+1)}{2} = \\frac{${n}(${n + 1})}{2} = ${power}$.\n- **Formula**: $$2^{\\frac{n(n+1)}{2}} = 2^{${power}} = ${ans >= 1e15 ? ans.toExponential(4) : ans}$$\n\n**Final Answer:** Exactly **${ans >= 1e15 ? ans.toExponential(4) : ans.toLocaleString()}** symmetric relations can be formed on a set of size ${n}.`,
-      keyTakeaways: [`2^{n(n+1)/2} = 2^{${power}} = ${ans}`, "Pairs decided simultaneously", "Independent diagonals"],
+      message: `### Exact Solution: Number of Symmetric Relations\n\nFor a set A with |A| = ${n} elements:\n\n- **Mathematical Derivation**:\n  - In an ${n} × ${n} relation matrix, there are ${n} diagonal elements and n(n - 1) / 2 = ${power - n} pairs of off-diagonal elements.\n  - For R to be symmetric, if (a, b) ∈ R, then (b, a) ∈ R. Thus, each off-diagonal pair must be decided together (2 choices per pair).\n  - Each of the ${n} diagonal elements (a, a) can also be independently included or excluded (2 choices each).\n  - Total independent choices: n + n(n - 1) / 2 = n(n + 1) / 2 = ${power}.\n- **Formula**:\n  2^(n(n + 1) / 2) = 2^${power} = ${ans >= 1e15 ? ans.toExponential(4) : ans}\n\n**Final Answer:** Exactly **${ans >= 1e15 ? ans.toExponential(4) : ans.toLocaleString()}** symmetric relations can be formed on a set of size ${n}.`,
+      keyTakeaways: [`2^(n(n + 1) / 2) = 2^${power} = ${ans}`, "Pairs decided simultaneously", "Independent diagonals"],
     };
   }
 
@@ -339,8 +413,8 @@ export function solveDiscreteMathNumerical(query: string): AiResponse | null {
     const power = (n * (n - 1)) / 2;
     const ans = Math.pow(2, power);
     return {
-      message: `### Exact Solution: Number of Reflexive AND Symmetric Relations\n\nFor a set $A$ with $|A| = ${n}$ elements:\n\n- **Mathematical Derivation**:\n  - **Reflexive requirement**: All $n$ diagonal pairs $(a, a)$ MUST be included (1 choice).\n  - **Symmetric requirement**: For the remaining off-diagonal elements, pairs $(a, b)$ and $(b, a)$ must be decided together.\n  - The number of off-diagonal pairs is $\\frac{n(n-1)}{2} = \\frac{${n}(${n - 1})}{2} = ${power}$.\n- **Formula**: $$2^{\\frac{n(n-1)}{2}} = 2^{${power}} = ${ans}$$\n\n**Final Answer:** Exactly **${ans.toLocaleString()}** relations on a set of size ${n} are both reflexive and symmetric.`,
-      keyTakeaways: [`2^{n(n-1)/2} = 2^{${power}} = ${ans}`, "Diagonal fixed to 1", "Off-diagonal pairs symmetric"],
+      message: `### Exact Solution: Number of Reflexive AND Symmetric Relations\n\nFor a set A with |A| = ${n} elements:\n\n- **Mathematical Derivation**:\n  - **Reflexive requirement**: All ${n} diagonal pairs (a, a) MUST be included (1 fixed choice).\n  - **Symmetric requirement**: For the remaining off-diagonal elements, pairs (a, b) and (b, a) must be decided together.\n  - The number of off-diagonal pairs is n(n - 1) / 2 = ${power}.\n- **Formula**:\n  2^(n(n - 1) / 2) = 2^${power} = ${ans}\n\n**Final Answer:** Exactly **${ans.toLocaleString()}** relations on a set of size ${n} are both reflexive and symmetric.`,
+      keyTakeaways: [`2^(n(n - 1) / 2) = 2^${power} = ${ans}`, "Diagonal fixed to 1", "Off-diagonal pairs symmetric"],
     };
   }
 
@@ -351,8 +425,8 @@ export function solveDiscreteMathNumerical(query: string): AiResponse | null {
     const offDiagPairs = (n * (n - 1)) / 2;
     const ans = Math.pow(2, n) * Math.pow(3, offDiagPairs);
     return {
-      message: `### Exact Solution: Number of Antisymmetric Relations\n\nFor a set $A$ with $|A| = ${n}$ elements:\n\n- **Mathematical Derivation**:\n  - For the $n$ diagonal elements $(a, a)$, each can be either in $R$ or not in $R$ (2 choices each $\\implies 2^n = 2^{${n}} = ${Math.pow(2, n)}$).\n  - For each of the $\\frac{n(n-1)}{2} = ${offDiagPairs}$ pairs of distinct elements $(a, b)$ with $a \\ne b$, antisymmetric forbids BOTH $(a, b)$ and $(b, a)$ from being in $R$. Thus there are **3 valid choices** for each pair: (1) only $(a, b) \\in R$, (2) only $(b, a) \\in R$, or (3) neither $\\in R$.\n- **Formula**: $$2^n \\times 3^{\\frac{n(n-1)}{2}} = 2^{${n}} \\times 3^{${offDiagPairs}} = ${ans >= 1e15 ? ans.toExponential(4) : ans}$$\n\n**Final Answer:** Exactly **${ans >= 1e15 ? ans.toExponential(4) : ans.toLocaleString()}** antisymmetric relations exist on a set of size ${n}.`,
-      keyTakeaways: [`2^n * 3^{n(n-1)/2} = ${ans}`, "3 choices for off-diagonal pairs", "2 choices for diagonals"],
+      message: `### Exact Solution: Number of Antisymmetric Relations\n\nFor a set A with |A| = ${n} elements:\n\n- **Mathematical Derivation**:\n  - For the ${n} diagonal elements (a, a), each can be either in R or not in R (2 choices each → 2^${n} = ${Math.pow(2, n)}).\n  - For each of the ${offDiagPairs} pairs of distinct elements (a, b) with a ≠ b, antisymmetry forbids BOTH (a, b) and (b, a) from being in R. Thus there are **3 valid choices** for each pair: (1) only (a, b) ∈ R, (2) only (b, a) ∈ R, or (3) neither ∈ R.\n- **Formula**:\n  2^n × 3^(n(n - 1) / 2) = 2^${n} × 3^${offDiagPairs} = ${ans >= 1e15 ? ans.toExponential(4) : ans}\n\n**Final Answer:** Exactly **${ans >= 1e15 ? ans.toExponential(4) : ans.toLocaleString()}** antisymmetric relations exist on a set of size ${n}.`,
+      keyTakeaways: [`2^n × 3^(n(n - 1) / 2) = ${ans}`, "3 choices for off-diagonal pairs", "2 choices for diagonals"],
     };
   }
 
@@ -367,8 +441,8 @@ export function solveDiscreteMathNumerical(query: string): AiResponse | null {
     const power = n * n;
     const ans = Math.pow(2, power);
     return {
-      message: `### Exact Solution: Total Number of Binary Relations\n\nFor a set $A$ with cardinality $|A| = ${n}$:\n\n- **Mathematical Derivation**:\n  - A binary relation on $A$ is any subset of the Cartesian product $A \\times A$.\n  - The cardinality of $A \\times A$ is $|A| \\times |A| = ${n} \\times ${n} = ${power}$.\n  - The number of subsets of a set of size ${power}$ is $2^{|A \\times A|}$.\n- **Formula**: $$2^{n^2} = 2^{${power}} = ${ans >= 1e15 ? ans.toExponential(4) : ans}$$\n\n**Final Answer:** Exactly **${ans >= 1e15 ? ans.toExponential(4) : ans.toLocaleString()}** relations can be formed on a set of size ${n}.`,
-      keyTakeaways: [`2^{n^2} = 2^{${power}} = ${ans}`, "Power set of A x A", "Exponential growth"],
+      message: `### Exact Solution: Total Number of Binary Relations\n\nFor a set A with cardinality |A| = ${n}:\n\n- **Mathematical Derivation**:\n  - A binary relation on A is any subset of the Cartesian product A × A.\n  - The cardinality of A × A is |A| × |A| = ${n} × ${n} = ${power}.\n  - The number of subsets of a set of size ${power} is 2^|A × A|.\n- **Formula**:\n  2^(n²) = 2^${power} = ${ans >= 1e15 ? ans.toExponential(4) : ans}\n\n**Final Answer:** Exactly **${ans >= 1e15 ? ans.toExponential(4) : ans.toLocaleString()}** relations can be formed on a set of size ${n}.`,
+      keyTakeaways: [`2^(n²) = 2^${power} = ${ans}`, "Power set of A × A", "Exponential growth"],
     };
   }
 
@@ -382,8 +456,8 @@ export function solveDiscreteMathNumerical(query: string): AiResponse | null {
     if (n > 30) return null;
     const ans = Math.pow(2, n);
     return {
-      message: `### Exact Solution: Power Set Cardinality\n\nFor a set $A$ with $|A| = ${n}$ elements:\n\n- **Mathematical Principle**: The power set $\\mathcal{P}(A)$ is the set of all subsets of $A$, including the empty set $\\emptyset$ and $A$ itself.\n- **Formula**: $$|\\mathcal{P}(A)| = 2^{|A|} = 2^{${n}} = ${ans}$$\n\n**Final Answer:** The power set contains exactly **${ans.toLocaleString()}** subsets.`,
-      keyTakeaways: [`|P(A)| = 2^n = 2^{${n}} = ${ans}`, "Includes empty set ∅", "Includes full set A"],
+      message: `### Exact Solution: Power Set Cardinality\n\nFor a set A with |A| = ${n} elements:\n\n- **Mathematical Principle**: The power set P(A) is the set of all subsets of A, including the empty set ∅ and A itself.\n- **Formula**:\n  |P(A)| = 2^|A| = 2^${n} = ${ans}\n\n**Final Answer:** The power set contains exactly **${ans.toLocaleString()}** subsets.`,
+      keyTakeaways: [`|P(A)| = 2^${n} = ${ans}`, "Includes empty set ∅", "Includes full set A"],
     };
   }
 
@@ -395,7 +469,7 @@ export function solveDiscreteMathNumerical(query: string): AiResponse | null {
     if (q.includes("injective") || q.includes("one-to-one")) {
       const ans = m <= n ? factorial(n) / (factorial(n - m) || 1) : 0;
       return {
-        message: `### Exact Solution: Number of Injective (One-to-One) Functions\n\nFor domain $|A| = ${m}$ and codomain $|B| = ${n}$:\n\n- **Pigeonhole Principle**: If $|A| > |B|$, at least two elements in $A$ must map to the same element in $B$, so NO injective function is possible.\n- **Permutation Formula**: For $|A| \\le |B|$:\n  $$P(|B|, |A|) = \\frac{|B|!}{(|B| - |A|)!} = \\frac{${n}!}{(${n} - ${m})!} = ${ans}$$\n\n**Final Answer:** There are exactly **${ans}** injective functions from a set of size ${m}$ to a set of size ${n}.`,
+        message: `### Exact Solution: Number of Injective (One-to-One) Functions\n\nFor domain |A| = ${m} and codomain |B| = ${n}:\n\n- **Pigeonhole Principle**: If |A| > |B|, at least two elements in A must map to the same element in B, so NO injective function is possible.\n- **Permutation Formula**: For |A| ≤ |B|:\n  P(|B|, |A|) = |B|! / (|B| - |A|)! = ${n}! / (${n} - ${m})! = ${ans}\n\n**Final Answer:** There are exactly **${ans}** injective functions from a set of size ${m} to a set of size ${n}.`,
         keyTakeaways: [`P(${n}, ${m}) = ${ans}`, "One-to-one mapping", m > n ? "Pigeonhole: 0 functions" : "Distinct elements map to distinct targets"],
       };
     }
@@ -403,7 +477,7 @@ export function solveDiscreteMathNumerical(query: string): AiResponse | null {
     if (q.includes("bijective") || q.includes("one-to-one and onto")) {
       const ans = m === n ? factorial(n) : 0;
       return {
-        message: `### Exact Solution: Number of Bijective Functions\n\nFor domain $|A| = ${m}$ and codomain $|B| = ${n}$:\n\n- **Bijective Requirement**: A function is bijective if and only if it is both injective and surjective, which strictly requires $|A| = |B|$.\n- **Formula**: If $|A| = |B| = n$, the number of bijections is $n! = ${n}! = ${ans}$. If $|A| \\ne |B|$, the number is **0**.\n\n**Final Answer:** There are exactly **${ans}** bijective functions between these sets.`,
+        message: `### Exact Solution: Number of Bijective Functions\n\nFor domain |A| = ${m} and codomain |B| = ${n}:\n\n- **Bijective Requirement**: A function is bijective if and only if it is both injective (one-to-one) and surjective (onto), which strictly requires |A| = |B|.\n- **Formula**: If |A| = |B| = n, the number of bijections is n! = ${n}! = ${ans}. If |A| ≠ |B|, the number is **0**.\n\n**Final Answer:** There are exactly **${ans}** bijective functions between these sets.`,
         keyTakeaways: [`n! = ${ans}`, "Requires |A| == |B|", "Invertible permutations"],
       };
     }
@@ -411,8 +485,8 @@ export function solveDiscreteMathNumerical(query: string): AiResponse | null {
     // Total Functions: |B|^|A| = n^m
     const ans = Math.pow(n, m);
     return {
-      message: `### Exact Solution: Total Number of Functions\n\nFor domain $|A| = ${m}$ and codomain $|B| = ${n}$:\n\n- **Rule of Product**: Each of the ${m}$ elements in the domain $A$ can independently be mapped to any of the ${n}$ elements in the codomain $B$.\n- **Formula**: $$|B|^{|A|} = ${n}^{${m}} = ${ans}$$\n\n**Final Answer:** There are exactly **${ans.toLocaleString()}** possible functions from $A$ to $B$.`,
-      keyTakeaways: [`|B|^{|A|} = ${n}^{${m}} = ${ans}`, "Each domain element chooses independent target", "Rule of product"],
+      message: `### Exact Solution: Total Number of Functions\n\nFor domain |A| = ${m} and codomain |B| = ${n}:\n\n- **Rule of Product**: Each of the ${m} elements in domain A can independently be mapped to any of the ${n} elements in codomain B.\n- **Formula**:\n  |B|^|A| = ${n}^${m} = ${ans}\n\n**Final Answer:** There are exactly **${ans.toLocaleString()}** possible functions from A to B.`,
+      keyTakeaways: [`|B|^|A| = ${n}^${m} = ${ans}`, "Each domain element chooses independent target", "Rule of product"],
     };
   }
 
@@ -422,8 +496,8 @@ export function solveDiscreteMathNumerical(query: string): AiResponse | null {
     if (n > 20) return null;
     const ans = Math.pow(2, n);
     return {
-      message: `### Exact Solution: Number of Truth Table Rows\n\nFor a propositional logic formula with $n = ${n}$ distinct variables:\n\n- **Binary Values**: Each boolean variable can be either True (1) or False (0) — exactly 2 possible truth assignments.\n- **Formula**: $$2^n = 2^{${n}} = ${ans}$$\n\n**Final Answer:** The complete truth table requires exactly **${ans}** rows.`,
-      keyTakeaways: [`2^n = 2^{${n}} = ${ans} rows`, "Binary truth assignments", "Complete enumeration"],
+      message: `### Exact Solution: Number of Truth Table Rows\n\nFor a propositional logic formula with n = ${n} distinct variables:\n\n- **Binary Values**: Each boolean variable can be either True (1) or False (0) — exactly 2 possible truth assignments.\n- **Formula**:\n  2^n = 2^${n} = ${ans} rows\n\n**Final Answer:** The complete truth table requires exactly **${ans}** rows.`,
+      keyTakeaways: [`2^n = 2^${n} = ${ans} rows`, "Binary truth assignments", "Complete enumeration"],
     };
   }
 
@@ -435,7 +509,7 @@ export function solveDiscreteMathNumerical(query: string): AiResponse | null {
     const actualK = Math.min(k, n);
     const ans = combinations(actualN, actualK);
     return {
-      message: `### Exact Solution: Combinations C(n, k)\n\nChoosing $k = ${actualK}$ elements from a set of $n = ${actualN}$ elements without regard to order:\n\n- **Formula**: $$\\binom{n}{k} = \\frac{n!}{k!(n-k)!} = \\frac{${actualN}!}{${actualK}! \\times ${actualN - actualK}!} = ${ans}$$\n\n**Final Answer:** There are exactly **${ans}** subsets of size ${actualK} from a set of size ${actualN}.`,
+      message: `### Exact Solution: Combinations C(n, k)\n\nChoosing k = ${actualK} elements from a set of n = ${actualN} elements without regard to order:\n\n- **Formula**:\n  C(n, k) = n! / (k! × (n - k)!) = ${actualN}! / (${actualK}! × ${actualN - actualK}!) = ${ans}\n\n**Final Answer:** There are exactly **${ans}** subsets of size ${actualK} from a set of size ${actualN}.`,
       keyTakeaways: [`C(${actualN}, ${actualK}) = ${ans}`, "Order does not matter", "Binomial coefficient"],
     };
   }
@@ -444,6 +518,26 @@ export function solveDiscreteMathNumerical(query: string): AiResponse | null {
 }
 
 export function answerDiscreteMathQuestion(
+  query: string,
+  evalResult: GraphEvaluation,
+  logicEval?: LogicEvaluation,
+  moduleId?: string,
+  automataSim?: AutomatonSimulation,
+  activeAutomataStepIndex?: number
+): AiResponse {
+  return humanizeResponse(
+    computeAnswerDiscreteMathQuestion(
+      query,
+      evalResult,
+      logicEval,
+      moduleId,
+      automataSim,
+      activeAutomataStepIndex
+    )
+  );
+}
+
+function computeAnswerDiscreteMathQuestion(
   query: string,
   evalResult: GraphEvaluation,
   logicEval?: LogicEvaluation,

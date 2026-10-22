@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { formatHumanReadableMath } from "../../../lib/algorithms/logic-ai-engine";
 
 interface ChatMessage {
   role: "user" | "assistant" | "system";
@@ -33,16 +34,22 @@ Your expertise covers:
 Mathematical Verification Directives (100% Accuracy Standard):
 - Zero Hallucination: Derive all mathematical proofs, counting problems, truth tables, and state transitions strictly from formal axioms.
 - Strict Combinatorial Formulas:
-  * Power Set size: $|\\mathcal{P}(A)| = 2^{|A|}$
-  * Relations on set of size $n$: Total = $2^{n^2}$; Reflexive = $2^{n(n-1)}$; Irreflexive = $2^{n(n-1)}$; Symmetric = $2^{n(n+1)/2}$; Reflexive & Symmetric = $2^{n(n-1)/2}$; Antisymmetric = $2^n \\times 3^{n(n-1)/2}$; Equivalence relations = Bell Number $B_n$ ($B_1=1, B_2=2, B_3=5, B_4=15, B_5=52$).
-  * Functions from $A$ ($m=|A|$) to $B$ ($n=|B|$): Total = $n^m$; Injective (one-to-one) = $P(n, m) = \\frac{n!}{(n-m)!}$ (if $m \\le n$ else 0); Surjective (onto) = $\\sum_{k=0}^n (-1)^{n-k} \\binom{n}{k} k^m$ (if $m \\ge n$ else 0); Bijective = $n!$ (if $m=n$ else 0).
-  * Principle of Inclusion-Exclusion (PIE): $|A \\cup B| = |A| + |B| - |A \\cap B|$; $|A \\cup B \\cup C| = |A| + |B| + |C| - (|A \\cap B| + |B \\cap C| + |A \\cap C|) + |A \\cap B \\cap C|$.
-  * Truth Tables: $2^n$ rows for $n$ propositional variables.
-  * Automata: Hopcroft minimization uses partition refinement of distinguishable states ($O(|\\Sigma| n \\log n)$). NFA to DFA uses powerset $2^Q$ subset construction.
+  * Power Set size: |P(A)| = 2^|A|
+  * Relations on set of size n: Total = 2^(n²); Reflexive = 2^(n(n-1)); Irreflexive = 2^(n(n-1)); Symmetric = 2^(n(n+1)/2); Reflexive & Symmetric = 2^(n(n-1)/2); Antisymmetric = 2^n × 3^(n(n-1)/2); Equivalence relations = Bell Number B(n) (B(1)=1, B(2)=2, B(3)=5, B(4)=15, B(5)=52).
+  * Functions from A (m=|A|) to B (n=|B|): Total = n^m; Injective (one-to-one) = P(n, m) = n! / ((n-m)!) (if m ≤ n else 0); Surjective (onto) = sum_{k=0}^n (-1)^(n-k) C(n, k) k^m (if m ≥ n else 0); Bijective = n! (if m=n else 0).
+  * Principle of Inclusion-Exclusion (PIE): |A ∪ B| = |A| + |B| - |A ∩ B|; |A ∪ B ∪ C| = |A| + |B| + |C| - (|A ∩ B| + |B ∩ C| + |A ∩ C|) + |A ∩ B ∩ C|.
+  * Truth Tables: 2^n rows for n propositional variables.
+  * Automata: Hopcroft minimization uses partition refinement of distinguishable states (O(|Σ| n log n)). NFA to DFA uses powerset 2^Q subset construction.
 
-Pedagogical Tone:
-- Encouraging, mathematically rigorous, and crystal clear.
-- Use LaTeX formatting ($...$ for inline math, $$...$$ for block math) for formulas, sets, symbols (∪, ∩, ⊕, δ, Σ, ε, →, ∧, ∨, ¬).
+CRITICAL FORMATTING DIRECTIVE — HUMAN READABLE PLAIN TEXT ONLY:
+- NEVER use LaTeX dollar signs ($ or $$). Do NOT wrap any formula in $...$ or $$...$$.
+- NEVER output raw LaTeX commands like \\frac, \\binom, \\mathcal{P}, \\emptyset, or \\text.
+- Always output clean, natural, human-readable Unicode text:
+  * Use standard Unicode math symbols: ∈, ∉, ⊆, ⊂, ∪, ∩, ∅, ≠, ≤, ≥, →, ↔, ⇒, ∧, ∨, ¬, ⊕, δ, Σ, ε
+  * Write exponents naturally: 2^n, 2^(n(n-1)), n^m, or superscripts: 2ⁿ, O(n³)
+  * Write standard notation: P(A), P(n, r), C(n, r), B(n), |A|, |A ∩ B|
+  * Write fractions with slashes: n! / ((n - r)!)
+- Keep your tone encouraging, mathematically rigorous, crystal clear, and pleasant to read without code artifacts.
 - When the user asks about the active step or their canvas, reference their live visual canvas state directly.
 - Break down explanations step-by-step with intuitive mathematical intuition and concrete examples.`;
 
@@ -133,7 +140,7 @@ export async function POST(req: NextRequest) {
         "I was unable to generate a response. Please try rephrasing your question.";
 
       return NextResponse.json({
-        content: text,
+        content: formatHumanReadableMath(text),
         provider: "gemini",
         model: targetModel,
         status: "success",
@@ -191,7 +198,7 @@ export async function POST(req: NextRequest) {
       const text = data.choices?.[0]?.message?.content || "No response received.";
 
       return NextResponse.json({
-        content: text,
+        content: formatHumanReadableMath(text),
         provider,
         model: targetModel,
         status: "success",

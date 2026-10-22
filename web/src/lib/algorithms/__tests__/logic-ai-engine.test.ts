@@ -5,6 +5,7 @@ import {
   generateHint,
   generateExample,
   answerDiscreteMathQuestion,
+  formatHumanReadableMath,
 } from "../logic-ai-engine";
 import type { Node, Edge } from "@xyflow/react";
 
@@ -47,27 +48,55 @@ describe("logic-ai-engine", () => {
     expect(answer.message).toContain("De Morgan");
   });
 
-  it("answerDiscreteMathQuestion calculates exact reflexive relations for n=3", () => {
+  it("answerDiscreteMathQuestion calculates exact reflexive relations for n=3 in human readable format", () => {
     const answer = answerDiscreteMathQuestion("how many reflexive relations on a set of size 3?", evalResult);
     expect(answer.message).toContain("64");
-    expect(answer.message).toContain("2^{n(n-1)}");
+    expect(answer.message).toContain("2^(n(n - 1))");
+    expect(answer.message).not.toContain("$");
   });
 
   it("answerDiscreteMathQuestion calculates exact equivalence relations for n=3 (Bell number 5)", () => {
     const answer = answerDiscreteMathQuestion("how many equivalence relations on a set of size 3?", evalResult);
     expect(answer.message).toContain("5");
     expect(answer.message).toContain("Bell Number");
+    expect(answer.message).not.toContain("$");
   });
 
   it("answerDiscreteMathQuestion calculates exact injective functions from 3 to 4", () => {
     const answer = answerDiscreteMathQuestion("how many injective functions from a set of size 3 to 4?", evalResult);
     expect(answer.message).toContain("24");
     expect(answer.keyTakeaways).toContain("P(4, 3) = 24");
+    expect(answer.message).not.toContain("$");
   });
 
-  it("answerDiscreteMathQuestion calculates exact power set size for n=5", () => {
+  it("answerDiscreteMathQuestion calculates exact power set size for n=5 in human readable format", () => {
     const answer = answerDiscreteMathQuestion("what is the power set size of a set with 5 elements?", evalResult);
     expect(answer.message).toContain("32");
-    expect(answer.message).toContain("2^{5} = 32");
+    expect(answer.message).toContain("2^5 = 32");
+    expect(answer.message).not.toContain("$");
+  });
+
+  it("answerDiscreteMathQuestion returns zero dollar signs across diverse mathematical concepts", () => {
+    const queries = [
+      "what is mathematical induction",
+      "what is a turing machine",
+      "what is cyk algorithm",
+      "what is symmetric difference",
+      "what is cartesian product",
+      "explain union",
+      "what is de morgan law",
+      "what is pda stack memory",
+      "what is pumping lemma",
+      "what is hopcroft minimization",
+    ];
+
+    for (const q of queries) {
+      const ans = answerDiscreteMathQuestion(q, evalResult);
+      expect(ans.message).not.toContain("$");
+      expect(ans.message).not.toContain("$$");
+      ans.keyTakeaways?.forEach((k) => {
+        expect(k).not.toContain("$");
+      });
+    }
   });
 });

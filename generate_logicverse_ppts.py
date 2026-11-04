@@ -323,124 +323,45 @@ def build_presentation(with_names: bool, filename: str):
     p_sfoot.space_before = Pt(14)
 
     # =========================================================================
-    # SLIDE 3: SYSTEM ARCHITECTURE & DATA FLOW (5 Columns, Filled Richly)
+    # SLIDE 3: SYSTEM ARCHITECTURE (Visual Flow Diagram Image)
     # =========================================================================
     s3 = prs.slides.add_slide(blank_layout)
     add_bg(s3)
-    add_header(s3, "System Architecture: End-to-End Mathematical Pipeline", "SYSTEM ARCHITECTURE")
+    add_header(s3, "System Architecture: End-to-End Visual Data Flow", "SYSTEM ARCHITECTURE")
 
-    arch_stages = [
-        ("STAGE 01", "Visual Canvas", "React Flow DAG", "User Mouse & Drag", "Visual Graph DAG", [
-            ("Custom SVG Nodes", "Circular states, double rings, and gate shapes."),
-            ("Animated Bezier Edges", "Curved transition arrows with symbol labels."),
-            ("Canvas Viewport", "Smooth panning, zooming, and snap-to-grid."),
-        ], "React Flow 11", BORDER_CYAN),
-        ("STAGE 02", "Graph Parser", "Zustand Store", "Canvas Nodes & Edges", "Mathematical AST", [
-            ("AST Generation", "Parses visual connections into formal models."),
-            ("State Isolation", "Zero re-render latency across dock panels."),
-            ("Schema Validation", "Strict TypeScript runtime verification."),
-        ], "Zustand v5 Store", BORDER_GOLD),
-        ("STAGE 03", "Math Engines", "Core Solvers", "Mathematical AST", "Exact Solution Data", [
-            ("Automata Solver", "Hopcroft minimization & NFA subset construction."),
-            ("Matrix Engine", "Warshall's transitive closure derivation in O(n³)."),
-            ("Logic Solver", "Full truth tables & canonical DNF/CNF synthesis."),
-        ], "Core Algorithms", BORDER_CRIMSON),
-        ("STAGE 04", "Output Dock", "Visual Panels", "Computed Data Models", "Interactive UI Views", [
-            ("Dynamic SVG Venn", "2-set & 3-set interactive spatial regions."),
-            ("Live Step Stepper", "Animated glowing states and pulsing edges."),
-            ("Batch Test Suite", "Instant green accepted and red rejected tags."),
-        ], "SVG Path & Lucide", BORDER_GREEN),
-        ("STAGE 05", "LogicAI Tutor", "Hybrid AI Engine", "Canvas State + Prompt", "Socratic Guidance", [
-            ("Canvas Perception", "Reads live nodes directly from store."),
-            ("Live LLM API", "Streams explanations via Gemini or Groq."),
-            ("Offline Fallback", "Deterministic AST rules when offline."),
-        ], "Gemini 2.5 Flash", BORDER_PURPLE),
-    ]
+    # Use the authentic high-resolution architecture diagram image
+    base_dir = os.path.dirname(os.path.abspath(__file__)) if "__file__" in globals() else r"c:\logicverse-v0.1-foundation"
+    framed_img_path = os.path.join(base_dir, "system_architecture_framed.png")
+    src_img_path = os.path.join(base_dir, "system_architecture.png")
 
-    card_w = Inches(2.2)
-    gap = Inches(0.183)
-    for i, (stage_tag, title, sub, d_in, d_out, bullets, tech_tag, col) in enumerate(arch_stages):
-        c_left = Inches(0.8 + i * (2.2 + 0.183))
-        c = add_card_box(s3, c_left, Inches(1.65), card_w, Inches(5.35), border_color=col)
-        tf = c.text_frame
-        tf.margin_left = tf.margin_right = Inches(0.16)
-        tf.margin_top = Inches(0.2)
-        tf.margin_bottom = Inches(0.15)
+    # Auto-generate framed image with smooth rounded corners and cyan border if not present
+    if not os.path.exists(framed_img_path) and os.path.exists(src_img_path):
+        try:
+            from PIL import Image, ImageDraw
+            im = Image.open(src_img_path)
+            rad = 24
+            mask = Image.new("L", im.size, 0)
+            draw_m = ImageDraw.Draw(mask)
+            draw_m.rounded_rectangle([(0, 0), im.size], radius=rad, fill=255)
+            framed = Image.new("RGBA", im.size, (0, 0, 0, 0))
+            framed.paste(im, (0, 0), mask=mask)
+            draw_b = ImageDraw.Draw(framed)
+            draw_b.rounded_rectangle([(1, 1), (im.size[0] - 2, im.size[1] - 2)], radius=rad, outline=(0, 242, 254, 255), width=3)
+            framed.save(framed_img_path)
+        except Exception:
+            framed_img_path = src_img_path
 
-        # Stage Tag
-        p_tag = tf.paragraphs[0]
-        p_tag.alignment = PP_ALIGN.LEFT
-        p_tag.text = stage_tag
-        p_tag.font.name = "Arial"
-        p_tag.font.size = Pt(9.5)
-        p_tag.font.bold = True
-        p_tag.font.color.rgb = col
+    active_img = framed_img_path if os.path.exists(framed_img_path) else src_img_path
+    if os.path.exists(active_img):
+        # Aspect ratio of 1024 x 682 image = ~1.5015
+        img_h = Inches(5.62)
+        img_w = Inches(5.62 * (1024 / 682))
+        img_left = Inches((13.333 - (5.62 * (1024 / 682))) / 2)
+        img_top = Inches(1.48)
+        s3.shapes.add_picture(active_img, img_left, img_top, img_w, img_h)
 
-        # Title
-        p_t = tf.add_paragraph()
-        p_t.alignment = PP_ALIGN.LEFT
-        p_t.text = title
-        p_t.font.name = "Arial"
-        p_t.font.size = Pt(12.5)
-        p_t.font.bold = True
-        p_t.font.color.rgb = TEXT_WHITE
-        p_t.space_before = Pt(2)
 
-        # Subtitle / Tech
-        p_s = tf.add_paragraph()
-        p_s.alignment = PP_ALIGN.LEFT
-        p_s.text = sub
-        p_s.font.name = "Calibri"
-        p_s.font.size = Pt(10)
-        p_s.font.bold = True
-        p_s.font.color.rgb = TEXT_GOLD
-        p_s.space_before = Pt(2)
 
-        # Data Flow Box
-        p_flow = tf.add_paragraph()
-        p_flow.alignment = PP_ALIGN.LEFT
-        p_flow.text = f"In: {d_in}\nOut: {d_out}"
-        p_flow.font.name = "Calibri"
-        p_flow.font.size = Pt(8.5)
-        p_flow.font.color.rgb = TEXT_CYAN
-        p_flow.space_before = Pt(6)
-
-        # Divider label
-        p_div = tf.add_paragraph()
-        p_div.alignment = PP_ALIGN.LEFT
-        p_div.text = "KEY CAPABILITIES"
-        p_div.font.name = "Arial"
-        p_div.font.size = Pt(8.5)
-        p_div.font.bold = True
-        p_div.font.color.rgb = col
-        p_div.space_before = Pt(6)
-
-        # 3 Structured Bullets
-        for b_head, b_desc in bullets:
-            pb = tf.add_paragraph()
-            pb.alignment = PP_ALIGN.LEFT
-            pb.space_before = Pt(5)
-            r1 = pb.add_run()
-            r1.text = f"• {b_head}: "
-            r1.font.name = "Calibri"
-            r1.font.size = Pt(9.5)
-            r1.font.bold = True
-            r1.font.color.rgb = TEXT_WHITE
-            r2 = pb.add_run()
-            r2.text = b_desc
-            r2.font.name = "Calibri"
-            r2.font.size = Pt(9)
-            r2.font.color.rgb = TEXT_MUTED
-
-        # Bottom Tech & Status Tag
-        p_st = tf.add_paragraph()
-        p_st.alignment = PP_ALIGN.LEFT
-        p_st.space_before = Pt(10)
-        p_st.text = f"Tech: {tech_tag}\nStatus: ✓ 100% Operational"
-        p_st.font.name = "Calibri"
-        p_st.font.size = Pt(8.5)
-        p_st.font.bold = True
-        p_st.font.color.rgb = TEXT_GREEN
 
     # =========================================================================
     # SLIDE 4: TECHNOLOGY STACK (6 Structured Cards)

@@ -1,0 +1,212 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 420" width="100%" height="auto" style="background:#ffffff; font-family:'Times New Roman',Times,serif;">
+  <defs>
+    <marker id="arr-arrow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#1e293b"/>
+    </marker>
+    <marker id="arr-wire" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#2563eb"/>
+    </marker>
+  </defs>
+
+  <!-- Browser Window Wrapper -->
+  <rect x="2" y="2" width="896" height="416" rx="4" fill="#ffffff" stroke="#0f172a" stroke-width="1.2"/>
+  
+  <!-- Window Title Bar -->
+  <rect x="2" y="2" width="896" height="24" rx="4" fill="#1e293b"/>
+  <!-- Window Controls -->
+  <circle cx="16" cy="14" r="4" fill="#ef4444"/>
+  <circle cx="28" cy="14" r="4" fill="#f59e0b"/>
+  <circle cx="40" cy="14" r="4" fill="#10b981"/>
+  <text x="450" y="16.5" font-family="'Times New Roman', serif" font-size="9.5" fill="#f8fafc" text-anchor="middle" font-weight="bold">LogicVerse Integrated Educational Environment (v0.1) &#8212; Workspace: Formal Automata &amp; Discrete Algebra</text>
+
+  <!-- Module Selector Toolbar -->
+  <rect x="2" y="26" width="896" height="24" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="0.8"/>
+  <rect x="12" y="30" width="110" height="16" rx="2" fill="#ffffff" stroke="#3b82f6" stroke-width="1"/>
+  <text x="67" y="41.5" font-size="8" font-weight="bold" fill="#1d4ed8" text-anchor="middle">&#10003; 1. Set Theory</text>
+  <rect x="128" y="30" width="110" height="16" rx="2" fill="#ffffff" stroke="#94a3b8" stroke-width="0.5"/>
+  <text x="183" y="41.5" font-size="8" fill="#475569" text-anchor="middle">&#10003; 2. Propositional Logic</text>
+  <rect x="244" y="30" width="110" height="16" rx="2" fill="#ffffff" stroke="#94a3b8" stroke-width="0.5"/>
+  <text x="299" y="41.5" font-size="8" fill="#475569" text-anchor="middle">&#10003; 3. Binary Relations</text>
+  <rect x="360" y="30" width="120" height="16" rx="2" fill="#1e293b" stroke="#0f172a" stroke-width="1"/>
+  <text x="420" y="41.5" font-size="8" font-weight="bold" fill="#ffffff" text-anchor="middle">&#9654; 4. Automata &amp; DFA</text>
+  <rect x="486" y="30" width="120" height="16" rx="2" fill="#ffffff" stroke="#94a3b8" stroke-width="0.5"/>
+  <text x="546" y="41.5" font-size="8" fill="#475569" text-anchor="middle">5. Grammars &amp; CYK</text>
+  <text x="880" y="41.5" font-size="7.5" fill="#047857" font-weight="bold" text-anchor="end">Engine Status: Reactive (0.18 ms)</text>
+
+  <!-- ========================================================================= -->
+  <!-- DOCK A: INTERACTIVE GRAPH CANVAS (LEFT: 460px)                            -->
+  <!-- ========================================================================= -->
+  <rect x="10" y="56" width="460" height="354" fill="#fafafa" stroke="#cbd5e1" stroke-width="0.8"/>
+  <rect x="10" y="56" width="460" height="20" fill="#e2e8f0"/>
+  <text x="18" y="70" font-size="8.5" font-weight="bold" fill="#0f172a">Dock A: Topological Visual Node-Wire Canvas</text>
+  <text x="460" y="70" font-size="7.5" fill="#64748b" text-anchor="end">Grid: 20px &#8226; Zoom: 100% &#8226; Nodes: 4, Edges: 5</text>
+
+  <!-- Canvas Elements: DFA State Graph for L = { w | w contains 'ab' } -->
+  <!-- State q0 (Start State) -->
+  <circle cx="70" cy="140" r="18" fill="#ffffff" stroke="#1e293b" stroke-width="1.5"/>
+  <text x="70" y="144" font-size="10" font-weight="bold" fill="#0f172a" text-anchor="middle">q&#8320;</text>
+  <!-- Initial Arrow -->
+  <line x1="28" y1="140" x2="52" y2="140" stroke="#1e293b" stroke-width="1.5" marker-end="url(#arr-arrow)"/>
+  <text x="36" y="134" font-size="7.5" font-style="italic" fill="#475569">start</text>
+  <!-- Self Loop q0 on b -->
+  <path d="M 64 122 C 55 95 85 95 76 122" fill="none" stroke="#1e293b" stroke-width="1.2" marker-end="url(#arr-arrow)"/>
+  <text x="70" y="100" font-size="8.5" font-weight="bold" fill="#1e293b" text-anchor="middle">b</text>
+
+  <!-- Transition q0 -> q1 on a -->
+  <line x1="88" y1="140" x2="162" y2="140" stroke="#1e293b" stroke-width="1.5" marker-end="url(#arr-arrow)"/>
+  <text x="125" y="132" font-size="9" font-weight="bold" fill="#1e293b" text-anchor="middle">a</text>
+
+  <!-- State q1 -->
+  <circle cx="180" cy="140" r="18" fill="#eff6ff" stroke="#2563eb" stroke-width="1.8"/>
+  <text x="180" y="144" font-size="10" font-weight="bold" fill="#1e40af" text-anchor="middle">q&#8321;</text>
+  <!-- Self Loop q1 on a -->
+  <path d="M 174 122 C 165 95 195 95 186 122" fill="none" stroke="#1e293b" stroke-width="1.2" marker-end="url(#arr-arrow)"/>
+  <text x="180" y="100" font-size="8.5" font-weight="bold" fill="#1e293b" text-anchor="middle">a</text>
+
+  <!-- Transition q1 -> q2 on b -->
+  <line x1="198" y1="140" x2="272" y2="140" stroke="#1e293b" stroke-width="1.5" marker-end="url(#arr-arrow)"/>
+  <text x="235" y="132" font-size="9" font-weight="bold" fill="#1e293b" text-anchor="middle">b</text>
+
+  <!-- State q2 (Accept State: Double Circle) -->
+  <circle cx="290" cy="140" r="18" fill="#ecfdf5" stroke="#059669" stroke-width="1.5"/>
+  <circle cx="290" cy="140" r="14" fill="none" stroke="#059669" stroke-width="1.2"/>
+  <text x="290" y="144" font-size="10" font-weight="bold" fill="#065f46" text-anchor="middle">q&#8322;</text>
+  <!-- Self Loop q2 on a, b -->
+  <path d="M 284 122 C 275 95 305 95 296 122" fill="none" stroke="#1e293b" stroke-width="1.2" marker-end="url(#arr-arrow)"/>
+  <text x="290" y="100" font-size="8.5" font-weight="bold" fill="#1e293b" text-anchor="middle">a, b</text>
+
+  <!-- Dynamic Wire Connection to Set Subsystem Node -->
+  <!-- Set Node A -->
+  <rect x="30" y="210" width="100" height="42" rx="2" fill="#ffffff" stroke="#2563eb" stroke-width="1"/>
+  <rect x="30" y="210" width="100" height="14" fill="#eff6ff"/>
+  <text x="36" y="221" font-size="7.5" font-weight="bold" fill="#1e40af">Set Node A</text>
+  <text x="36" y="235" font-size="7.2" fill="#334155">A = { q&#8320;, q&#8321; }</text>
+  <circle cx="130" cy="231" r="3" fill="#2563eb"/>
+
+  <!-- Set Node B -->
+  <rect x="30" y="270" width="100" height="42" rx="2" fill="#ffffff" stroke="#2563eb" stroke-width="1"/>
+  <rect x="30" y="270" width="100" height="14" fill="#eff6ff"/>
+  <text x="36" y="281" font-size="7.5" font-weight="bold" fill="#1e40af">Set Node B</text>
+  <text x="36" y="295" font-size="7.2" fill="#334155">B = { q&#8321;, q&#8322; }</text>
+  <circle cx="130" cy="291" r="3" fill="#2563eb"/>
+
+  <!-- Operator Node: Intersection -->
+  <rect x="190" y="236" width="90" height="46" rx="2" fill="#ffffff" stroke="#7c3aed" stroke-width="1"/>
+  <rect x="190" y="236" width="90" height="14" fill="#f5f3ff"/>
+  <text x="196" y="247" font-size="7.5" font-weight="bold" fill="#6d28d9">OpNode: A &#8745; B</text>
+  <text x="196" y="261" font-size="7.2" fill="#334155">Val: { q&#8321; }</text>
+  <text x="196" y="273" font-size="7" fill="#047857" font-weight="bold">|A &#8745; B| = 1</text>
+  <circle cx="190" cy="251" r="3" fill="#7c3aed"/>
+  <circle cx="190" cy="265" r="3" fill="#7c3aed"/>
+  <circle cx="280" cy="259" r="3" fill="#7c3aed"/>
+
+  <!-- Dynamic Wires -->
+  <path d="M 130 231 C 160 231, 160 251, 190 251" fill="none" stroke="#2563eb" stroke-width="1.5"/>
+  <path d="M 130 291 C 160 291, 160 265, 190 265" fill="none" stroke="#2563eb" stroke-width="1.5"/>
+
+  <!-- Live Simulation Tape Bar at bottom of Dock A -->
+  <rect x="20" y="340" width="440" height="60" rx="2" fill="#ffffff" stroke="#94a3b8" stroke-width="0.8"/>
+  <rect x="20" y="340" width="440" height="14" fill="#f1f5f9"/>
+  <text x="26" y="351" font-size="7.5" font-weight="bold" fill="#0f172a">Execution Trace Inspector &#8226; Input String: w = "aab"</text>
+  <!-- Tape Cells -->
+  <rect x="30" y="362" width="24" height="24" fill="#e2e8f0" stroke="#64748b" stroke-width="0.8"/>
+  <text x="42" y="377" font-size="9" font-weight="bold" fill="#64748b" text-anchor="middle">a</text>
+  <rect x="54" y="362" width="24" height="24" fill="#fef3c7" stroke="#d97706" stroke-width="1.2"/>
+  <text x="66" y="377" font-size="9" font-weight="bold" fill="#b45309" text-anchor="middle">a</text>
+  <text x="66" y="396" font-size="6.5" font-weight="bold" fill="#b45309" text-anchor="middle">&#9650; Step 2</text>
+  <rect x="78" y="362" width="24" height="24" fill="#ffffff" stroke="#64748b" stroke-width="0.8"/>
+  <text x="90" y="377" font-size="9" font-weight="bold" fill="#0f172a" text-anchor="middle">b</text>
+  <text x="130" y="377" font-size="8" fill="#047857" font-weight="bold">Current State: q&#8321; &#8226; Status: Valid Reachable Configuration</text>
+
+  <!-- ========================================================================= -->
+  <!-- DOCK B: REAL-TIME ANALYTICAL PROBES (CENTER-RIGHT: 210px)                 -->
+  <!-- ========================================================================= -->
+  <rect x="478" y="56" width="200" height="354" fill="#ffffff" stroke="#cbd5e1" stroke-width="0.8"/>
+  <rect x="478" y="56" width="200" height="20" fill="#e2e8f0"/>
+  <text x="486" y="70" font-size="8.5" font-weight="bold" fill="#0f172a">Dock B: Multi-View Probes</text>
+  <text x="670" y="70" font-size="7" fill="#64748b" text-anchor="end">Auto-Sync</text>
+
+  <!-- Probe 1: Venn Diagram -->
+  <rect x="486" y="82" width="184" height="110" rx="2" fill="#f8fafc" stroke="#cbd5e1" stroke-width="0.75"/>
+  <text x="494" y="94" font-size="7.5" font-weight="bold" fill="#1e293b">Venn Intersection Probe: |A &#8745; B|</text>
+  <!-- Circles -->
+  <circle cx="550" cy="140" r="32" fill="#93c5fd" fill-opacity="0.5" stroke="#1d4ed8" stroke-width="1.2"/>
+  <circle cx="590" cy="140" r="32" fill="#c4b5fd" fill-opacity="0.5" stroke="#6d28d9" stroke-width="1.2"/>
+  <text x="532" y="142" font-size="7.5" font-weight="bold" fill="#1e40af">q&#8320;</text>
+  <text x="570" y="142" font-size="7.5" font-weight="bold" fill="#0f172a">q&#8321;</text>
+  <text x="608" y="142" font-size="7.5" font-weight="bold" fill="#5b21b6">q&#8322;</text>
+  <text x="494" y="184" font-size="7" fill="#475569">Cardinality: |A| = 2, |B| = 2, |A &#8746; B| = 3</text>
+
+  <!-- Probe 2: State Transition Table -->
+  <rect x="486" y="200" width="184" height="96" rx="2" fill="#f8fafc" stroke="#cbd5e1" stroke-width="0.75"/>
+  <text x="494" y="212" font-size="7.5" font-weight="bold" fill="#1e293b">Formal Transition Matrix: δ(q, &#963;)</text>
+  <!-- Table Header -->
+  <rect x="494" y="218" width="168" height="14" fill="#e2e8f0"/>
+  <text x="510" y="228" font-size="7" font-weight="bold" fill="#0f172a">State</text>
+  <text x="560" y="228" font-size="7" font-weight="bold" fill="#0f172a">Input 'a'</text>
+  <text x="620" y="228" font-size="7" font-weight="bold" fill="#0f172a">Input 'b'</text>
+  <!-- Rows -->
+  <text x="510" y="244" font-size="7" fill="#334155">&#8594; q&#8320;</text>
+  <text x="560" y="244" font-size="7" fill="#1e40af" font-weight="bold">q&#8321;</text>
+  <text x="620" y="244" font-size="7" fill="#334155">q&#8320;</text>
+  <line x1="494" y1="248" x2="662" y2="248" stroke="#e2e8f0" stroke-width="0.5"/>
+  <text x="510" y="260" font-size="7" fill="#334155">q&#8321;</text>
+  <text x="560" y="260" font-size="7" fill="#334155">q&#8321;</text>
+  <text x="620" y="260" font-size="7" fill="#047857" font-weight="bold">q&#8322;</text>
+  <line x1="494" y1="264" x2="662" y2="264" stroke="#e2e8f0" stroke-width="0.5"/>
+  <text x="510" y="276" font-size="7" fill="#047857" font-weight="bold">* q&#8322;</text>
+  <text x="560" y="276" font-size="7" fill="#334155">q&#8322;</text>
+  <text x="620" y="276" font-size="7" fill="#334155">q&#8322;</text>
+
+  <!-- Probe 3: Invariant Health Status -->
+  <rect x="486" y="304" width="184" height="96" rx="2" fill="#eff6ff" stroke="#bfdbfe" stroke-width="0.75"/>
+  <text x="494" y="318" font-size="7.5" font-weight="bold" fill="#1e40af">Topological Invariant Monitor</text>
+  <text x="494" y="332" font-size="7" fill="#1e3a8a">&#8226; Determinism: Guaranteed (No &#949;-transitions)</text>
+  <text x="494" y="344" font-size="7" fill="#1e3a8a">&#8226; Completeness: Complete (|&#931;| = 2 on all states)</text>
+  <text x="494" y="356" font-size="7" fill="#1e3a8a">&#8226; Minimality: Minimal (Hopcroft partition = 3)</text>
+  <text x="494" y="374" font-size="7" fill="#047857" font-weight="bold">&#10003; Verification Passed: 0.18 ms</text>
+
+  <!-- ========================================================================= -->
+  <!-- DOCK C: LOGICAI GROUNDED TUTOR CONVERSATION (RIGHT: 200px)                 -->
+  <!-- ========================================================================= -->
+  <rect x="686" y="56" width="204" height="354" fill="#ffffff" stroke="#cbd5e1" stroke-width="0.8"/>
+  <rect x="686" y="56" width="204" height="20" fill="#1e293b"/>
+  <text x="694" y="70" font-size="8.5" font-weight="bold" fill="#ffffff">Dock C: LogicAI Grounded Tutor</text>
+  <text x="880" y="70" font-size="7" fill="#cbd5e1" text-anchor="end">Tier 1 + 2</text>
+
+  <!-- Message 1: Student -->
+  <rect x="694" y="84" width="186" height="42" rx="3" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="0.6"/>
+  <text x="700" y="96" font-size="7" font-weight="bold" fill="#475569">Student:</text>
+  <text x="700" y="108" font-size="7" fill="#0f172a">"How many reflexive relations exist</text>
+  <text x="700" y="119" font-size="7" fill="#0f172a">on a set with n = 4 elements?"</text>
+
+  <!-- Tier 1 Badge -->
+  <rect x="694" y="132" width="186" height="14" fill="#dbeafe" stroke="#93c5fd" stroke-width="0.5"/>
+  <text x="700" y="142" font-size="6.5" font-weight="bold" fill="#1e40af">GATE: Routed to Tier 1 Solver (Exact Arithmetic)</text>
+
+  <!-- Message 2: LogicAI -->
+  <rect x="694" y="150" width="186" height="106" rx="3" fill="#eff6ff" stroke="#93c5fd" stroke-width="0.8"/>
+  <text x="700" y="162" font-size="7" font-weight="bold" fill="#1d4ed8">LogicAI (Grounded Tier 1 Solver):</text>
+  <text x="700" y="174" font-size="7" fill="#1e3a8a">Formula: 2^(n(n - 1))</text>
+  <text x="700" y="186" font-size="7" fill="#1e3a8a">For n = 4:</text>
+  <text x="700" y="198" font-size="7" fill="#1e3a8a">&#8226; Exponent = 4 &#215; (4 - 1) = 12</text>
+  <text x="700" y="210" font-size="7" font-weight="bold" fill="#1e40af">&#8226; Total = 2^12 = 4,096 relations.</text>
+  <text x="700" y="224" font-size="6.8" fill="#475569">Notice: LLMs often guess 2^16</text>
+  <text x="700" y="235" font-size="6.8" fill="#475569">or 65,536 (violating diagonal lock).</text>
+  <text x="700" y="248" font-size="6.5" fill="#047857" font-weight="bold">&#10003; 100.0% Exact Combinatorial Precision</text>
+
+  <!-- Message 3: Student follow-up -->
+  <rect x="694" y="262" width="186" height="34" rx="3" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="0.6"/>
+  <text x="700" y="274" font-size="7" font-weight="bold" fill="#475569">Student:</text>
+  <text x="700" y="286" font-size="7" fill="#0f172a">"Is state q1 in my DFA minimal?"</text>
+
+  <!-- Message 4: LogicAI Tier 2 Grounded Response -->
+  <rect x="694" y="302" width="186" height="98" rx="3" fill="#faf5ff" stroke="#d8b4fe" stroke-width="0.8"/>
+  <text x="700" y="314" font-size="7" font-weight="bold" fill="#7c3aed">LogicAI (Tier 2 Socratic Scaffold):</text>
+  <text x="700" y="326" font-size="7" fill="#4c1d95">&#8226; Inspecting live canvas topology:</text>
+  <text x="700" y="338" font-size="6.8" fill="#4c1d95">From q&#8321;, string "b" reaches accepting</text>
+  <text x="700" y="350" font-size="6.8" fill="#4c1d95">state q&#8322;, but from q&#8320;, "b" self-loops.</text>
+  <text x="700" y="362" font-size="6.8" fill="#4c1d95">Because δ(q&#8320;, b) &#8800; δ(q&#8321;, b), they</text>
+  <text x="700" y="374" font-size="6.8" fill="#4c1d95">belong to distinct 1-equivalence classes.</text>
+  <text x="700" y="388" font-size="6.8" font-weight="bold" fill="#6d28d9">&#8594; Yes, q&#8321; cannot be merged.</text>
+</svg>

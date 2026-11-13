@@ -33,3 +33,8 @@ Thumbs.db
 next-env.d.ts
 
 system_architecture*.png
+tools/
+test_*.pdf
+test_*.typ
+test_out.pdf
+

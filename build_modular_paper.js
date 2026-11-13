@@ -925,7 +925,7 @@ const fileUrl = 'file:///' + htmlPath.replace(/\\/g, '/');
 
 const cmd = `"${edgePath}" --headless --disable-gpu --print-to-pdf="${pdfPath}" --no-pdf-header-footer "${fileUrl}"`;
 console.log('Compiling Clean Master PDF via Edge...');
-execSync(cmd, { stdio: 'inherit' });
+execSync(cmd, { stdio: 'ignore' });
 
 const stat = fs.statSync(pdfPath);
 console.log('Compiled PDF size:', stat.size);

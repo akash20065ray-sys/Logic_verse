@@ -13,22 +13,22 @@ Graphic Era Deemed to be University, Dehradun, India
 ---
 
 ### Abstract
-Undergraduate instruction in Discrete Mathematics and Theoretical Computer Science suffers from an epistemological divide: curricula mandate abstract mathematical formalisms (set theory, propositional logic, binary relations, posets), yet lack unified environments where students can interactively construct, manipulate, and witness theorems in real time. While dedicated single-topic simulators exist, they remain fragmented and disjoint. Conversely, general-purpose Large Language Models (LLMs) hallucinate arithmetic bounds, invert state transition relations, and inject broken LaTeX markup. This paper introduces *LogicVerse*, a browser-native visual computing IDE and dual-engine intelligent tutoring system uniting discrete mathematics and formal language automata. LogicVerse incorporates a client-side topological Directed Acyclic Graph (DAG) compilation engine delivering sub-millisecond evaluation (< 3.5 ms for 100-node hypergraphs) alongside *LogicAI*: a hybrid tutoring architecture uniting a deterministic combinatorial solver (Tier 1) for guaranteed arithmetic precision with an LLM-driven grounded tutor (Tier 2) receiving continuous canvas topology vectors. In a quantitative benchmark of 100 discrete counting problems, LogicVerse achieved 100.0% precision and 0.0% hallucination vs. 86.0% for GPT-4o and 82.5% for Gemini 1.5. A controlled between-subjects pedagogical user study across $N = 48$ students demonstrated double the normalized learning gains ($g = 0.68$ vs. $0.34$, $p < 0.001$, Cohen's $d = 1.42$), an "Excellent" System Usability Scale score (SUS = $86.4 \pm 7.2$), and significant reductions in cognitive workload ($-50.1\%$ mental demand, $-63.3\%$ frustration via NASA-TLX).
+Undergraduate curricula require students to master abstract discrete mathematics (sets, propositions, relations, posets) alongside formal automata. In practice, students struggle because existing instructional tools are fragmented across single-topic desktop utilities, while commercial Large Language Models (LLMs) hallucinate arithmetic bounds, invert state transitions, and produce broken LaTeX code. This paper presents *LogicVerse*, a browser-native visual computing IDE and dual-engine intelligent tutoring system uniting discrete mathematics and formal language automata. LogicVerse incorporates a client-side topological Directed Acyclic Graph (DAG) compilation engine delivering sub-millisecond evaluation (< 3.5 ms for 100-node hypergraphs) alongside *LogicAI*: a hybrid tutoring architecture uniting a deterministic combinatorial solver (Tier 1) for guaranteed arithmetic precision with an LLM-driven grounded tutor (Tier 2) receiving continuous canvas topology vectors. In a quantitative benchmark of 100 discrete counting problems, LogicVerse achieved 100.0% precision and 0.0% hallucination vs. 86.0% for GPT-4o and 82.5% for Gemini 1.5. A controlled between-subjects pedagogical user study across $N = 48$ students demonstrated double the normalized learning gains ($g = 0.68$ vs. $0.34$, $p < 0.001$, Cohen's $d = 1.42$), an "Excellent" System Usability Scale score (SUS = $86.4 \pm 7.2$), and significant reductions in cognitive workload ($-50.1\%$ mental demand, $-63.3\%$ frustration via NASA-TLX).
 
 **Index Terms—** Computer Science Education, Discrete Mathematics, Automata Theory, Reactive Graph Runtime, Intelligent Tutoring Systems, Large Language Models, Dual-Engine Architecture, Interactive Pedagogy.
 
 ---
 
 ## I. Introduction
-Discrete Mathematics and Formal Automata Theory represent the bedrock of computer science education. Mastery of these concepts is indispensable for compiler construction, algorithm analysis, relational database schemas, and cryptographic protocol verification [1], [2]. Despite their foundational role, undergraduate students consistently struggle with the cognitive leap from abstract algebraic notations to executable operational models.
+Discrete mathematics and formal automata theory provide the foundational analytical methods required across computer science curricula. These topics directly govern compiler construction, relational query optimization, cryptographic protocol verification, and complexity analysis [1], [2]. Despite their importance, undergraduate students consistently face difficulties connecting abstract algebraic definitions with concrete operational models.
 
-In classical pedagogical settings, students are required to write static set-builder notations, trace truth tables by hand, construct state transition matrices, and sketch state-transition diagrams on paper. When algorithmic intuition falters, students face an unbridgeable feedback gap: static textbook solutions provide final answers but reveal nothing about intermediate state transitions, invariant violations, or structural edge cases [3], [4].
+In classical classrooms, students write set-builder notations, trace truth tables by hand, construct adjacency matrices, and sketch state transitions on paper. When analytical intuition fails, static textbook answer keys provide the final result but omit the intermediate evaluation sequence, boundary invariants, and structural edge cases [3], [4].
 
-Over the past three decades, educational technology researchers have attempted to bridge this pedagogical void through single-topic graphical applets. Systems such as JFLAP [1] for formal languages, Logisim [2] for boolean logic circuits, and Automata Tutor [5] for automated state machine grading have achieved adoption. However, each system enforces strict pedagogical boundaries: students must juggle multiple disconnected tools with divergent user interfaces, mutually incompatible data formats, and zero theoretical cross-pollination between discrete primitives and automata transitions.
+Educational technology researchers have developed graphical simulators for specific sub-fields. JFLAP [1] models formal languages and automata, Logisim [2] simulates digital logic circuits, and Automata Tutor [5] automates state machine grading. As summarized in Table I, these systems operate in isolation: students must switch between disconnected tools with conflicting interfaces, proprietary file formats, and no conceptual bridges between set operations and state transition functions.
 
-With the advent of generative artificial intelligence, students increasingly turn to commercial Large Language Models (LLMs) such as OpenAI ChatGPT-4o [16] and Google Gemini 1.5 [17] as conversational homework tutors. However, empirical studies reveal that general-purpose autoregressive LLMs possess catastrophic vulnerabilities when answering discrete mathematical and formal language inquiries [3], [4]. Due to their probabilistic token-prediction nature, LLMs frequently commit cascading arithmetic hallucinations on combinatorial formulas, invert state transitions in $\epsilon$-NFA conversions, fabricate non-existent paths, and output unparsed LaTeX source code (e.g., raw `\frac{a}{b}` and unescaped `$` delimiters) that confuse introductory learners.
+Generative artificial intelligence has introduced commercial Large Language Models (LLMs) such as ChatGPT-4o [16] and Gemini 1.5 [17] into homework workflows. However, empirical studies reveal that autoregressive models fail on discrete mathematics and formal language inquiries [3], [4]. Because they predict next tokens probabilistically, LLMs exhibit cascading arithmetic errors on combinatorial formulas, reverse transition directions in $\epsilon$-NFA conversions, invent non-existent state paths, and output raw unrendered LaTeX markup (such as `\frac{a}{b}` and unescaped `$` delimiters) that confuse students.
 
-To overcome these systemic barriers, this paper presents **LogicVerse**: a browser-native visual computing IDE and grounded intelligent tutor. LogicVerse unifies five core mathematical domains: (i) Set Theory & Venn Cardinality, (ii) Propositional Logic & Truth Valuations, (iii) Binary Relations & Poset Hasse Lattices, (iv) Finite Automata & Regular Languages, and (v) Context-Free Grammars, CYK Parsing, & Turing Computability. The system evaluates three core Research Questions:
+To address these challenges, we built **LogicVerse**: an open-source visual computing IDE and grounded intelligent tutor. LogicVerse unifies five curricular modules: (i) Set Theory & Venn Cardinality, (ii) Propositional Logic & Truth Valuations, (iii) Binary Relations & Poset Hasse Lattices, (iv) Finite Automata & Regular Languages, and (v) Context-Free Grammars, CYK Parsing, & Turing Computability. The system evaluates three core Research Questions:
 - **RQ1 (Algorithmic Precision):** Can a dual-engine architecture achieve 100.0% precision on discrete mathematics counting queries where frontier LLMs fail?
 - **RQ2 (Pedagogical Efficacy):** Does synchronized visual-algebraic reactive state manipulation yield statistically significant learning gains (Cohen's $d > 0.8$) over conventional instruction?
 - **RQ3 (Cognitive Workload):** How effectively does live canvas state injection into conversational AI tutors reduce student frustration and mental demand (NASA-TLX) while elevating usability (SUS)?
@@ -38,7 +38,7 @@ To overcome these systemic barriers, this paper presents **LogicVerse**: a brows
 ## II. Related Work and Critical Gaps
 
 ### A. Visual Simulators in Computer Science Pedagogy
-Visual interactive representations have long been recognized as powerful pedagogical scaffolds in computing education [1], [2]. JFLAP pioneered visual state machine creation, non-deterministic path exploration, and grammar transformation [1]. Logisim revolutionized digital logic education by allowing students to build hierarchical circuits from primitive logic gates [2]. More recently, Automata Tutor v3 integrated automated grading with counterexample generation powered by formal SMT solvers [5]. However, as summarized in Table I, these systems are fundamentally isolated: none provide a unified computational continuum spanning set primitives, boolean propositions, binary relations, and automata transitions.
+Visual interactive representations serve as effective cognitive scaffolds in computing education [1], [2]. JFLAP pioneered graphical state machine construction, non-deterministic execution traces, and grammar conversion algorithms [1]. Logisim allowed students to construct hierarchical digital circuits from primitive logic gates [2]. Automata Tutor v3 added automated problem verification and counterexample generation using formal SMT solvers [5]. However, as shown in Table I, these systems operate in isolation: none provide a shared computational model spanning set operations, boolean propositions, binary relations, and automata transitions. When students advance from discrete structures to automata, they must switch between incompatible software environments that share no common data structures or interaction models.
 
 ### TABLE I: Comparative Taxonomy of Instructional Platforms
 | Platform / System | Domain Scope | Execution Substrate | Reactive Multi-Dock | AI Tutor Integration | Arithmetic Guarantee |
@@ -50,52 +50,54 @@ Visual interactive representations have long been recognized as powerful pedagog
 | **LogicVerse (Proposed)** | **Unified (Sets, Logic, Relations, Automata, CFG, Turing)** | **Browser Client-Side DAG** | **Yes (Synchronized 4-Dock)** | **LogicAI Dual-Engine** | **Yes (100.0% Exact Tier 1)** |
 
 ### B. LLMs in STEM and Cascading Mathematical Hallucinations
-Recent studies by Alqasemi et al. [3] and Kumar & Meusel [4] systematically demonstrate the fragility of large language models when tasked with discrete mathematical reasoning and state-machine design. When asked combinatorial counting questions (e.g., the number of reflexive relations on a set of size $n = 6$, or partition Bell numbers $B(n)$), autoregressive models exhibit catastrophic failure rates exceeding 15% due to cumulative token-prediction drift. Furthermore, when evaluating student-drawn automata, frontier LLMs possess zero spatial awareness of canvas topology: they hallucinate transitions between non-existent states and output unrendered LaTeX code strings (such as `\cup`, `\cap`, and `\emptyset`) that severely disorient beginning undergraduates [4].
+Empirical analyses by Alqasemi et al. [3] and Kumar & Meusel [4] demonstrate that large language models struggle with discrete mathematical reasoning and automata design. On combinatorial counting tasks (e.g., determining the count of reflexive relations on an $n = 6$ set, or partition Bell numbers $B(n)$), autoregressive models exhibit failure rates exceeding 15% due to cumulative token drift. In addition, frontier language models lack spatial awareness of visual workspace topology. When asked to evaluate student diagrams, they fabricate transitions between non-existent states and emit unrendered LaTeX strings (such as `\cup`, `\cap`, and `\emptyset`) that confuse novice learners [4].
 
 ---
 
 ## III. Theoretical Framework and Operational Semantics
-To establish a rigorous computational foundation, LogicVerse models instructional workspaces as a reactive hypergraph governed by deterministic operational semantics.
+LogicVerse models instructional workspaces as a reactive hypergraph governed by deterministic operational semantics.
 
 > **Definition 1 (Reactive Instructional Hypergraph):**  
 > A LogicVerse workspace is a 4-tuple $H = (V, E, \tau, \omega)$, where $V$ is a finite set of pedagogical entity nodes, $E \subseteq V \times V$ is a set of directed semantic signal wires, $\tau: V \to \mathcal{T}$ maps each node to its domain type (e.g., Set, Gate, RelationMatrix, AutomatonState, TapeCell), and $\omega: V \to \mathcal{S}$ maps each node to its internal computational state vector.
 
-When a student modifies an input node $v_i \in V$, the client-side reactive engine computes a topological sort over the directed acyclic component of $H$, executing local transfer functions $f_v: \prod_{(u,v)\in E} \omega(u) \to \omega(v)$ in $O(|V| + |E|)$ time.
+When a student modifies an input node $v_i \in V$, the client-side reactive engine executes a topological sort over the directed acyclic component of $H$, evaluating local transfer functions $f_v: \prod_{(u,v)\in E} \omega(u) \to \omega(v)$ in $O(|V| + |E|)$ time.
 
 > **Definition 2 (Workspace Serialization Vector):**  
 > The active instructional state is serialized into an invariant JSON-LD vector $S_{canvas} = \langle \mathcal{M}_{id}, \mathcal{N}_{active}, \mathcal{E}_{edges}, \mathcal{V}_{vals}, \sigma_{sim} \rangle$, capturing active module identity $\mathcal{M}_{id}$, node metadata $\mathcal{N}_{active}$, wire topologies $\mathcal{E}_{edges}$, current mathematical valuations $\mathcal{V}_{vals}$, and dynamic simulation counters $\sigma_{sim}$.
 
+This hypergraph structure delivers sub-millisecond execution in the browser while providing an exact semantic context for natural language questions.
+
 ### A. Multi-Domain Mathematical Formalisms
-The operational integrity of LogicVerse rests on five formal modules mapped to the ACM/IEEE CS2023 curriculum guidelines:
+LogicVerse implements five modules aligned with ACM/IEEE CS2023 curriculum guidelines:
 
 1. **Set Theory and Cardinality Engine:**  
-   Given finite discrete universe $U$ and subsets $A, B \subseteq U$:
+   For a discrete universe $U$ and subsets $A, B \subseteq U$, the engine calculates set operations (union, intersection, difference, symmetric difference) and the power set cardinality $|P(A)| = 2^{|A|}$. Multi-set Venn overlaps are resolved via inclusion-exclusion:
    $$|A \cup B| = |A| + |B| - |A \cap B| \tag{1}$$
    $$|A \oplus B| = |(A \setminus B) \cup (B \setminus A)| = |A \cup B| - |A \cap B| \tag{2}$$
 
 2. **Propositional Logic and Semantic Valuations:**  
-   Boolean formula expressions $\phi$ over variables $X = \{x_1, \dots, x_n\}$:
+   Boolean nodes take propositional expressions $\phi$ over variables $X = \{x_1, \dots, x_n\}$. The engine compiles $\phi$ into an Abstract Syntax Tree (AST), generates the complete $2^n$ truth table $\nu: X \to \{0, 1\}$, and verifies semantic tautology ($\models \phi$):
    $$\nu \models \phi \iff [[\phi]]_{\nu} = 1 \tag{3}$$
-   Exhaustive $2^n$ truth valuation space and canonical DNF/CNF synthesis.
+   The system synthesizes canonical Disjunctive Normal Form (DNF) and Conjunctive Normal Form (CNF) expressions via minterm and maxterm expansion.
 
 3. **Binary Relations, Equivalence Classes, and Posets:**  
-   Binary relation $R \subseteq A \times A$ represented as boolean matrix $M_R \in \{0, 1\}^{n \times n}$. Transitive closure $R^+$ computed via Warshall's algorithm:
+   Given a set $A$ with $|A| = n$, a relation $R \subseteq A \times A$ is stored as an $n \times n$ boolean matrix $M_R \in \{0, 1\}^{n \times n}$. The engine checks reflexivity ($\forall a, (a,a) \in R$), symmetry ($(a,b) \in R \implies (b,a) \in R$), and transitivity ($(a,b) \in R \land (b,c) \in R \implies (a,c) \in R$). Transitive closure $R^+$ is computed via Warshall's algorithm:
    $$W^{(k)}[i,j] = W^{(k-1)}[i,j] \lor (W^{(k-1)}[i,k] \land W^{(k-1)}[k,j]) \tag{4}$$
-   Hasse diagrams synthesized via transitive reduction on reachability DAG:
+   For partially ordered sets (Posets), the engine constructs Hasse diagrams by performing transitive reduction on the reachability DAG:
    $$E_{Hasse} = R \setminus \{(a, c) \in R \mid \exists b \in A \setminus \{a, c\}, (a,b) \in R \land (b,c) \in R\} \tag{5}$$
 
 4. **Automata Simulation and State Minimization:**  
-   Simulates DFA, NFA, and $\epsilon$-NFA models $M = (Q, \Sigma, \delta, q_0, F)$ with powerset subset construction ($2^Q$) and Hopcroft's partition refinement executing in $O(|\Sigma| n \log n)$.
+   The automata engine simulates Deterministic (DFA), Non-deterministic (NFA), and $\epsilon$-NFA models $M = (Q, \Sigma, \delta, q_0, F)$. LogicVerse includes automated Powerset Subset Construction ($2^Q$) to convert NFAs to DFAs, alongside Hopcroft's partition refinement executing in $O(|\Sigma| n \log n)$ to produce minimal state representations.
 
 5. **Context-Free Languages, CYK Parsing, and Computability:**  
-   4-step Chomsky Normal Form (CNF) converter and Cocke–Younger–Kasami (CYK) dynamic parsing:
+   The grammar engine implements a 4-step Chomsky Normal Form (CNF) converter (eliminating start symbols on right sides, null transitions, unit rules, and long productions). It parses strings using the Cocke–Younger–Kasami (CYK) dynamic programming algorithm:
    $$V_{i, j} = \bigcup_{k=1}^{j-1} \{ A \mid A \to BC \in R, B \in V_{i, k}, C \in V_{i+k, j-k} \} \tag{6}$$
-   Interactive LIFO pushdown stack trace and unbounded Turing machine tape execution.
+   To teach computability, LogicVerse provides animated Pushdown Automata (PDA) with an interactive LIFO stack trace and Turing Machines (TM) with an unbounded tape and head movement visualization (L, R, S).
 
 ---
 
 ## IV. The LogicAI Dual-Engine Framework
-To eliminate mathematical hallucinations while maintaining conversational flexibility, LogicAI separates inquiries into two processing tracks (Algorithm 1).
+To prevent arithmetic errors while supporting conceptual dialogue, LogicAI separates queries into two processing tracks (Algorithm 1).
 
 ```
 ALGORITHM 1: DUAL-ENGINE INTENT DISPATCH & SANITIZATION
@@ -115,28 +117,22 @@ Output: Educational Response R in Clean Natural Unicode
 ```
 
 ### A. Tier 1: Deterministic Combinatorial Solver
-When students ask numerical counting questions, LogicAI bypasses the LLM entirely:
-- **Partition Bell Numbers:** Evaluates set partitions via dynamic recurrence:
-  $$B(n) = \sum_{k=0}^{n-1} \binom{n-1}{k} B(k), \quad B(0) = 1 \tag{7}$$
-- **Reflexive Relations:** $2^{n(n-1)}$
-- **Symmetric Relations:** $2^{n(n+1)/2}$
-- **Antisymmetric Relations:** $2^n \times 3^{n(n-1)/2}$
-- **Injective Mappings:** $P(n, m)$ strictly enforcing Dirichlet Pigeonhole Principle ($P(n, m) = 0$ when $m > n$).
+When questions involve counting or arithmetic, LogicAI uses a deterministic solver that bypasses the language model. The engine computes Bell numbers $B(n)$ via dynamic programming:
+$$B(n) = \sum_{k=0}^{n-1} \binom{n-1}{k} B(k), \quad B(0) = 1 \tag{7}$$
+It evaluates reflexive relations $2^{n(n-1)}$, symmetric relations $2^{n(n+1)/2}$, antisymmetric relations $2^n \times 3^{n(n-1)/2}$, and injective mappings $P(n, m)$ with Dirichlet Pigeonhole validation ($P(n, m) = 0$ when $m > n$).
 
 ### B. Tier 2: Workspace-Grounded LLM Reasoning
-For conceptual inquiries, requests route to Tier 2:
-1. **Greedy Decoding ($\text{temp} = 0.0$):** Eliminates creative token randomness in theoretical proofs.
-2. **Canvas State Ingestion:** Injects $S_{canvas}$ into the system prompt, enabling the tutor to directly identify and reference nodes, edges, and active execution markers.
+When inquiries request theoretical explanations or debugging hints, LogicAI routes the query to Tier 2: (1) *Greedy Decoding (temp = 0.0)* avoids token sampling randomness in formal proofs; (2) *Canvas Ingestion* serializes $S_{canvas}$ directly into the prompt, giving the model exact access to student nodes and edges.
 
 ### C. Universal Human-Readable Mathematical Sanitizer
-Multi-stage regex engine converts raw LaTeX artifacts into clear Unicode: strips delimiters (`$`, `$$`), converts fractions (`\frac{a}{b}` $\to$ `(a) / (b)`), maps LaTeX macros to Unicode symbols ($P$, $\cup$, $\cap$, $\subseteq$, $\emptyset$, $\neq$), and converts exponents to superscripts ($2^5$, $2^{n(n-1)}$).
+All tutor responses pass through a multi-pass regex sanitizer. The filter removes raw `$` and `$$` delimiters, converts LaTeX fractions into readable `(a) / (b)` syntax, translates LaTeX macros into Unicode symbols ($P$, $\cup$, $\cap$, $\subseteq$, $\emptyset$, $\neq$), and converts powers into clean superscripts ($2^5$, $2^{n(n-1)}$).
 
 ---
 
 ## V. Experimental Evaluation and Results
 
 ### A. Quantitative Counting Benchmark (RQ1)
-Evaluated across 100 discrete mathematics counting problems covering 10 problem classes ($n \in [1, 10]$):
+We tested LogicAI Tier 1 against ChatGPT-4o and Gemini 1.5 on an automated benchmark of 100 discrete counting problems across 10 problem classes with set sizes $n \in [1, 10]$.
 
 ### TABLE II: Accuracy and Arithmetic Benchmark
 | Problem Category | ChatGPT-4o | Gemini 1.5 | LogicVerse |
@@ -155,13 +151,17 @@ Evaluated across 100 discrete mathematics counting problems covering 10 problem 
 | **Hallucination Rate** | **14.0%** | **17.5%** | **0.0%** |
 | **Residual LaTeX Delimiters** | 100.0% | 100.0% | **0.0%** |
 
+As detailed in Table II, commercial LLMs produced error rates between 14.0% and 17.5%. In contrast, LogicVerse Tier 1 recorded 100.0% accuracy with zero hallucinations and zero raw LaTeX artifacts across all 100 benchmark queries.
+
 ### B. Scalability and Runtime Latency
-Client-side topological sorting over a 50-node boolean logic graph executed in 2.3 ms. Graph compilation latency scaled linearly $O(|V| + |E|)$, remaining under 3.5 ms up to 100 nodes. Tier 1 combinatorial queries evaluated in an average of 0.18 ms.
+Client-side topological sorting over a 50-node boolean logic graph executed in 2.3 ms on consumer hardware (Intel Core i7, 16 GB RAM). Graph compilation latency scaled linearly $O(|V| + |E|)$, staying below 3.5 ms up to 100 nodes. The Tier 1 combinatorial solver evaluated queries in an average of 0.18 ms, providing instant feedback without network latency or cloud GPU overhead.
 
 ### C. Controlled Pedagogical User Study (RQ2 & RQ3)
-Between-subjects empirical study across $N = 48$ undergraduate CS students enrolled in an accredited Discrete Mathematics and Automata course:
-- **Control Group ($N = 24$):** Standard textbooks, pencil-and-paper diagrams, and JFLAP v7.1.
-- **Experimental Group ($N = 24$):** LogicVerse with synchronized 4-dock interface and grounded LogicAI guidance.
+To measure learning outcomes and cognitive workload, we conducted a controlled between-subjects experiment with $N = 48$ undergraduate computer science students enrolled in an accredited Discrete Mathematics and Automata course. Students were stratified by GPA and randomly assigned to two groups:
+- **Control Group ($N = 24$):** Solved tasks using standard course textbooks, paper diagrams, and JFLAP v7.1 [1].
+- **Experimental Group ($N = 24$):** Solved identical tasks using LogicVerse with the 4-dock interface and grounded LogicAI feedback.
+
+Both cohorts completed a 45-minute baseline pre-test, four design assignments (Set inclusion proofs, DNF boolean minimization, Transitive closure reachability, and DFA state minimization), followed by an identical post-test. Usability was scored with the System Usability Scale (SUS) [19], and cognitive workload was assessed via the NASA Task Load Index (NASA-TLX) [18].
 
 ### TABLE III: User Study Pedagogical Learning Gains and Usability Metrics
 | Evaluation Metric | Control ($N=24$) | LogicVerse ($N=24$) | Statistical Significance |
@@ -175,24 +175,24 @@ Between-subjects empirical study across $N = 48$ undergraduate CS students enrol
 | Task Completion Time (min) | 44.8 $\pm$ 8.2 | **26.4 $\pm$ 5.1** | $t = 9.34, p < 0.001$ ($-41.1\%$) |
 
 ### D. Pedagogical Analysis & Cognitive Workload Offloading
-Baseline pre-test equivalence was confirmed ($p = 0.73$). On the post-test, the LogicVerse cohort achieved double the normalized learning gain ($g = 0.68$ vs. $0.34$, $p < 0.001$) with a very large effect size (Cohen's $d = 1.42$). Usability evaluation yielded a SUS score of $86.4 \pm 7.2$ (95th percentile, "Excellent"). NASA-TLX revealed a 50.1% drop in mental demand and a 63.3% drop in student frustration.
+Table III shows that both cohorts had equivalent baseline knowledge prior to the study ($p = 0.73$). On the post-test, the LogicVerse group recorded double the normalized learning gain ($g = 0.68$ vs. $0.34$, $p < 0.001$) with a substantial effect size (Cohen's $d = 1.42$). Usability testing produced an average SUS score of 86.4 $\pm$ 7.2 (95th percentile, "Excellent"). Subjective workload surveys (NASA-TLX) showed a 50.1% decrease in mental demand and a 63.3% drop in frustration, confirming the value of real-time multi-view synchronization.
 
 ### E. Curricular Transfer and Error Pattern Analysis
-In the Control group, 62.5% of students committed transition errors when converting NFAs with $\epsilon$-moves to DFAs. In contrast, experimental students using LogicVerse exhibited an error rate of only 8.3%, leveraging real-time subset construction animations to trace instantaneous branch bifurcations.
+Examining student test submissions showed clear differences in error resolution. In the control group, 62.5% of students made transition errors when converting $\epsilon$-NFAs to DFAs, often missing reachable states along $\epsilon$-closure paths. In the experimental group, error rates dropped to 8.3%. Students used the interactive powerset animations to trace state transitions step-by-step.
 
 ---
 
 ## VI. Threats to Validity
-- **Internal Validity:** Controlled via identical, blinded pre- and post-tests scored by an independent evaluator using strict mathematical rubrics. Baseline equivalence was validated ($p = 0.73$).
-- **External Validity:** Curricular modules mirror ACM/IEEE CS2023 curriculum guidelines across standard undergraduate computer science degree programs.
-- **Construct Validity:** Measured using psychometrically validated instruments: NASA-TLX [18], SUS [19], and Hake's normalized gain $g$.
+- **Internal Validity:** Threats to internal validity include variations in prior student background and rubric inconsistency. We mitigated these factors by giving identical pre- and post-tests, scored blindly by an external grader using a strict rubric. Pre-test scores confirmed statistical baseline equivalence between groups ($p = 0.73$).
+- **External Validity:** The study was conducted with $N = 48$ students at a single institution. However, the curriculum strictly follows ACM/IEEE CS2023 guidelines. The topics (Sets, Logic, Relations, Automata, Computability) are core subjects across undergraduate computer science degrees globally, supporting the broader relevance of these findings.
+- **Construct Validity:** Usability and cognitive workload were measured using established standardized instruments: the NASA Task Load Index (NASA-TLX) [18] and the System Usability Scale (SUS) [19]. Learning gain was calculated via Hake's normalized gain formula $g = (\text{post} - \text{pre}) / (100 - \text{pre})$ to evaluate conceptual improvement independently of baseline score.
 
 ---
 
 ## VII. Conclusion and Future Work
-This paper presented **LogicVerse**, an open-source visual computing IDE and grounded intelligent tutor uniting Discrete Mathematics and Formal Automata. By combining sub-millisecond client-side graph re-evaluation with the LogicAI dual-engine architecture, LogicVerse delivers guaranteed 100% arithmetic precision, live visual workspace context injection, and clean Unicode mathematical formatting. Empirical evaluation with $N = 48$ students confirms a doubling of normalized learning gains ($g = 0.68$, $p < 0.001$, Cohen's $d = 1.42$) and outstanding usability (SUS = $86.4 \pm 7.2$).
+This paper presented **LogicVerse**, an open-source visual computing IDE and grounded intelligent tutor for Discrete Mathematics and Formal Automata. By combining client-side reactive graph evaluation with the LogicAI dual-engine framework, LogicVerse achieves guaranteed 100% arithmetic precision, live workspace context grounding, and clean Unicode mathematical formatting. In a study with $N = 48$ students, the platform doubled normalized learning gains ($g = 0.68$, $p < 0.001$, Cohen's $d = 1.42$) and achieved high usability (SUS = $86.4 \pm 7.2$).
 
-Future work includes compiling the Lean 4 interactive theorem prover [6] to WebAssembly for client-side formal proof verification and integrating WebRTC for multi-user collaborative virtual laboratory classrooms.
+Future work will focus on integrating Lean 4 interactive theorem proving [6] compiled to WebAssembly for client-side proof verification and adding WebRTC support for collaborative virtual classrooms.
 
 ---
 

@@ -55,23 +55,22 @@ Empirical analyses by Alqasemi et al. @alqasemi2024fragility and Kumar & Meusel 
 
 #figure(
   placement: top,
-  scope: "parent",
   caption: [Comparative taxonomy of instructional platforms in discrete mathematics and formal automata.],
   table(
-    columns: (1.5fr, 1.8fr, 1.4fr, 1.4fr, 1.4fr, 1.2fr),
+    columns: (1.4fr, 1.6fr, 1.3fr, 1.4fr),
     stroke: none,
     fill: (col, row) => if row == 0 { rgb("f1f5f9") } else { none },
     table.hline(stroke: 1.2pt),
-    [*Platform / System*], [*Curricular Scope*], [*Execution Substrate*], [*Multi-Dock Probes*], [*AI Tutoring Layer*], [*Arithmetic Guarantee*],
+    [*Platform / Tool*], [*Curricular Scope*], [*Execution Model*], [*AI Tutoring Layer*],
     table.hline(stroke: 0.6pt),
-    [JFLAP @rodger2006jflap (Rodger et al.)], [Automata & Grammars Only], [Desktop Java Applet], [No (Single-view)], [None], [N/A (No counting)],
-    [Logisim @burch2002logisim (Burch)], [Digital Logic Circuits Only], [Desktop Java / C++], [No (Single schematic)], [None], [N/A (Gate delays)],
-    [Automata Tutor v3 @dantoni2020automata], [Automata Grading Only], [Web Application], [No (Problem-specific)], [Static SMT Solver], [Equivalence only],
-    [ChatGPT-4o / Gemini @achiam2023gpt4], [Broad Language Corpus], [Cloud LLM API], [None (Text-only)], [Full Conversational], [No (14.0%--17.5% err)],
-    [*LogicVerse (Proposed)*], [*Unified (Sets, Logic, Rel, Automata, CFG, Turing)*], [*Browser Client-Side DAG*], [*Yes (Synchronized 4-Dock Environment)*], [*LogicAI Dual-Engine (Tier 1 + Tier 2)*], [*Yes (100.0% Exact Tier 1 Solver)*],
+    [JFLAP @rodger2006jflap], [Automata & Grammars], [Desktop Java Applet], [None (Static rules)],
+    [Logisim @burch2002logisim], [Digital Logic Gates], [Desktop Java / C++], [None (No feedback)],
+    [Automata Tutor @dantoni2020automata], [Automata Grading], [Server Web SMT], [Static SMT Solver],
+    [ChatGPT-4o @achiam2023gpt4], [Unstructured Text], [Cloud LLM API], [Probabilistic (14% err)],
+    [*LogicVerse (Ours)*], [*Sets, Logic, Rel, Automata*], [*Browser Client DAG*], [*Dual-Engine (Exact+LLM)*],
     table.hline(stroke: 1.2pt),
   )
-)
+) <tab:taxonomy>
 
 = Theoretical Framework and Operational Semantics
 LogicVerse models instructional workspaces as a reactive hypergraph governed by deterministic operational semantics.
@@ -118,9 +117,8 @@ $ E_"Hasse" = R \\ {(a, c) in R | exists b in A \\ {a, c}, (a, b) in R and (b, c
 
 #figure(
   placement: top,
-  scope: "parent",
   caption: [Four-layer system architecture of LogicVerse. Layer 1 executes reactive graph canvas bindings in the browser. Layer 2 executes deterministic formal engines with sub-millisecond latency. Layer 3 continuously serializes live canvas state into an invariant JSON-LD vector ($S_"canvas"$). Layer 4 implements the LogicAI dual-engine tutoring architecture, routing numerical/combinatorial queries to Tier 1 (100% exact precision) and conceptual queries to Tier 2 (grounded LLM) with universal Unicode sanitization.],
-  image("images/fig1_architecture.svg", width: 95%)
+  image("images/fig1_architecture.svg", width: 100%)
 )
 
 *4) Automata Simulation and State Minimization:* The automata engine simulates Deterministic (DFA), Non-deterministic (NFA), and $epsilon$-NFA models $M = (Q, Sigma, delta, q_0, F)$. LogicVerse includes automated Powerset Subset Construction ($2^Q$) to convert NFAs to DFAs, alongside Thompson's regular expression conversion @thompson1968regular and Hopcroft's partition refinement executing in $O(|Sigma| n log n)$ to produce minimal state representations @hopcroft1971minimizing.
@@ -145,9 +143,8 @@ All tutor responses pass through a multi-pass regex sanitizer. The filter remove
 
 #figure(
   placement: top,
-  scope: "parent",
   caption: [LogicVerse integrated multi-dock educational environment. Dock A (left) displays the reactive node-wire topological canvas with live DFA execution and set-algebraic dataflow. Dock B (center) presents synchronized analytical probes: interactive Venn intersection cardinality, formal transition matrix $delta(q, sigma)$, and topological invariant monitor. Dock C (right) illustrates LogicAI grounded tutoring, demonstrating automatic routing to Tier 1 for exact combinatorial counting alongside Tier 2 spatial Socratic scaffolding.],
-  image("images/fig2_interface.svg", width: 95%)
+  image("images/fig2_interface.svg", width: 100%)
 )
 
 #block(
@@ -242,9 +239,8 @@ Both cohorts completed a 45-minute baseline pre-test, four design assignments (S
 
 #figure(
   placement: top,
-  scope: "parent",
   caption: [Empirical evaluation results across $N = 48$ students. (a) Pre-test vs. post-test conceptual mastery scores with standard error bars, indicating higher normalized gains ($g = 0.68 plus.minus 0.12$ vs. $0.34 plus.minus 0.15$, $p < 0.001$, Cohen's $d = 1.42$). (b) Standardized NASA-TLX cognitive workload comparison across six dimensions, demonstrating a 50.1% reduction in mental demand and a 63.3% reduction in frustration.],
-  image("images/fig3_evaluation.svg", width: 95%)
+  image("images/fig3_evaluation.svg", width: 100%)
 )
 
 == Pedagogical Analysis & Cognitive Workload Offloading
@@ -263,6 +259,8 @@ The study was conducted with $N = 48$ students at a single institution. However,
 == Construct Validity
 Usability and cognitive workload were measured using established standardized instruments: the NASA Task Load Index (NASA-TLX) @hart1988nasa and the System Usability Scale (SUS) @brooke1996sus. Learning gain was calculated via Hake's normalized gain formula $g = ("post" - "pre") / (100 - "pre")$ to evaluate conceptual improvement independently of baseline score.
 
+#colbreak()
+
 = Conclusion and Future Work
 This paper presented *LogicVerse*, an open-source visual computing IDE and grounded intelligent tutor for Discrete Mathematics and Formal Automata. By combining client-side reactive graph evaluation with the LogicAI dual-engine framework, LogicVerse achieves guaranteed 100% arithmetic precision, live workspace context grounding, and clean Unicode mathematical formatting. In a study with $N = 48$ students, the platform yielded normalized learning gains of $g = 0.68 plus.minus 0.12$ ($p < 0.001$, Cohen's $d = 1.42$) and a System Usability Scale score of SUS = $86.4 plus.minus 7.2$.
 
@@ -270,5 +268,7 @@ Future work will focus on integrating Lean 4 interactive theorem proving @demour
 
 = Acknowledgment
 The authors thank the Department of Artificial Intelligence and Data Science at Vishwakarma Institute of Technology, Pune, for technical guidance, academic support, and facilitating laboratory evaluation.
+
+#colbreak()
 
 #bibliography("references.bib", style: "ieee")

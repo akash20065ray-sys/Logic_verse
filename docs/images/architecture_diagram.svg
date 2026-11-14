@@ -33,7 +33,7 @@
     <!-- Layer Header Tag -->
     <rect x="14" y="10" width="932" height="18" fill="#1e293b"/>
     <text x="24" y="22.5" font-family="'Arial', 'Helvetica', sans-serif" font-size="8.5" font-weight="bold" fill="#ffffff" letter-spacing="0.6">LAYER 1: PRESENTATION &amp; INTERACTIVE WORKSPACE SUBSTRATE (BROWSER RUNTIME)</text>
-    <text x="930" y="22.5" font-family="'Arial', 'Helvetica', sans-serif" font-size="7.5" fill="#94a3b8" text-anchor="end">Next.js 16 App Router &bull; React 19 &bull; WebGL Canvas Engine</text>
+    <text x="930" y="22.5" font-family="'Arial', 'Helvetica', sans-serif" font-size="7.5" fill="#94a3b8" text-anchor="end">Next.js 16 App Router ? React 19 ? WebGL Canvas Engine</text>
 
     <!-- Sub-Panel 1A: GPU-Accelerated Node-Wire Canvas Substrate -->
     <rect x="24" y="34" width="480" height="82" rx="2" fill="#ffffff" stroke="#94a3b8" stroke-width="0.75" filter="url(#subtle-shadow)"/>
@@ -60,8 +60,8 @@
     <!-- Operation Node: Union -->
     <rect x="160" y="67" width="76" height="28" rx="2" fill="#eff6ff" stroke="#1d4ed8" stroke-width="0.75"/>
     <circle cx="160" cy="81" r="2.5" fill="#1d4ed8"/>
-    <text x="170" y="79" font-family="'Arial', 'Helvetica', sans-serif" font-size="7" font-weight="bold" fill="#1e40af">OpNode: A &cup; B</text>
-    <text x="170" y="89" font-size="6.8" fill="#1e3a8a">|A &cup; B| = 5</text>
+    <text x="170" y="79" font-family="'Arial', 'Helvetica', sans-serif" font-size="7" font-weight="bold" fill="#1e40af">OpNode: A ? B</text>
+    <text x="170" y="89" font-size="6.8" fill="#1e3a8a">|A ? B| = 5</text>
     <circle cx="236" cy="81" r="2.5" fill="#1d4ed8"/>
 
     <!-- Automata Transition Schematic (q0 -> q1) -->
@@ -79,7 +79,7 @@
       <circle cx="72" cy="18" r="13" fill="#ffffff" stroke="#475569" stroke-width="0.8"/>
       <circle cx="72" cy="18" r="10.5" fill="none" stroke="#475569" stroke-width="0.6"/>
       <text x="67" y="21" font-family="'Times New Roman', Times, serif" font-size="8" font-weight="bold" fill="#0f172a">q1</text>
-      <text x="14" y="44" font-family="'Times New Roman', Times, serif" font-size="7" fill="#475569">&delta;: Q &times; &Sigma; &rarr; Q</text>
+      <text x="14" y="44" font-family="'Times New Roman', Times, serif" font-size="7" fill="#475569">?: Q ? ? ? Q</text>
     </g>
 
     <!-- PDA Stack & Turing Tape Schematic -->
@@ -130,7 +130,7 @@
       <line x1="52" y1="0" x2="52" y2="44" stroke="#cbd5e1" stroke-width="0.5"/>
       <text x="6" y="8" font-family="'Times New Roman', Times, serif" font-size="6.5" font-weight="bold" fill="#0f172a">P</text>
       <text x="32" y="8" font-family="'Times New Roman', Times, serif" font-size="6.5" font-weight="bold" fill="#0f172a">Q</text>
-      <text x="56" y="8" font-family="'Times New Roman', Times, serif" font-size="6.5" font-weight="bold" fill="#0f172a">P &and; Q</text>
+      <text x="56" y="8" font-family="'Times New Roman', Times, serif" font-size="6.5" font-weight="bold" fill="#0f172a">P ∧ Q</text>
       <text x="8" y="19" font-family="'Courier New', Courier, monospace" font-size="6" fill="#334155">0</text>
       <text x="34" y="19" font-family="'Courier New', Courier, monospace" font-size="6" fill="#334155">0</text>
       <text x="64" y="19" font-family="'Courier New', Courier, monospace" font-size="6" font-weight="bold" fill="#dc2626">0</text>
@@ -157,9 +157,9 @@
     <g transform="translate(802, 52)">
       <rect x="0" y="0" width="124" height="44" fill="#f8fafc" stroke="#94a3b8" stroke-width="0.6"/>
       <text x="8" y="10" font-family="'Arial', 'Helvetica', sans-serif" font-size="6.5" font-weight="bold" fill="#0f172a">Formal Parsers &amp; Checks</text>
-      <text x="8" y="21" font-size="6.2" fill="#334155">&bull; CYK Dynamic Table V[i, j]</text>
-      <text x="8" y="30" font-size="6.2" fill="#334155">&bull; Warshall Reachability W^(k)</text>
-      <text x="8" y="40" font-family="'Times New Roman', Times, serif" font-size="6.5" font-weight="bold" fill="#047857">&bull; Hopcroft State Minimizer</text>
+      <text x="8" y="21" font-size="6.2" fill="#334155">? CYK Dynamic Table V[i, j]</text>
+      <text x="8" y="30" font-size="6.2" fill="#334155">? Warshall Reachability W^(k)</text>
+      <text x="8" y="40" font-family="'Times New Roman', Times, serif" font-size="6.5" font-weight="bold" fill="#047857">? Hopcroft State Minimizer</text>
       <text x="8" y="55" font-family="'Arial', 'Helvetica', sans-serif" font-size="6.2" fill="#475569">Algorithmic Evaluator</text>
     </g>
   </g>
@@ -181,42 +181,42 @@
     <!-- Layer Header Tag -->
     <rect x="14" y="146" width="932" height="18" fill="#334155"/>
     <text x="24" y="158.5" font-family="'Arial', 'Helvetica', sans-serif" font-size="8.5" font-weight="bold" fill="#ffffff" letter-spacing="0.6">LAYER 2: CLIENT-SIDE REACTIVE DAG &amp; FORMAL THEORY ALGORITHM ENGINES</text>
-    <text x="930" y="158.5" font-family="'Arial', 'Helvetica', sans-serif" font-size="7.5" fill="#cbd5e1" text-anchor="end">Sub-Millisecond Incremental Re-evaluation &bull; Zero Server Round-Trip</text>
+    <text x="930" y="158.5" font-family="'Arial', 'Helvetica', sans-serif" font-size="7.5" fill="#cbd5e1" text-anchor="end">Sub-Millisecond Incremental Re-evaluation ? Zero Server Round-Trip</text>
 
     <!-- Module 2A: Set & Logic AST Compiler -->
     <rect x="24" y="170" width="220" height="64" rx="2" fill="#ffffff" stroke="#94a3b8" stroke-width="0.7" filter="url(#subtle-shadow)"/>
     <rect x="24" y="170" width="220" height="13" fill="#f8fafc" stroke="#94a3b8" stroke-width="0.7"/>
     <text x="30" y="179.5" font-family="'Arial', 'Helvetica', sans-serif" font-size="7" font-weight="bold" fill="#0f172a">Sets &amp; Boolean AST Compiler</text>
-    <text x="30" y="192" font-size="6.5" fill="#334155">&bull; Topological DAG Traversal (Kahn Alg.)</text>
-    <text x="30" y="202" font-size="6.5" fill="#334155">&bull; Cycle Detection &amp; Short-Circuit Eval</text>
-    <text x="30" y="212" font-size="6.5" fill="#334155">&bull; Canonical DNF / CNF Synthesizer</text>
+    <text x="30" y="192" font-size="6.5" fill="#334155">? Topological DAG Traversal (Kahn Alg.)</text>
+    <text x="30" y="202" font-size="6.5" fill="#334155">? Cycle Detection &amp; Short-Circuit Eval</text>
+    <text x="30" y="212" font-size="6.5" fill="#334155">? Canonical DNF / CNF Synthesizer</text>
     <text x="30" y="223" font-family="'Arial', 'Helvetica', sans-serif" font-size="6.2" font-weight="bold" fill="#047857">Re-evaluation Latency: &lt; 2.3 ms</text>
 
     <!-- Module 2B: Binary Relations & Poset Reducer -->
     <rect x="254" y="170" width="220" height="64" rx="2" fill="#ffffff" stroke="#94a3b8" stroke-width="0.7" filter="url(#subtle-shadow)"/>
     <rect x="254" y="170" width="220" height="13" fill="#f8fafc" stroke="#94a3b8" stroke-width="0.7"/>
     <text x="260" y="179.5" font-family="'Arial', 'Helvetica', sans-serif" font-size="7" font-weight="bold" fill="#0f172a">Relations &amp; Poset Reducer</text>
-    <text x="260" y="192" font-size="6.5" fill="#334155">&bull; Invariant Check: diag(M_R) &amp; Symmetry</text>
-    <text x="260" y="202" font-size="6.5" fill="#334155">&bull; Poset Transitive Reduction (Hasse)</text>
-    <text x="260" y="212" font-size="6.5" fill="#334155">&bull; Warshall Reachability Closure W^(k)</text>
+    <text x="260" y="192" font-size="6.5" fill="#334155">? Invariant Check: diag(M_R) &amp; Symmetry</text>
+    <text x="260" y="202" font-size="6.5" fill="#334155">? Poset Transitive Reduction (Hasse)</text>
+    <text x="260" y="212" font-size="6.5" fill="#334155">? Warshall Reachability Closure W^(k)</text>
     <text x="260" y="223" font-family="'Arial', 'Helvetica', sans-serif" font-size="6.2" font-weight="bold" fill="#047857">Adjacency Engine: 0.18 ms</text>
 
     <!-- Module 2C: Automata Determinization & Minimization -->
     <rect x="484" y="170" width="220" height="64" rx="2" fill="#ffffff" stroke="#94a3b8" stroke-width="0.7" filter="url(#subtle-shadow)"/>
     <rect x="484" y="170" width="220" height="13" fill="#f8fafc" stroke="#94a3b8" stroke-width="0.7"/>
     <text x="490" y="179.5" font-family="'Arial', 'Helvetica', sans-serif" font-size="7" font-weight="bold" fill="#0f172a">Automata Algorithms Engine</text>
-    <text x="490" y="192" font-size="6.5" fill="#334155">&bull; &epsilon;-Closure Breadth-First Reachability</text>
-    <text x="490" y="202" font-size="6.5" fill="#334155">&bull; Powerset Subset 2^Q Construction</text>
-    <text x="490" y="212" font-family="'Times New Roman', Times, serif" font-size="6.5" fill="#334155">&bull; Hopcroft Minimizer O(|&Sigma;| n log n)</text>
+    <text x="490" y="192" font-size="6.5" fill="#334155">? ε-Closure Breadth-First Reachability</text>
+    <text x="490" y="202" font-size="6.5" fill="#334155">? Powerset Subset 2^Q Construction</text>
+    <text x="490" y="212" font-family="'Times New Roman', Times, serif" font-size="6.5" fill="#334155">? Hopcroft Minimizer O(|?| n log n)</text>
     <text x="490" y="223" font-family="'Arial', 'Helvetica', sans-serif" font-size="6.2" font-weight="bold" fill="#047857">State Minimization: Optimal</text>
 
     <!-- Module 2D: Grammars & Computability -->
     <rect x="714" y="170" width="222" height="64" rx="2" fill="#ffffff" stroke="#94a3b8" stroke-width="0.7" filter="url(#subtle-shadow)"/>
     <rect x="714" y="170" width="222" height="13" fill="#f8fafc" stroke="#94a3b8" stroke-width="0.7"/>
     <text x="720" y="179.5" font-family="'Arial', 'Helvetica', sans-serif" font-size="7" font-weight="bold" fill="#0f172a">Grammars &amp; Computability Engine</text>
-    <text x="720" y="192" font-size="6.5" fill="#334155">&bull; 4-Step CNF Normalization Pipeline</text>
-    <text x="720" y="202" font-size="6.5" fill="#334155">&bull; CYK Dynamic Programming Parsing O(n&sup3;)</text>
-    <text x="720" y="212" font-size="6.5" fill="#334155">&bull; Pushdown Stack &amp; 2-Way Turing Head</text>
+    <text x="720" y="192" font-size="6.5" fill="#334155">? 4-Step CNF Normalization Pipeline</text>
+    <text x="720" y="202" font-size="6.5" fill="#334155">? CYK Dynamic Programming Parsing O(n&sup3;)</text>
+    <text x="720" y="212" font-size="6.5" fill="#334155">? Pushdown Stack &amp; 2-Way Turing Head</text>
     <text x="720" y="223" font-family="'Arial', 'Helvetica', sans-serif" font-size="6.2" font-weight="bold" fill="#047857">Turing Simulation: Unbounded</text>
   </g>
 
@@ -245,10 +245,10 @@
 
       <!-- Bi-directional arrows -->
       <path d="M 570 8 L 710 8" stroke="#1d4ed8" stroke-width="1" marker-end="url(#arr-blue)"/>
-      <text x="574" y="5.5" font-family="'Arial', 'Helvetica', sans-serif" font-size="5.8" fill="#1e40af">Push Graph State to Tutor &rarr;</text>
+      <text x="574" y="5.5" font-family="'Arial', 'Helvetica', sans-serif" font-size="5.8" fill="#1e40af">Push Graph State to Tutor ?</text>
 
       <path d="M 710 20 L 570 20" stroke="#047857" stroke-width="1" marker-end="url(#arr-green)"/>
-      <text x="574" y="26.5" font-family="'Arial', 'Helvetica', sans-serif" font-size="5.8" fill="#047857">&larr; Hydrate Socratic Canvas Hints</text>
+      <text x="574" y="26.5" font-family="'Arial', 'Helvetica', sans-serif" font-size="5.8" fill="#047857">← Hydrate Socratic Canvas Hints</text>
     </g>
   </g>
 
@@ -266,7 +266,7 @@
     <!-- Layer Header Tag -->
     <rect x="14" y="320" width="932" height="18" fill="#1e293b"/>
     <text x="24" y="332.5" font-family="'Arial', 'Helvetica', sans-serif" font-size="8.5" font-weight="bold" fill="#ffffff" letter-spacing="0.6">LAYER 4: LOGICAI DUAL-ENGINE GROUNDED INTELLIGENT TUTORING ARCHITECTURE</text>
-    <text x="930" y="332.5" font-family="'Arial', 'Helvetica', sans-serif" font-size="7.5" fill="#94a3b8" text-anchor="end">Deterministic Symbolic Grounding &bull; Greedy Decoded LLM Reasoning &bull; LaTeX Sanitizer</text>
+    <text x="930" y="332.5" font-family="'Arial', 'Helvetica', sans-serif" font-size="7.5" fill="#94a3b8" text-anchor="end">Deterministic Symbolic Grounding ? Greedy Decoded LLM Reasoning ? LaTeX Sanitizer</text>
 
     <!-- Query Ingestion & Fast Intent Router -->
     <g transform="translate(26, 344)">
@@ -300,11 +300,11 @@
       <text x="8" y="10.5" font-family="'Arial', 'Helvetica', sans-serif" font-size="7" font-weight="bold" fill="#065f46">Tier 1: Deterministic Solver</text>
       <text x="326" y="10.5" font-family="'Arial', 'Helvetica', sans-serif" font-size="6.2" font-weight="bold" fill="#047857" text-anchor="end">100% Accuracy (0% Hallucination)</text>
 
-      <text x="8" y="24" font-size="6.5" fill="#064e3b">&bull; <tspan font-weight="bold">Bell Numbers:</tspan> B(n) = &sum; C(n-1, k) B(k), B(0)=1 &rarr; Dynamic Programming</text>
-      <text x="8" y="35" font-size="6.5" fill="#064e3b">&bull; <tspan font-weight="bold">Relation Permutations:</tspan> Reflexive: 2^(n(n-1)) &bull; Symmetric: 2^(n(n+1)/2)</text>
-      <text x="8" y="46" font-size="6.5" fill="#064e3b">&bull; <tspan font-weight="bold">Antisymmetric Relations:</tspan> 2^n &times; 3^(n(n-1)/2) Coordinate Verification</text>
-      <text x="8" y="57" font-size="6.5" fill="#064e3b">&bull; <tspan font-weight="bold">Injective Functions:</tspan> P(n, m) with Dirichlet Pigeonhole (m&gt;n &rarr; 0)</text>
-      <text x="8" y="68" font-family="'Arial', 'Helvetica', sans-serif" font-size="6.2" font-weight="bold" fill="#047857">&check; Exact Arithmetic Guarantee &bull; Evaluation Latency: 0.18 ms</text>
+      <text x="8" y="24" font-size="6.5" fill="#064e3b">? <tspan font-weight="bold">Bell Numbers:</tspan> B(n) = ∑ C(n-1, k) B(k), B(0)=1 ? Dynamic Programming</text>
+      <text x="8" y="35" font-size="6.5" fill="#064e3b">? <tspan font-weight="bold">Relation Permutations:</tspan> Reflexive: 2^(n(n-1)) ? Symmetric: 2^(n(n+1)/2)</text>
+      <text x="8" y="46" font-size="6.5" fill="#064e3b">? <tspan font-weight="bold">Antisymmetric Relations:</tspan> 2^n ? 3^(n(n-1)/2) Coordinate Verification</text>
+      <text x="8" y="57" font-size="6.5" fill="#064e3b">? <tspan font-weight="bold">Injective Functions:</tspan> P(n, m) with Dirichlet Pigeonhole (m&gt;n ? 0)</text>
+      <text x="8" y="68" font-family="'Arial', 'Helvetica', sans-serif" font-size="6.2" font-weight="bold" fill="#047857">✓ Exact Arithmetic Guarantee ? Evaluation Latency: 0.18 ms</text>
     </g>
 
     <!-- Branch B: Tier 2 - Contextually-Grounded LLM Reasoning Engine -->
@@ -314,11 +314,11 @@
       <text x="8" y="10.5" font-family="'Arial', 'Helvetica', sans-serif" font-size="7" font-weight="bold" fill="#5b21b6">Tier 2: Grounded LLM Layer</text>
       <text x="326" y="10.5" font-family="'Arial', 'Helvetica', sans-serif" font-size="6.2" font-weight="bold" fill="#6d28d9" text-anchor="end">Greedy Decoding (temp = 0.0)</text>
 
-      <text x="8" y="24" font-size="6.5" fill="#4c1d95">&bull; <tspan font-weight="bold">Live Canvas Context Ingestion:</tspan> Injects Layer 3 JSON AST directly into prompt</text>
-      <text x="8" y="35" font-size="6.5" fill="#4c1d95">&bull; <tspan font-weight="bold">Greedy Token Decoding:</tspan> Eliminates non-deterministic stochastic drift</text>
-      <text x="8" y="46" font-size="6.5" fill="#4c1d95">&bull; <tspan font-weight="bold">Socratic Pedagogical Ladders:</tspan> Guides proof steps without giving away answers</text>
-      <text x="8" y="57" font-size="6.5" fill="#4c1d95">&bull; <tspan font-weight="bold">Visual Graph Alignment:</tspan> References active canvas nodes, cycle states &amp; edges</text>
-      <text x="8" y="68" font-family="'Arial', 'Helvetica', sans-serif" font-size="6.2" font-weight="bold" fill="#6d28d9">&check; Contextually Grounded Conversational Feedback</text>
+      <text x="8" y="24" font-size="6.5" fill="#4c1d95">? <tspan font-weight="bold">Live Canvas Context Ingestion:</tspan> Injects Layer 3 JSON AST directly into prompt</text>
+      <text x="8" y="35" font-size="6.5" fill="#4c1d95">? <tspan font-weight="bold">Greedy Token Decoding:</tspan> Eliminates non-deterministic stochastic drift</text>
+      <text x="8" y="46" font-size="6.5" fill="#4c1d95">? <tspan font-weight="bold">Socratic Pedagogical Ladders:</tspan> Guides proof steps without giving away answers</text>
+      <text x="8" y="57" font-size="6.5" fill="#4c1d95">? <tspan font-weight="bold">Visual Graph Alignment:</tspan> References active canvas nodes, cycle states &amp; edges</text>
+      <text x="8" y="68" font-family="'Arial', 'Helvetica', sans-serif" font-size="6.2" font-weight="bold" fill="#6d28d9">✓ Contextually Grounded Conversational Feedback</text>
     </g>
 
     <!-- Converging Arrows to Sanitizer -->
@@ -330,9 +330,9 @@
       <rect x="0" y="0" width="296" height="154" rx="2" fill="#f8fafc" stroke="#334155" stroke-width="0.8" filter="url(#subtle-shadow)"/>
       <rect x="0" y="0" width="296" height="16" fill="#1e293b"/>
       <text x="8" y="11.5" font-family="'Arial', 'Helvetica', sans-serif" font-size="7" font-weight="bold" fill="#ffffff">Universal Mathematical Unicode Sanitizer</text>
-      <text x="288" y="11.5" font-family="'Arial', 'Helvetica', sans-serif" font-size="6.2" font-weight="bold" fill="#22c55e" text-anchor="end">&check; 0.0% Residual '$' Tokens</text>
+      <text x="288" y="11.5" font-family="'Arial', 'Helvetica', sans-serif" font-size="6.2" font-weight="bold" fill="#22c55e" text-anchor="end">✓ 0.0% Residual '$' Tokens</text>
 
-      <text x="8" y="27" font-size="6.5" fill="#334155">&bull; Multi-pass regular expression transformation engine executing across</text>
+      <text x="8" y="27" font-size="6.5" fill="#334155">? Multi-pass regular expression transformation engine executing across</text>
       <text x="14" y="36" font-size="6.5" fill="#334155">all tutor output streams prior to presentation rendering.</text>
 
       <!-- Before and After Transformation Comparison -->
@@ -350,19 +350,19 @@
         <rect x="148" y="0" width="132" height="28" rx="2" fill="#ffffff" stroke="#059669" stroke-width="0.6"/>
         <text x="152" y="9" font-family="'Arial', 'Helvetica', sans-serif" font-size="6" font-weight="bold" fill="#047857">Sanitized Human Unicode:</text>
         <text x="152" y="18" font-family="'Times New Roman', Times, serif" font-size="6.5" font-weight="bold" fill="#065f46">&quot;P(A) = 2^|A|&quot;</text>
-        <text x="152" y="25" font-family="'Times New Roman', Times, serif" font-size="6.5" font-weight="bold" fill="#065f46">&quot;(n!) / (k!) and &empty;&quot;</text>
+        <text x="152" y="25" font-family="'Times New Roman', Times, serif" font-size="6.5" font-weight="bold" fill="#065f46">&quot;(n!) / (k!) and ?&quot;</text>
       </g>
 
       <!-- Specification Rules -->
-      <text x="8" y="79" font-size="6.5" fill="#334155">&bull; <tspan font-weight="bold">Delimiter Stripping:</tspan> Eliminates all block &quot;$$&quot; and inline &quot;$&quot; markers.</text>
-      <text x="8" y="90" font-size="6.5" fill="#334155">&bull; <tspan font-weight="bold">Fraction Normalization:</tspan> Converts &#92;frac{a}{b} into readable (a) / (b).</text>
-      <text x="8" y="101" font-size="6.5" fill="#334155">&bull; <tspan font-weight="bold">Combinatorial Syntax:</tspan> &#92;binom{n}{k} normalized cleanly into C(n, k).</text>
-      <text x="8" y="112" font-size="6.5" fill="#334155">&bull; <tspan font-weight="bold">Unicode Symbol Mapping:</tspan> &#92;mathcal{P} &rarr; P, &#92;cup &rarr; &cup;, &#92;cap &rarr; &cap;, &#92;emptyset &rarr; &empty;, &#92;le &rarr; &le;.</text>
-      <text x="8" y="123" font-size="6.5" fill="#334155">&bull; <tspan font-weight="bold">Exponent Cleaner:</tspan> Normalizes 2^{n(n-1)} &rarr; 2^(n(n-1)) without curly braces.</text>
+      <text x="8" y="79" font-size="6.5" fill="#334155">? <tspan font-weight="bold">Delimiter Stripping:</tspan> Eliminates all block &quot;$$&quot; and inline &quot;$&quot; markers.</text>
+      <text x="8" y="90" font-size="6.5" fill="#334155">? <tspan font-weight="bold">Fraction Normalization:</tspan> Converts &#92;frac{a}{b} into readable (a) / (b).</text>
+      <text x="8" y="101" font-size="6.5" fill="#334155">? <tspan font-weight="bold">Combinatorial Syntax:</tspan> &#92;binom{n}{k} normalized cleanly into C(n, k).</text>
+      <text x="8" y="112" font-size="6.5" fill="#334155">? <tspan font-weight="bold">Unicode Symbol Mapping:</tspan> &#92;mathcal{P} ? P, &#92;cup ? ?, &#92;cap ? ?, &#92;emptyset ? ?, &#92;le ? ?.</text>
+      <text x="8" y="123" font-size="6.5" fill="#334155">? <tspan font-weight="bold">Exponent Cleaner:</tspan> Normalizes 2^{n(n-1)} ? 2^(n(n-1)) without curly braces.</text>
 
       <!-- Output Banner -->
       <rect x="8" y="131" width="280" height="17" rx="2" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="0.6"/>
-      <text x="148" y="143" font-family="'Arial', 'Helvetica', sans-serif" font-size="6.5" font-weight="bold" fill="#065f46" text-anchor="middle">&check; 100% Frictionless Natural Language Math Presentation</text>
+      <text x="148" y="143" font-family="'Arial', 'Helvetica', sans-serif" font-size="6.5" font-weight="bold" fill="#065f46" text-anchor="middle">✓ 100% Frictionless Natural Language Math Presentation</text>
     </g>
   </g>
 

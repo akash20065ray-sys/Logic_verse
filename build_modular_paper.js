@@ -933,3 +933,4 @@ console.log('Compiled PDF size:', stat.size);
 const docsPdfPath = 'c:\\logicverse-v0.1-foundation\\docs\\LogicVerse_IEEE_Research_Paper.pdf';
 fs.copyFileSync(pdfPath, docsPdfPath);
 console.log('Copied to docs/LogicVerse_IEEE_Research_Paper.pdf');
+

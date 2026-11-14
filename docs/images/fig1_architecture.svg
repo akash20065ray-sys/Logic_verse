@@ -1,170 +1,138 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" width="100%" height="auto" style="background:#ffffff; font-family:'Times New Roman',Times,serif;">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 510" width="100%" height="auto" style="background:#ffffff; font-family:'Times New Roman',Times,serif;">
   <defs>
-    <!-- Crisp Vector Markers -->
     <marker id="arr" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#1e293b"/>
-    </marker>
-    <marker id="arr-blue" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#1e40af"/>
-    </marker>
-    <marker id="arr-green" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#065f46"/>
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#0f172a"/>
     </marker>
   </defs>
 
-  <!-- Outer Boundary -->
-  <rect x="2" y="2" width="896" height="476" rx="3" fill="#ffffff" stroke="#0f172a" stroke-width="1.2"/>
+  <!-- Outer Border -->
+  <rect x="2" y="2" width="416" height="506" rx="2" fill="#ffffff" stroke="#0f172a" stroke-width="1.2"/>
 
   <!-- ========================================================================= -->
-  <!-- LAYER 1: REACTIVE WORKSPACE SUBSTRATE (CLIENT BROWSER)                    -->
+  <!-- PLANE 1: REACTIVE WORKSPACE SUBSTRATE                                     -->
   <!-- ========================================================================= -->
-  <g id="layer-1">
-    <rect x="14" y="12" width="872" height="96" rx="2" fill="#f8fafc" stroke="#475569" stroke-width="0.8"/>
-    <rect x="14" y="12" width="872" height="18" fill="#1e293b"/>
-    <text x="24" y="24.5" font-family="'Times New Roman', serif" font-size="9" font-weight="bold" fill="#ffffff" letter-spacing="0.5">LAYER 1: REACTIVE HYPERGRAPH WORKSPACE SUBSTRATE (BROWSER RUNTIME)</text>
-    <text x="876" y="24.5" font-family="'Times New Roman', serif" font-size="8.5" fill="#cbd5e1" text-anchor="end" font-style="italic">Formal Spatial Hypergraph: H = (V, E, &#964;, &#969;)</text>
+  <g id="plane-1">
+    <rect x="10" y="10" width="400" height="96" rx="2" fill="#f8fafc" stroke="#334155" stroke-width="0.8"/>
+    <rect x="10" y="10" width="400" height="18" fill="#1e293b"/>
+    <text x="16" y="22.5" font-size="8.5" font-weight="bold" fill="#ffffff" letter-spacing="0.3">PLANE 1: REACTIVE HYPERGRAPH SUBSTRATE</text>
+    <text x="404" y="22.5" font-size="7.5" fill="#cbd5e1" text-anchor="end" font-style="italic">H = (V, E, &#964;, &#969;)</text>
 
-    <!-- Sub-Box 1A: Topological Canvas -->
-    <rect x="24" y="36" width="410" height="64" rx="2" fill="#ffffff" stroke="#64748b" stroke-width="0.75"/>
-    <text x="32" y="49" font-size="8.5" font-weight="bold" fill="#0f172a">Topological Graph Canvas Substrate</text>
-    <text x="32" y="62" font-size="7.5" fill="#334155">&#8226; Incremental Node/Edge Mutation Dispatcher: O(1) state ingestion</text>
-    <text x="32" y="74" font-size="7.5" fill="#334155">&#8226; Spatial Boundary &amp; Port Binding Validator: Pin: V &#215; Port &#8594; {Input, Output}</text>
-    <text x="32" y="86" font-size="7.5" fill="#334155">&#8226; WebGL Accelerated Layout &amp; Real-Time View Synchronization</text>
+    <!-- Sub-boxes -->
+    <rect x="18" y="34" width="186" height="64" rx="2" fill="#ffffff" stroke="#64748b" stroke-width="0.7"/>
+    <text x="24" y="46" font-size="7.8" font-weight="bold" fill="#0f172a">Topological Graph Canvas</text>
+    <text x="24" y="58" font-size="7" fill="#334155">&#8226; Drag-and-Drop Node Mutation</text>
+    <text x="24" y="69" font-size="7" fill="#334155">&#8226; Port Binding &amp; Wire Validation</text>
+    <text x="24" y="80" font-size="7" fill="#334155">&#8226; Incremental O(1) State Ingestion</text>
+    <text x="24" y="91" font-size="6.8" fill="#047857" font-weight="bold">Latency: &lt; 0.20 ms</text>
 
-    <!-- Sub-Box 1B: Analytical Probes & Docks -->
-    <rect x="446" y="36" width="430" height="64" rx="2" fill="#ffffff" stroke="#64748b" stroke-width="0.75"/>
-    <text x="454" y="49" font-size="8.5" font-weight="bold" fill="#0f172a">Synchronized Multi-Dock Analytical Probes</text>
-    <text x="454" y="62" font-size="7.5" fill="#334155">&#8226; Continuous Venn Set Visualizer &amp; Euler Cardinality Inspector</text>
-    <text x="454" y="74" font-size="7.5" fill="#334155">&#8226; Dynamic 2^n Propositional Truth Valuation &amp; Semantic Equivalence Grid</text>
-    <text x="454" y="86" font-size="7.5" fill="#334155">&#8226; Automata State Transition Table &amp; Turing LIFO/Tape Step Animator</text>
+    <rect x="214" y="34" width="188" height="64" rx="2" fill="#ffffff" stroke="#64748b" stroke-width="0.7"/>
+    <text x="220" y="46" font-size="7.8" font-weight="bold" fill="#0f172a">Multi-Dock Probes Engine</text>
+    <text x="220" y="58" font-size="7" fill="#334155">&#8226; Live Venn Intersection Visualizer</text>
+    <text x="220" y="69" font-size="7" fill="#334155">&#8226; Dynamic 2^n Truth Valuation Grid</text>
+    <text x="220" y="80" font-size="7" fill="#334155">&#8226; Automata State Matrix &amp; LIFO Tape</text>
+    <text x="220" y="91" font-size="6.8" fill="#047857" font-weight="bold">Auto-Synchronized Multi-View</text>
   </g>
 
   <!-- Flow Arrow 1 -> 2 -->
-  <line x1="450" y1="108" x2="450" y2="124" stroke="#1e293b" stroke-width="1.2" marker-end="url(#arr)"/>
-  <text x="456" y="119" font-size="7.5" fill="#475569" font-style="italic">Topological Sort Event Dispatch: O(|V| + |E|)</text>
+  <line x1="210" y1="106" x2="210" y2="122" stroke="#0f172a" stroke-width="1.2" marker-end="url(#arr)"/>
+  <text x="216" y="117" font-size="7" fill="#475569" font-style="italic">Topological Sort: O(|V| + |E|)</text>
 
   <!-- ========================================================================= -->
-  <!-- LAYER 2: FORMAL DOMAIN-SPECIFIC ALGORITHMIC ENGINES                       -->
+  <!-- PLANE 2: DETERMINISTIC ALGORITHMIC ENGINES                               -->
   <!-- ========================================================================= -->
-  <g id="layer-2">
-    <rect x="14" y="126" width="872" height="106" rx="2" fill="#f8fafc" stroke="#475569" stroke-width="0.8"/>
-    <rect x="14" y="126" width="872" height="18" fill="#1e293b"/>
-    <text x="24" y="138.5" font-family="'Times New Roman', serif" font-size="9" font-weight="bold" fill="#ffffff" letter-spacing="0.5">LAYER 2: CLIENT-SIDE DETERMINISTIC FORMAL ALGORITHMIC ENGINES</text>
-    <text x="876" y="138.5" font-family="'Times New Roman', serif" font-size="8.5" fill="#cbd5e1" text-anchor="end" font-style="italic">Guaranteed Verification Latency &lt; 3.5 ms</text>
+  <g id="plane-2">
+    <rect x="10" y="124" width="400" height="114" rx="2" fill="#f8fafc" stroke="#334155" stroke-width="0.8"/>
+    <rect x="10" y="124" width="400" height="18" fill="#1e293b"/>
+    <text x="16" y="136.5" font-size="8.5" font-weight="bold" fill="#ffffff" letter-spacing="0.3">PLANE 2: CLIENT DETERMINISTIC FORMAL ENGINES</text>
+    <text x="404" y="136.5" font-size="7.5" fill="#cbd5e1" text-anchor="end" font-style="italic">Sub-3.5 ms Latency</text>
 
-    <!-- Engine 1: Sets -->
-    <rect x="24" y="150" width="164" height="74" rx="2" fill="#ffffff" stroke="#64748b" stroke-width="0.75"/>
-    <text x="30" y="163" font-size="8" font-weight="bold" fill="#0f172a">Sets &amp; Boolean Algebra</text>
-    <text x="30" y="176" font-size="7" fill="#334155">&#8226; Union, Intersect, SymDiff</text>
-    <text x="30" y="188" font-size="7" fill="#334155">&#8226; Inclusion-Exclusion Engine</text>
-    <text x="30" y="200" font-size="7" fill="#334155">&#8226; Powerset Generator: P(A)</text>
-    <text x="30" y="212" font-size="6.8" fill="#047857" font-weight="bold">Latency: &lt; 0.22 ms</text>
+    <!-- Row 1: Sets, Logic, Relations -->
+    <rect x="18" y="148" width="122" height="40" rx="2" fill="#ffffff" stroke="#64748b" stroke-width="0.6"/>
+    <text x="24" y="159" font-size="7.5" font-weight="bold" fill="#0f172a">Sets &amp; Cardinality</text>
+    <text x="24" y="170" font-size="6.8" fill="#334155">&#8226; Inclusion-Exclusion</text>
+    <text x="24" y="180" font-size="6.8" fill="#334155">&#8226; Powerset |P(A)| = 2^|A|</text>
 
-    <!-- Engine 2: Logic -->
-    <rect x="198" y="150" width="164" height="74" rx="2" fill="#ffffff" stroke="#64748b" stroke-width="0.75"/>
-    <text x="204" y="163" font-size="8" font-weight="bold" fill="#0f172a">Propositional Logic</text>
-    <text x="204" y="176" font-size="7" fill="#334155">&#8226; Recursive AST Parsing</text>
-    <text x="204" y="188" font-size="7" fill="#334155">&#8226; DNF / CNF Synthesis</text>
-    <text x="204" y="200" font-size="7" fill="#334155">&#8226; Tautology Prover: &#8872; &#966;</text>
-    <text x="204" y="212" font-size="6.8" fill="#047857" font-weight="bold">Latency: &lt; 0.45 ms</text>
+    <rect x="146" y="148" width="128" height="40" rx="2" fill="#ffffff" stroke="#64748b" stroke-width="0.6"/>
+    <text x="152" y="159" font-size="7.5" font-weight="bold" fill="#0f172a">Propositional Logic</text>
+    <text x="152" y="170" font-size="6.8" fill="#334155">&#8226; AST Parser &amp; DNF/CNF</text>
+    <text x="152" y="180" font-size="6.8" fill="#334155">&#8226; Tautology Prover &#8872; &#966;</text>
 
-    <!-- Engine 3: Relations -->
-    <rect x="372" y="150" width="164" height="74" rx="2" fill="#ffffff" stroke="#64748b" stroke-width="0.75"/>
-    <text x="378" y="163" font-size="8" font-weight="bold" fill="#0f172a">Binary Relations &amp; Posets</text>
-    <text x="378" y="176" font-size="7" fill="#334155">&#8226; Warshall Transitive Closure</text>
-    <text x="378" y="188" font-size="7" fill="#334155">&#8226; Equivalence Classes [a]</text>
-    <text x="378" y="200" font-size="7" fill="#334155">&#8226; Hasse Transitive Reduction</text>
-    <text x="378" y="212" font-size="6.8" fill="#047857" font-weight="bold">Latency: &lt; 0.38 ms</text>
+    <rect x="280" y="148" width="122" height="40" rx="2" fill="#ffffff" stroke="#64748b" stroke-width="0.6"/>
+    <text x="286" y="159" font-size="7.5" font-weight="bold" fill="#0f172a">Binary Relations</text>
+    <text x="286" y="170" font-size="6.8" fill="#334155">&#8226; Warshall Closure O(n^3)</text>
+    <text x="286" y="180" font-size="6.8" fill="#334155">&#8226; Hasse Transitive Red.</text>
 
-    <!-- Engine 4: Automata -->
-    <rect x="546" y="150" width="164" height="74" rx="2" fill="#ffffff" stroke="#64748b" stroke-width="0.75"/>
-    <text x="552" y="163" font-size="8" font-weight="bold" fill="#0f172a">Automata Theory</text>
-    <text x="552" y="176" font-size="7" fill="#334155">&#8226; &#949;-NFA &#8594; DFA Powerset</text>
-    <text x="552" y="188" font-size="7" fill="#334155">&#8226; Hopcroft State Minimization</text>
-    <text x="552" y="200" font-size="7" fill="#334155">&#8226; Regex Thompson NFA Dual</text>
-    <text x="552" y="212" font-size="6.8" fill="#047857" font-weight="bold">Complexity: O(|&#931;| n log n)</text>
+    <!-- Row 2: Automata, Grammars -->
+    <rect x="18" y="192" width="186" height="40" rx="2" fill="#ffffff" stroke="#64748b" stroke-width="0.6"/>
+    <text x="24" y="203" font-size="7.5" font-weight="bold" fill="#0f172a">Automata Theory Engine</text>
+    <text x="24" y="214" font-size="6.8" fill="#334155">&#8226; ε-NFA ? DFA Powerset Subset Const. (2^Q)</text>
+    <text x="24" y="224" font-size="6.8" fill="#334155">&#8226; Hopcroft State Minimization: O(|&#931;| n log n)</text>
 
-    <!-- Engine 5: Grammars -->
-    <rect x="720" y="150" width="156" height="74" rx="2" fill="#ffffff" stroke="#64748b" stroke-width="0.75"/>
-    <text x="726" y="163" font-size="8" font-weight="bold" fill="#0f172a">Grammars &amp; Machines</text>
-    <text x="726" y="176" font-size="7" fill="#334155">&#8226; 4-Stage CNF Converter</text>
-    <text x="726" y="188" font-size="7" fill="#334155">&#8226; Dynamic CYK Parser: O(n^3)</text>
-    <text x="726" y="200" font-size="7" fill="#334155">&#8226; Turing Machine Simulator</text>
-    <text x="726" y="212" font-size="6.8" fill="#047857" font-weight="bold">Infinite Tape Memory</text>
+    <rect x="214" y="192" width="188" height="40" rx="2" fill="#ffffff" stroke="#64748b" stroke-width="0.6"/>
+    <text x="220" y="203" font-size="7.5" font-weight="bold" fill="#0f172a">Grammars &amp; Computability Engine</text>
+    <text x="220" y="214" font-size="6.8" fill="#334155">&#8226; 4-Stage CNF Converter &amp; CYK Parsing: O(n^3)</text>
+    <text x="220" y="224" font-size="6.8" fill="#334155">&#8226; Turing Machine Unbounded LIFO/Tape Head Trace</text>
   </g>
 
   <!-- Flow Arrow 2 -> 3 -->
-  <line x1="450" y1="232" x2="450" y2="248" stroke="#1e293b" stroke-width="1.2" marker-end="url(#arr)"/>
-  <text x="456" y="243" font-size="7.5" fill="#475569" font-style="italic">Canvas Invariant Vector Serialization: S_canvas = &#9001; M_id, N_active, E_edges, V_vals, &#963;_sim &#9002;</text>
+  <line x1="210" y1="238" x2="210" y2="254" stroke="#0f172a" stroke-width="1.2" marker-end="url(#arr)"/>
+  <text x="216" y="249" font-size="7" fill="#475569" font-style="italic">Canvas Vector: S_canvas = &#9001; M_id, N_active, E_edges, V_vals, &#963;_sim &#9002;</text>
 
   <!-- ========================================================================= -->
-  <!-- LAYER 3: WORKSPACE SERIALIZATION & IPC BRIDGE                             -->
+  <!-- PLANE 3: WORKSPACE SERIALIZATION IPC                                      -->
   <!-- ========================================================================= -->
-  <g id="layer-3">
-    <rect x="14" y="250" width="872" height="42" rx="2" fill="#f1f5f9" stroke="#475569" stroke-width="0.8"/>
-    <rect x="24" y="256" width="852" height="30" rx="2" fill="#ffffff" stroke="#94a3b8" stroke-width="0.7"/>
-    <text x="34" y="271" font-family="'Consolas', monospace" font-size="7.8" fill="#0f172a">Invariant Context JSON-LD: { module: "automata_dfa", states: [q0, q1, q2], alphabet: [a, b], delta: [...], F: [q2], sim_step: 3 }</text>
-    <text x="34" y="281" font-size="7.2" fill="#475569" font-style="italic">Eliminates spatial hallucinations by binding conversational LLM directly to deterministic graph ground truth.</text>
+  <g id="plane-3">
+    <rect x="10" y="256" width="400" height="34" rx="2" fill="#f1f5f9" stroke="#334155" stroke-width="0.8"/>
+    <rect x="18" y="262" width="384" height="22" rx="2" fill="#ffffff" stroke="#94a3b8" stroke-width="0.6"/>
+    <text x="24" y="274" font-family="'Consolas', monospace" font-size="7" fill="#0f172a">{ module: "automata_dfa", states: [q0,q1,q2], delta: [...], F: [q2] }</text>
+    <text x="24" y="281" font-size="6.5" fill="#475569" font-style="italic">Continuous JSON-LD vector eliminates LLM spatial and topological hallucinations.</text>
   </g>
 
   <!-- Flow Arrow 3 -> 4 -->
-  <line x1="450" y1="292" x2="450" y2="308" stroke="#1e293b" stroke-width="1.2" marker-end="url(#arr)"/>
-  <text x="456" y="303" font-size="7.5" fill="#475569" font-style="italic">Dual-Engine Intent Dispatch &amp; Semantic Grounding</text>
+  <line x1="210" y1="290" x2="210" y2="306" stroke="#0f172a" stroke-width="1.2" marker-end="url(#arr)"/>
+  <text x="216" y="301" font-size="7" fill="#475569" font-style="italic">Dual-Engine Intent Dispatch Gate (Algorithm 1)</text>
 
   <!-- ========================================================================= -->
-  <!-- LAYER 4: LOGICAI GROUNDED TUTORING SUBSYSTEM                             -->
+  <!-- PLANE 4: LOGICAI DUAL-ENGINE TUTORING ARCHITECTURE                        -->
   <!-- ========================================================================= -->
-  <g id="layer-4">
-    <rect x="14" y="310" width="872" height="156" rx="2" fill="#f8fafc" stroke="#475569" stroke-width="0.8"/>
-    <rect x="14" y="310" width="872" height="18" fill="#1e293b"/>
-    <text x="24" y="322.5" font-family="'Times New Roman', serif" font-size="9" font-weight="bold" fill="#ffffff" letter-spacing="0.5">LAYER 4: LOGICAI DUAL-ENGINE GROUNDED INTELLIGENT TUTORING ARCHITECTURE</text>
-    <text x="876" y="322.5" font-family="'Times New Roman', serif" font-size="8.5" fill="#cbd5e1" text-anchor="end" font-style="italic">Intent Routing Gate &#8226; Deterministic Solver &#8226; Grounded Socratic LLM</text>
+  <g id="plane-4">
+    <rect x="10" y="308" width="400" height="190" rx="2" fill="#f8fafc" stroke="#334155" stroke-width="0.8"/>
+    <rect x="10" y="308" width="400" height="18" fill="#1e293b"/>
+    <text x="16" y="320.5" font-size="8.5" font-weight="bold" fill="#ffffff" letter-spacing="0.3">PLANE 4: LOGICAI DUAL-ENGINE TUTORING SYSTEM</text>
+    <text x="404" y="320.5" font-size="7.5" fill="#cbd5e1" text-anchor="end" font-style="italic">Neuro-Symbolic Grounding</text>
 
     <!-- Intent Gate -->
-    <rect x="24" y="334" width="160" height="122" rx="2" fill="#ffffff" stroke="#64748b" stroke-width="0.75"/>
-    <text x="32" y="348" font-size="8.2" font-weight="bold" fill="#0f172a">Intent Classifier Gate</text>
-    <text x="32" y="361" font-size="7.2" fill="#334155">&#8226; Analyzes student input q</text>
-    <text x="32" y="373" font-size="7.2" fill="#334155">&#8226; Extracts numerical entities N</text>
-    <text x="32" y="385" font-size="7.2" fill="#334155">&#8226; Identifies computational goals</text>
-    <rect x="32" y="395" width="144" height="26" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="0.5"/>
-    <text x="38" y="406" font-size="6.8" fill="#1e40af" font-weight="bold">Numerical / Bounds &#8594; Tier 1</text>
-    <text x="38" y="416" font-size="6.8" fill="#6d28d9" font-weight="bold">Conceptual / Scaffolding &#8594; Tier 2</text>
-    <text x="32" y="435" font-size="7" fill="#475569">&#8226; Routing Latency: &lt; 0.05 ms</text>
+    <rect x="18" y="332" width="384" height="32" rx="2" fill="#ffffff" stroke="#64748b" stroke-width="0.7"/>
+    <text x="24" y="343" font-size="7.5" font-weight="bold" fill="#0f172a">Intent Classifier Gate:</text>
+    <text x="120" y="343" font-size="7" fill="#334155">Inspects Student Input q and Numerical Entities N</text>
+    <text x="24" y="356" font-size="6.8" fill="#1e40af" font-weight="bold">&#8594; Numerical / Combinatorial Query &#8594; Tier 1</text>
+    <text x="220" y="356" font-size="6.8" fill="#6d28d9" font-weight="bold">&#8594; Conceptual / Scaffolding &#8594; Tier 2</text>
 
-    <!-- Tier 1: Deterministic Solver -->
-    <rect x="194" y="334" width="280" height="122" rx="2" fill="#ffffff" stroke="#1d4ed8" stroke-width="0.8"/>
-    <rect x="194" y="334" width="280" height="15" fill="#eff6ff"/>
-    <text x="202" y="345" font-size="8" font-weight="bold" fill="#1e40af">Tier 1: Deterministic Symbolic Solver (100% Accuracy)</text>
-    <text x="202" y="361" font-size="7.2" fill="#1e3a8a">&#8226; Bell Numbers: B(n) = &#931; C(n-1, k) B(k) [Dynamic Programming]</text>
-    <text x="202" y="373" font-size="7.2" fill="#1e3a8a">&#8226; Relation Bounds: Reflexive 2^(n(n-1)), Symmetric 2^(n(n+1)/2)</text>
-    <text x="202" y="385" font-size="7.2" fill="#1e3a8a">&#8226; Antisymmetric: 2^n &#215; 3^(n(n-1)/2), Injective P(n, m)</text>
-    <text x="202" y="397" font-size="7.2" fill="#1e3a8a">&#8226; Invariant Verification: Resolves arithmetic with 0.0% hallucination</text>
-    <rect x="202" y="405" width="264" height="20" fill="#dbeafe" stroke="#93c5fd" stroke-width="0.5"/>
-    <text x="210" y="418" font-size="7" font-weight="bold" fill="#1e40af">&#10003; Arithmetic Precision: 100.0% | Hallucination Rate: 0.0%</text>
-    <text x="202" y="437" font-size="7" fill="#475569">Bypasses stochastic token generation for combinatorial guarantees.</text>
+    <!-- Tier 1 Box -->
+    <rect x="18" y="370" width="186" height="80" rx="2" fill="#ffffff" stroke="#1d4ed8" stroke-width="0.8"/>
+    <rect x="18" y="370" width="186" height="14" fill="#eff6ff"/>
+    <text x="24" y="380" font-size="7.2" font-weight="bold" fill="#1e40af">Tier 1: Deterministic Solver (100% Exact)</text>
+    <text x="24" y="395" font-size="6.8" fill="#1e3a8a">&#8226; Bell Partitions: B(n) = &#8721; C(n-1, k) B(k)</text>
+    <text x="24" y="406" font-size="6.8" fill="#1e3a8a">&#8226; Reflexive: 2^(n(n-1)), Symmetric: 2^(n(n+1)/2)</text>
+    <text x="24" y="417" font-size="6.8" fill="#1e3a8a">&#8226; Injective Functions P(n, m) with Pigeonhole</text>
+    <rect x="24" y="426" width="174" height="18" fill="#dbeafe" stroke="#93c5fd" stroke-width="0.5"/>
+    <text x="28" y="438" font-size="6.5" font-weight="bold" fill="#1e40af">&#10003; 100.0% Precision | 0.0% Hallucination</text>
 
-    <!-- Tier 2: Grounded LLM -->
-    <rect x="484" y="334" width="220" height="122" rx="2" fill="#ffffff" stroke="#6d28d9" stroke-width="0.8"/>
-    <rect x="484" y="334" width="220" height="15" fill="#f5f3ff"/>
-    <text x="492" y="345" font-size="8" font-weight="bold" fill="#6d28d9">Tier 2: Grounded Socratic LLM (Temp = 0.0)</text>
-    <text x="492" y="361" font-size="7.2" fill="#4c1d95">&#8226; Direct Injection of S_canvas JSON Context</text>
-    <text x="492" y="373" font-size="7.2" fill="#4c1d95">&#8226; Socratic Scaffolding: Guides step-by-step</text>
-    <text x="492" y="385" font-size="7.2" fill="#4c1d95">&#8226; Spatial Anchoring: References live node states</text>
-    <text x="492" y="397" font-size="7.2" fill="#4c1d95">&#8226; Greedy Deterministic Decoding: Drift = 0.0%</text>
-    <rect x="492" y="405" width="204" height="20" fill="#ede9fe" stroke="#c4b5fd" stroke-width="0.5"/>
-    <text x="500" y="418" font-size="7" font-weight="bold" fill="#5b21b6">&#10003; Pedagogical Scaffolding &amp; Explanation</text>
-    <text x="492" y="437" font-size="7" fill="#475569">Constructs instructional feedback from validated canvas facts.</text>
+    <!-- Tier 2 Box -->
+    <rect x="214" y="370" width="188" height="80" rx="2" fill="#ffffff" stroke="#6d28d9" stroke-width="0.8"/>
+    <rect x="214" y="370" width="188" height="14" fill="#f5f3ff"/>
+    <text x="220" y="380" font-size="7.2" font-weight="bold" fill="#6d28d9">Tier 2: Grounded Socratic LLM (Temp = 0.0)</text>
+    <text x="220" y="395" font-size="6.8" fill="#4c1d95">&#8226; Direct Injection of S_canvas JSON Vector</text>
+    <text x="220" y="406" font-size="6.8" fill="#4c1d95">&#8226; Socratic Scaffolding (Guides step-by-step)</text>
+    <text x="220" y="417" font-size="6.8" fill="#4c1d95">&#8226; Spatial Anchoring (References live states)</text>
+    <rect x="220" y="426" width="176" height="18" fill="#ede9fe" stroke="#c4b5fd" stroke-width="0.5"/>
+    <text x="224" y="438" font-size="6.5" font-weight="bold" fill="#5b21b6">&#10003; Zero-Drift Deterministic Greedy Decoding</text>
 
-    <!-- Sanitizer -->
-    <rect x="714" y="334" width="162" height="122" rx="2" fill="#ffffff" stroke="#047857" stroke-width="0.8"/>
-    <rect x="714" y="334" width="162" height="15" fill="#ecfdf5"/>
-    <text x="722" y="345" font-size="8" font-weight="bold" fill="#047857">Unicode LaTeX Sanitizer</text>
-    <text x="722" y="361" font-size="7.2" fill="#064e3b">&#8226; Strips $ and $$ delimiters</text>
-    <text x="722" y="373" font-size="7.2" fill="#064e3b">&#8226; Converts \frac{a}{b} &#8594; (a)/(b)</text>
-    <text x="722" y="385" font-size="7.2" fill="#064e3b">&#8226; Normalizes \cup, \cap, \emptyset</text>
-    <text x="722" y="397" font-size="7.2" fill="#064e3b">&#8226; Replaces \le, \ge, \ne &#8594; &#8804;, &#8805;, &#8800;</text>
-    <rect x="722" y="405" width="146" height="20" fill="#d1fae5" stroke="#6ee7b7" stroke-width="0.5"/>
-    <text x="728" y="418" font-size="7" font-weight="bold" fill="#065f46">&#10003; Residual Syntax Errors: 0.0%</text>
-    <text x="722" y="437" font-size="7" fill="#475569">Clean native math delivery.</text>
+    <!-- Sanitizer Bar -->
+    <rect x="18" y="456" width="384" height="34" rx="2" fill="#ffffff" stroke="#047857" stroke-width="0.8"/>
+    <rect x="18" y="456" width="384" height="12" fill="#ecfdf5"/>
+    <text x="24" y="465" font-size="7" font-weight="bold" fill="#047857">Universal Unicode Mathematical Sanitizer</text>
+    <text x="24" y="478" font-size="6.6" fill="#064e3b">Strips $, $$ delimiters ? Normalizes \frac{a}{b} &#8594; (a)/(b) &#8226; Converts \cup, \cap, \emptyset &#8594; &#8746;, &#8745;, &#8709;</text>
+    <text x="24" y="486" font-size="6.5" font-weight="bold" fill="#065f46">&#10003; 0.0% Residual Syntax Errors &#8226; Natural Clean Unicode Presentation</text>
   </g>
 </svg>

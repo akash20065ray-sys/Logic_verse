@@ -24,16 +24,16 @@
 
     <!-- Sub-heading & Formalisms -->
     <text x="8" y="32" font-size="6.8" font-weight="bold" fill="#1e40af">Discrete Universe Foundations:</text>
-    <text x="8" y="44" font-size="6.5" fill="#334155">&bull; Finite Universes A, B &sube; U</text>
-    <text x="8" y="55" font-size="6.5" fill="#334155">&bull; Operators: &cup;, &cap;, &minus;, &oplus; (SymDiff)</text>
-    <text x="8" y="66" font-size="6.5" fill="#334155">&bull; Power Set: |P(A)| = 2^|A|</text>
-    <text x="8" y="77" font-size="6.5" fill="#334155">&bull; Cartesian Product: A &times; B</text>
+    <text x="8" y="44" font-size="6.5" fill="#334155">? Finite Universes A, B ⊆ U</text>
+    <text x="8" y="55" font-size="6.5" fill="#334155">? Operators: ?, ?, −, ⊕ (SymDiff)</text>
+    <text x="8" y="66" font-size="6.5" fill="#334155">? Power Set: |P(A)| = 2^|A|</text>
+    <text x="8" y="77" font-size="6.5" fill="#334155">? Cartesian Product: A ? B</text>
 
     <line x1="8" y1="86" x2="168" y2="86" stroke="#cbd5e1" stroke-width="0.6"/>
     <text x="8" y="98" font-family="'Arial', 'Helvetica', sans-serif" font-size="6.5" font-weight="bold" fill="#0f172a">Computational Engine:</text>
-    <text x="8" y="109" font-size="6.2" fill="#475569">&bull; Topological DAG Evaluator</text>
-    <text x="8" y="120" font-size="6.2" fill="#475569">&bull; Dynamic Multi-Set Venn Probes</text>
-    <text x="8" y="132" font-family="'Arial', 'Helvetica', sans-serif" font-size="6.2" font-weight="bold" fill="#047857">&bull; Sub-millisecond Cardinalities |S|</text>
+    <text x="8" y="109" font-size="6.2" fill="#475569">? Topological DAG Evaluator</text>
+    <text x="8" y="120" font-size="6.2" fill="#475569">? Dynamic Multi-Set Venn Probes</text>
+    <text x="8" y="132" font-family="'Arial', 'Helvetica', sans-serif" font-size="6.2" font-weight="bold" fill="#047857">? Sub-millisecond Cardinalities |S|</text>
   </g>
 
   <!-- Arrow 1 -> 2 -->
@@ -47,16 +47,16 @@
 
     <!-- Sub-heading & Formalisms -->
     <text x="8" y="32" font-size="6.8" font-weight="bold" fill="#1e40af">Truth Functional Calculus:</text>
-    <text x="8" y="44" font-size="6.5" fill="#334155">&bull; Valuations &nu;: Var &rarr; {0, 1}</text>
-    <text x="8" y="55" font-size="6.5" fill="#334155">&bull; Gates: &and;, &or;, &not;, &rarr;, &harr;, &oplus;</text>
-    <text x="8" y="66" font-size="6.5" fill="#334155">&bull; 2^n Interpretation Space</text>
-    <text x="8" y="77" font-size="6.5" fill="#334155">&bull; Tautology Verification &models; &phi;</text>
+    <text x="8" y="44" font-size="6.5" fill="#334155">? Valuations ν: Var ? {0, 1}</text>
+    <text x="8" y="55" font-size="6.5" fill="#334155">? Gates: ∧, ∨, ¬, ?, ?, ⊕</text>
+    <text x="8" y="66" font-size="6.5" fill="#334155">? 2^n Interpretation Space</text>
+    <text x="8" y="77" font-size="6.5" fill="#334155">? Tautology Verification ? ?</text>
 
     <line x1="8" y1="86" x2="168" y2="86" stroke="#cbd5e1" stroke-width="0.6"/>
     <text x="8" y="98" font-family="'Arial', 'Helvetica', sans-serif" font-size="6.5" font-weight="bold" fill="#0f172a">Computational Engine:</text>
-    <text x="8" y="109" font-size="6.2" fill="#475569">&bull; Reactive AST Tree Compiler</text>
-    <text x="8" y="120" font-size="6.2" fill="#475569">&bull; Canonical DNF / CNF Synthesis</text>
-    <text x="8" y="132" font-family="'Arial', 'Helvetica', sans-serif" font-size="6.2" font-weight="bold" fill="#047857">&bull; Semantic Equivalence Checker</text>
+    <text x="8" y="109" font-size="6.2" fill="#475569">? Reactive AST Tree Compiler</text>
+    <text x="8" y="120" font-size="6.2" fill="#475569">? Canonical DNF / CNF Synthesis</text>
+    <text x="8" y="132" font-family="'Arial', 'Helvetica', sans-serif" font-size="6.2" font-weight="bold" fill="#047857">? Semantic Equivalence Checker</text>
   </g>
 
   <!-- Arrow 2 -> 3 -->
@@ -70,16 +70,16 @@
 
     <!-- Sub-heading & Formalisms -->
     <text x="8" y="32" font-size="6.8" font-weight="bold" fill="#1e40af">Discrete Binary Structures:</text>
-    <text x="8" y="44" font-size="6.5" fill="#334155">&bull; Relations R &sube; A &times; A; Matrix M_R</text>
-    <text x="8" y="55" font-size="6.5" fill="#334155">&bull; Reflexive, Symmetric, Transitive</text>
-    <text x="8" y="66" font-size="6.5" fill="#334155">&bull; Equivalence Classes &amp; Partitions</text>
-    <text x="8" y="77" font-size="6.5" fill="#334155">&bull; Posets &amp; Partially Ordered Sets</text>
+    <text x="8" y="44" font-size="6.5" fill="#334155">? Relations R ⊆ A ? A; Matrix M_R</text>
+    <text x="8" y="55" font-size="6.5" fill="#334155">? Reflexive, Symmetric, Transitive</text>
+    <text x="8" y="66" font-size="6.5" fill="#334155">? Equivalence Classes &amp; Partitions</text>
+    <text x="8" y="77" font-size="6.5" fill="#334155">? Posets &amp; Partially Ordered Sets</text>
 
     <line x1="8" y1="86" x2="168" y2="86" stroke="#cbd5e1" stroke-width="0.6"/>
     <text x="8" y="98" font-family="'Arial', 'Helvetica', sans-serif" font-size="6.5" font-weight="bold" fill="#0f172a">Computational Engine:</text>
-    <text x="8" y="109" font-size="6.2" fill="#475569">&bull; Hasse Transitive Reduction</text>
-    <text x="8" y="120" font-size="6.2" fill="#475569">&bull; Warshall Reachability Closure W^(k)</text>
-    <text x="8" y="132" font-family="'Arial', 'Helvetica', sans-serif" font-size="6.2" font-weight="bold" fill="#047857">&bull; Tier 1 Exact Permutations 2^k</text>
+    <text x="8" y="109" font-size="6.2" fill="#475569">? Hasse Transitive Reduction</text>
+    <text x="8" y="120" font-size="6.2" fill="#475569">? Warshall Reachability Closure W^(k)</text>
+    <text x="8" y="132" font-family="'Arial', 'Helvetica', sans-serif" font-size="6.2" font-weight="bold" fill="#047857">? Tier 1 Exact Permutations 2^k</text>
   </g>
 
   <!-- Arrow 3 -> 4 -->
@@ -93,16 +93,16 @@
 
     <!-- Sub-heading & Formalisms -->
     <text x="8" y="32" font-size="6.8" font-weight="bold" fill="#1e40af">Finite State Transition Systems:</text>
-    <text x="8" y="44" font-size="6.5" fill="#334155">&bull; 5-Tuple M = (Q, &Sigma;, &delta;, q0, F)</text>
-    <text x="8" y="55" font-size="6.5" fill="#334155">&bull; Transition Relation: &delta; &sube; Q &times; &Sigma; &times; Q</text>
-    <text x="8" y="66" font-size="6.5" fill="#334155">&bull; DFA, NFA, &amp; &epsilon;-NFA Machines</text>
-    <text x="8" y="77" font-size="6.5" fill="#334155">&bull; Regular Languages &amp; RegEx Dual</text>
+    <text x="8" y="44" font-size="6.5" fill="#334155">? 5-Tuple M = (Q, ?, ?, q0, F)</text>
+    <text x="8" y="55" font-size="6.5" fill="#334155">? Transition Relation: ? ⊆ Q ? ? ? Q</text>
+    <text x="8" y="66" font-size="6.5" fill="#334155">? DFA, NFA, &amp; ε-NFA Machines</text>
+    <text x="8" y="77" font-size="6.5" fill="#334155">? Regular Languages &amp; RegEx Dual</text>
 
     <line x1="8" y1="86" x2="168" y2="86" stroke="#cbd5e1" stroke-width="0.6"/>
     <text x="8" y="98" font-family="'Arial', 'Helvetica', sans-serif" font-size="6.5" font-weight="bold" fill="#0f172a">Computational Engine:</text>
-    <text x="8" y="109" font-size="6.2" fill="#475569">&bull; Powerset Subset 2^Q Converter</text>
-    <text x="8" y="120" font-size="6.2" fill="#475569">&bull; Hopcroft Minimizer O(|&Sigma;| n log n)</text>
-    <text x="8" y="132" font-family="'Arial', 'Helvetica', sans-serif" font-size="6.2" font-weight="bold" fill="#047857">&bull; Real-Time Step-by-Step String Trace</text>
+    <text x="8" y="109" font-size="6.2" fill="#475569">? Powerset Subset 2^Q Converter</text>
+    <text x="8" y="120" font-size="6.2" fill="#475569">? Hopcroft Minimizer O(|?| n log n)</text>
+    <text x="8" y="132" font-family="'Arial', 'Helvetica', sans-serif" font-size="6.2" font-weight="bold" fill="#047857">? Real-Time Step-by-Step String Trace</text>
   </g>
 
   <!-- Arrow 4 -> 5 -->
@@ -116,23 +116,23 @@
 
     <!-- Sub-heading & Formalisms -->
     <text x="8" y="32" font-size="6.8" font-weight="bold" fill="#1e40af">Formal Languages &amp; Machines:</text>
-    <text x="8" y="44" font-size="6.5" fill="#334155">&bull; Context-Free Grammars G = (V, &Sigma;, R, S)</text>
-    <text x="8" y="55" font-size="6.5" fill="#334155">&bull; Chomsky Hierarchy Levels 3 &rarr; 0</text>
-    <text x="8" y="66" font-size="6.5" fill="#334155">&bull; Pushdown Automata LIFO Stack</text>
-    <text x="8" y="77" font-size="6.5" fill="#334155">&bull; Turing Machine Tape Decidability</text>
+    <text x="8" y="44" font-size="6.5" fill="#334155">? Context-Free Grammars G = (V, ?, R, S)</text>
+    <text x="8" y="55" font-size="6.5" fill="#334155">? Chomsky Hierarchy Levels 3 ? 0</text>
+    <text x="8" y="66" font-size="6.5" fill="#334155">? Pushdown Automata LIFO Stack</text>
+    <text x="8" y="77" font-size="6.5" fill="#334155">? Turing Machine Tape Decidability</text>
 
     <line x1="8" y1="86" x2="160" y2="86" stroke="#cbd5e1" stroke-width="0.6"/>
     <text x="8" y="98" font-family="'Arial', 'Helvetica', sans-serif" font-size="6.5" font-weight="bold" fill="#0f172a">Computational Engine:</text>
-    <text x="8" y="109" font-size="6.2" fill="#475569">&bull; 4-Step CNF Normalization</text>
-    <text x="8" y="120" font-size="6.2" fill="#475569">&bull; CYK Dynamic Parser O(n&sup3;)</text>
-    <text x="8" y="132" font-family="'Arial', 'Helvetica', sans-serif" font-size="6.2" font-weight="bold" fill="#047857">&bull; Unbounded Head Simulation</text>
+    <text x="8" y="109" font-size="6.2" fill="#475569">? 4-Step CNF Normalization</text>
+    <text x="8" y="120" font-size="6.2" fill="#475569">? CYK Dynamic Parser O(n&sup3;)</text>
+    <text x="8" y="132" font-family="'Arial', 'Helvetica', sans-serif" font-size="6.2" font-weight="bold" fill="#047857">? Unbounded Head Simulation</text>
   </g>
 
   <!-- Bottom Synthesis Banner -->
   <g transform="translate(12, 182)">
     <rect x="0" y="0" width="936" height="26" rx="2" fill="#f8fafc" stroke="#94a3b8" stroke-width="0.75"/>
     <text x="12" y="16.5" font-family="'Arial', 'Helvetica', sans-serif" font-size="7" font-weight="bold" fill="#0f172a">Formal Mathematical Continuity Invariants Across the Curricular Pipeline:</text>
-    <text x="365" y="16.5" font-size="6.8" fill="#334155">Set operations &cup;, &cap; &rarr; Boolean valuations &nu; &rarr; Cartesian product relation matrix M_R &rarr; State transition relation &delta; &sube; Q &times; &Sigma; &times; Q &rarr; Unbounded Turing tape &Gamma;</text>
+    <text x="365" y="16.5" font-size="6.8" fill="#334155">Set operations ?, ? ? Boolean valuations ν ? Cartesian product relation matrix M_R ? State transition relation ? ⊆ Q ? ? ? Q ? Unbounded Turing tape Γ</text>
   </g>
 
 </svg>

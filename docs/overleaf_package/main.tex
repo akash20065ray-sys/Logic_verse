@@ -82,38 +82,37 @@ Recent advancements in Generative Artificial Intelligence (GenAI) have introduce
 To address these limitations, we designed and implemented \textbf{LogicVerse}, an open-source visual computing IDE and grounded intelligent tutor. We designed LogicVerse around four core engineering targets:
 \begin{enumerate}
     \item \textbf{Sub-Millisecond In-Browser Reactive Compilation:} Execute reactive graph traversals and algebraic transformations in $<3.5$\,ms directly on client WebAssembly/JavaScript threads without server round-trips.
-    \item \textbf{Unified Multi-Domain Pipeline:} Seamlessly connect Set Theory, Propositional Logic, Binary Relations \& Posets, Automata, and Turing Computability on a shared topological canvas.
+    \item \textbf{Unified Multi-Domain Pipeline:} Formally connect Set Theory, Propositional Logic, Binary Relations \& Posets, Automata, and Turing Computability on a shared topological canvas.
     \item \textbf{Zero-Hallucination Dual-Engine Tutoring (LogicAI):} Combine a deterministic symbolic solver (Tier 1) for guaranteed 100\% arithmetic accuracy with a workspace-grounded LLM (Tier 2) for Socratic explanations.
     \item \textbf{Empirical Pedagogical Offloading:} Measurably enhance conceptual mastery (Cohen's $d > 0.8$) while reducing cognitive workload and student frustration (NASA-TLX).
 \end{enumerate}
 
-\begin{table*}[t]
-\caption{Comprehensive Capability \& Architecture Comparison of CS Theory Instructional Platforms}
+\begin{table}[htbp]
+\caption{Capability Comparison of Instructional Platforms}
 \label{tab:comparison}
 \begin{center}
-\begin{tabular}{lcccccc}
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{llll}
 \toprule
-\textbf{Capability / Technical Feature} & \textbf{JFLAP~\cite{rodger2006}} & \textbf{Logisim~\cite{burch2002}} & \textbf{Automata Tutor~\cite{dantoni2020}} & \textbf{Standalone LLM~\cite{achiam2023}} & \textbf{Lean 4 / SMT~\cite{demoura2021}} & \textbf{LogicVerse (Ours)} \\
+\textbf{Platform / System} & \textbf{Curricular Scope} & \textbf{Runtime Model} & \textbf{AI Tutoring Layer} \\
 \midrule
-Curricular Scope & Automata/CFG & Logic Gates & Automata Only & Broad Corpus & Formal Proofs & \textbf{Unified (Sets, Logic, Rel, DFA, TM)} \\
-Execution Substrate & Desktop Java & Desktop C++ & Web App & Cloud API & Local CLI & \textbf{Browser Client-Side DAG} \\
-Multi-Dock Analytical Probes & No (Single) & No (Single) & No (Problem) & None (Text-only) & No (Terminal) & \textbf{Yes (Synchronized 4-Dock)} \\
-Dynamic State Invariant Monitor & No & No & Equivalence SMT & No (Fabricates) & Formal Typing & \textbf{Yes (Real-Time Invariant Engine)} \\
-Conversational Tutoring Integration & None & None & Static Feedback & Full Unconstrained & None & \textbf{LogicAI Dual-Engine (Tier 1 + 2)} \\
-Arithmetic Accuracy Guarantee & N/A & N/A & N/A & No ($14.0\%$--$17.5\%$ Err) & Strict Verified & \textbf{Yes (100.0\% Exact Tier 1 Solver)} \\
-Mathematical Formatting & ASCII & ASCII & MathJax & Broken LaTeX & ASCII & \textbf{Universal Sanitized Unicode} \\
-Client-Side Execution Latency & Java Delay & $<5$\,ms & Network SMT & $>800$\,ms (API) & High (Compile) & \textbf{Ultra-Low ($<3.5$\,ms for 100 nodes)} \\
+JFLAP~\cite{rodger2006} & Automata \& Grammars & Desktop Java & None (Static rules) \\
+Logisim~\cite{burch2002} & Digital Logic Gates & Desktop Java & None (No feedback) \\
+Automata Tutor~\cite{dantoni2020} & Automata Grading & Server Web SMT & Static SMT Solver \\
+ChatGPT-4o~\cite{achiam2023} & Unstructured Text & Cloud LLM API & Probabilistic ($14\%$ err) \\
+\textbf{LogicVerse (Ours)} & \textbf{Sets, Logic, Rel, Automata} & \textbf{Browser Client DAG} & \textbf{Dual-Engine (Exact+LLM)} \\
 \bottomrule
-\end{tabular}
+\end{tabular}%
+}
 \end{center}
-\end{table*}
+\end{table}
 
-\begin{figure*}[t]
+\begin{figure}[t]
 \centering
-\includegraphics[width=0.92\textwidth]{figures/fig0_system_architecture.png}
+\includegraphics[width=\columnwidth]{figures/fig0_system_architecture.png}
 \caption{Four-Layer System Architecture of LogicVerse: Layer 1 executes reactive graph canvas bindings in the browser; Layer 2 executes deterministic formal engines with sub-millisecond latency; Layer 3 continuously serializes live canvas state into an invariant JSON-LD vector ($S_{\text{canvas}}$); Layer 4 implements the LogicAI dual-engine tutoring architecture, routing numerical/combinatorial queries to Tier 1 (100\% exact precision) and conceptual queries to Tier 2 (grounded LLM) with universal Unicode sanitization.}
 \label{fig:arch}
-\end{figure*}
+\end{figure}
 
 \section{Theoretical Foundations \& Operational Semantics}
 
@@ -164,12 +163,12 @@ V_{i, j} = \bigcup_{k=1}^{j-1} \{ A \mid A \to BC \in R, B \in V_{i, k}, C \in V
 \end{equation}
 To teach computability, LogicVerse provides animated Pushdown Automata (PDA) with an interactive LIFO stack trace and Turing Machines (TM) with an unbounded tape and head movement visualization (L, R, S)~\cite{turing1936}.
 
-\begin{figure*}[t]
+\begin{figure}[t]
 \centering
-\includegraphics[width=0.92\textwidth]{figures/fig1_multidock_interface.png}
+\includegraphics[width=\columnwidth]{figures/fig1_multidock_interface.png}
 \caption{LogicVerse Integrated Multi-Dock Educational Environment: Dock A (left) displays the reactive node-wire topological canvas with live DFA execution and set-algebraic dataflow; Dock B (center) presents synchronized analytical probes: interactive Venn intersection cardinality, formal transition matrix $\delta(q, \sigma)$, and topological invariant monitor; Dock C (right) illustrates LogicAI grounded tutoring, demonstrating automatic routing to Tier 1 for exact combinatorial counting alongside Tier 2 spatial Socratic scaffolding.}
 \label{fig:interface}
-\end{figure*}
+\end{figure}
 
 \section{System Architecture \& Multi-Plane Topology}
 As illustrated in Fig.~\ref{fig:arch}, LogicVerse executes as an asynchronous, in-browser visual computing runtime organized across four architectural planes:
@@ -223,6 +222,7 @@ Table~\ref{tab:complexity} provides a comprehensive asymptotic time and space co
 \caption{Theoretical Complexity Analysis of LogicVerse Engines}
 \label{tab:complexity}
 \begin{center}
+\resizebox{\columnwidth}{!}{%
 \begin{tabular}{llcc}
 \toprule
 \textbf{Module / Engine} & \textbf{Primary Operation} & \textbf{Time} & \textbf{Space} \\
@@ -237,16 +237,17 @@ Grammar Engine & CYK Dynamic Programming & $O(n^3 \cdot |R|)$ & $O(n^2 \cdot |V|
 LogicAI Tier 1 & Bell Numbers / Counting & $O(n^2)$ dyn. & $O(n)$ \\
 LogicAI Tier 2 & Invariant Context Injection & $O(|V| + |E|)$ & $O(|V| + |E|)$ \\
 \bottomrule
-\end{tabular}
+\end{tabular}%
+}
 \end{center}
 \end{table}
 
-\begin{figure*}[t]
+\begin{figure}[t]
 \centering
-\includegraphics[width=0.92\textwidth]{figures/fig2_evaluation_charts.png}
+\includegraphics[width=\columnwidth]{figures/fig2_evaluation_charts.png}
 \caption{Empirical Evaluation Results Across $N = 48$ Students: (a) Pre-test vs. post-test conceptual mastery scores with standard error bars, indicating higher normalized gains ($g = 0.68 \pm 0.12$ vs. $0.34 \pm 0.15$, $p < 0.001$, Cohen's $d = 1.42$); (b) Standardized NASA-TLX cognitive workload comparison across six dimensions, demonstrating a 50.1\% reduction in mental demand and a 63.3\% reduction in frustration.}
 \label{fig:evaluation}
-\end{figure*}
+\end{figure}
 
 \section{Experimental Evaluation \& Empirical Results}
 
@@ -257,6 +258,7 @@ We tested LogicAI Tier 1 against ChatGPT-4o and Gemini 1.5 on an automated bench
 \caption{Accuracy and Arithmetic Benchmark Across 100 Discrete Mathematics Problems}
 \label{tab:benchmark}
 \begin{center}
+\resizebox{\columnwidth}{!}{%
 \begin{tabular}{lccc}
 \toprule
 \textbf{Problem Category} & \textbf{ChatGPT-4o} & \textbf{Gemini 1.5} & \textbf{LogicVerse} \\
@@ -276,7 +278,8 @@ Bijective Permutations $n!$ & 95.0\% & 90.0\% & \textbf{100.0\%} \\
 \textbf{Hallucination Rate} & \textbf{14.0\%} & \textbf{17.5\%} & \textbf{0.0\%} \\
 \textbf{Residual LaTeX Delimiters} & 100.0\% & 100.0\% & \textbf{0.0\%} \\
 \bottomrule
-\end{tabular}
+\end{tabular}%
+}
 \end{center}
 \end{table}
 
@@ -298,6 +301,7 @@ Both cohorts completed a 45-minute baseline pre-test, four design assignments (S
 \caption{User Study Pedagogical Learning Gains and Usability Metrics ($N = 48$)}
 \label{tab:userstudy}
 \begin{center}
+\resizebox{\columnwidth}{!}{%
 \begin{tabular}{lccc}
 \toprule
 \textbf{Evaluation Metric} & \textbf{Control ($N=24$)} & \textbf{LogicVerse ($N=24$)} & \textbf{Statistical Sig.} \\
@@ -310,7 +314,8 @@ NASA-TLX Mental Demand & 68.5 $\pm$ 14.3 & \textbf{34.2 $\pm$ 10.8} & $t = 9.21,
 NASA-TLX Frustration & 59.4 $\pm$ 16.2 & \textbf{21.8 $\pm$ 9.5} & $t = 9.77, p < 0.001$ ($-63.3\%$) \\
 Task Time (min) & 44.8 $\pm$ 8.2 & \textbf{26.4 $\pm$ 5.1} & $t = 9.34, p < 0.001$ ($-41.1\%$) \\
 \bottomrule
-\end{tabular}
+\end{tabular}%
+}
 \end{center}
 \end{table}
 
@@ -362,3 +367,4 @@ The authors thank the Department of Artificial Intelligence and Data Science at 
 \end{thebibliography}
 
 \end{document}
+

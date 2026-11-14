@@ -4,18 +4,11 @@
   title: [LogicVerse: A Reactive Visual Graph IDE and Dual-Engine Grounded AI Tutor for Discrete Mathematics and Formal Languages],
   authors: (
     (
-      name: "Akash Sharma",
-      department: "Dept. of Computer Science & Engineering",
-      organization: "Graphic Era Deemed to be University",
-      location: "Dehradun, India",
-      email: "akash.sharma.cse@geu.ac.in"
-    ),
-    (
-      name: "Faculty Mentor / Co-Author",
-      department: "School of Computing and Informatics",
-      organization: "Graphic Era Deemed to be University",
-      location: "Dehradun, India",
-      email: "research.computing@geu.ac.in"
+      name: "Akash Kumar, Ghansham Agaldare, Krishna Aher, Sanskar Bhargude, Hari Birare",
+      department: "Department of Artificial Intelligence and Data Science",
+      organization: "Vishwakarma Institute of Technology (Affiliated to SPPU)",
+      location: "Pune, Maharashtra, India",
+      email: "Project Faculty Guide: Prof. Sheela Chinchmalatpure"
     ),
   ),
   abstract: [
@@ -276,6 +269,6 @@ This paper presented *LogicVerse*, an open-source visual computing IDE and groun
 Future work will focus on integrating Lean 4 interactive theorem proving @demoura2021lean compiled to WebAssembly for client-side proof verification and adding WebRTC support for collaborative virtual classrooms.
 
 = Acknowledgment
-The authors thank the Department of Computer Science and Engineering and the faculty mentors at Graphic Era Deemed to be University for institutional support and facilitating student laboratory testing.
+The authors thank the Department of Artificial Intelligence and Data Science at Vishwakarma Institute of Technology, Pune, for technical guidance, academic support, and facilitating laboratory evaluation.
 
 #bibliography("references.bib", style: "ieee")

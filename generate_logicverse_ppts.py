@@ -196,9 +196,9 @@ def build_presentation(with_names: bool, filename: str):
 
     if with_names:
         roles = [
-            ("Akash (Lead)", "Full-Stack Integration (Connected Frontend & Backend) + DFA/NFA & PDA/TM + LogicAI Chatbot"),
-            ("Krishna & Ghansham", "Frontend Architecture: Canvas & Regex/CFG (Krishna) + Next.js 16 UI & Propositional Logic (Ghansham)"),
-            ("Sanskar & Hari", "Backend Systems: Set Theory Bitset Engine (Sanskar) + Binary Relations, Warshall & Posets (Hari)"),
+            ("Full-Stack Lead (Akash)", "Connected Frontend & Backend via Reactive Hypergraph IPC + DFA/NFA + PDA & Turing Machines + LogicAI Chatbot"),
+            ("Frontend Team (Krishna & Ghansham)", "Interactive Canvas & Formal Languages Regex/CFG (Krishna) + UI Shell & Propositional Logic (Ghansham)"),
+            ("Backend Team (Hari & Sanskar)", "Set Theory Bitset Engine & Dynamic Venn (Sanskar) + Binary Relations, Warshall's Closure & Functions (Hari)"),
         ]
         for leader, area in roles:
             p = tf_info.add_paragraph()
@@ -461,8 +461,8 @@ def build_presentation(with_names: bool, filename: str):
     # =========================================================================
     s5 = prs.slides.add_slide(blank_layout)
     add_bg(s5)
-    owner_sub = " (Sanskar's Contribution • Backend)" if with_names else ""
-    add_header(s5, f"Module 1: Set Theory & Dynamic Venn Diagrams{owner_sub}", "CORE DOMAIN 1 • SET THEORY • SANSKAR")
+    owner_sub = " (Sanskar's Contribution • Backend Team)" if with_names else ""
+    add_header(s5, f"Module 1: Set Theory & Dynamic Venn Diagrams{owner_sub}", "CORE DOMAIN 1 • SET THEORY • SANSKAR (BACKEND TEAM)" if with_names else "CORE DOMAIN 1 • SET THEORY")
 
     c1 = add_card_box(s5, Inches(0.8), Inches(1.65), Inches(5.7), Inches(5.35), border_color=BORDER_CYAN)
     tf1 = c1.text_frame
@@ -545,8 +545,8 @@ def build_presentation(with_names: bool, filename: str):
     # =========================================================================
     s6 = prs.slides.add_slide(blank_layout)
     add_bg(s6)
-    owner_sub = " (Ghansham's Contribution • Frontend & Logic)" if with_names else ""
-    add_header(s6, f"Module 2: Propositional Logic & Truth Tables{owner_sub}", "CORE DOMAIN 2 • FORMAL LOGIC • GHANSHAM")
+    owner_sub = " (Ghansham's Contribution • Frontend Team)" if with_names else ""
+    add_header(s6, f"Module 2: Propositional Logic & Truth Tables{owner_sub}", "CORE DOMAIN 2 • FORMAL LOGIC • GHANSHAM (FRONTEND TEAM)" if with_names else "CORE DOMAIN 2 • FORMAL LOGIC")
 
     c1 = add_card_box(s6, Inches(0.8), Inches(1.65), Inches(5.7), Inches(5.35), border_color=BORDER_PURPLE)
     tf1 = c1.text_frame
@@ -629,8 +629,8 @@ def build_presentation(with_names: bool, filename: str):
     # =========================================================================
     s7 = prs.slides.add_slide(blank_layout)
     add_bg(s7)
-    owner_sub = " (Sanskar & Hari's Contribution • Backend)" if with_names else ""
-    add_header(s7, f"Module 3: Step-by-Step Proof & Countability Solvers{owner_sub}", "CORE DOMAIN 3 • BACKEND PROOF SOLVERS • SANSKAR & HARI")
+    owner_sub = " (Sanskar & Hari's Contribution • Backend Team)" if with_names else ""
+    add_header(s7, f"Module 3: Step-by-Step Proof & Countability Solvers{owner_sub}", "CORE DOMAIN 3 • BACKEND PROOF SOLVERS • SANSKAR & HARI (BACKEND TEAM)" if with_names else "CORE DOMAIN 3 • BACKEND PROOF SOLVERS")
 
     c1 = add_card_box(s7, Inches(0.8), Inches(1.65), Inches(3.73), Inches(5.35), border_color=BORDER_GOLD)
     tf1 = c1.text_frame
@@ -757,8 +757,8 @@ def build_presentation(with_names: bool, filename: str):
     # =========================================================================
     s8 = prs.slides.add_slide(blank_layout)
     add_bg(s8)
-    owner_sub = " (Hari's Contribution • Backend)" if with_names else ""
-    add_header(s8, f"Module 4: Relations, Order Theory & Functions{owner_sub}", "CORE DOMAIN 4 • RELATIONS & FUNCTIONS • HARI")
+    owner_sub = " (Hari's Contribution • Backend Team)" if with_names else ""
+    add_header(s8, f"Module 4: Relations, Order Theory & Functions{owner_sub}", "CORE DOMAIN 4 • RELATIONS & FUNCTIONS • HARI (BACKEND TEAM)" if with_names else "CORE DOMAIN 4 • RELATIONS & FUNCTIONS")
 
     c1 = add_card_box(s8, Inches(0.8), Inches(1.65), Inches(5.7), Inches(5.35), border_color=BORDER_GOLD)
     tf1 = c1.text_frame
@@ -841,8 +841,8 @@ def build_presentation(with_names: bool, filename: str):
     # =========================================================================
     s9 = prs.slides.add_slide(blank_layout)
     add_bg(s9)
-    owner_sub = " (Akash's Contribution • Automata & Full-Stack)" if with_names else ""
-    add_header(s9, f"Module 5: Finite Automata (DFA / NFA) Visualizer{owner_sub}", "CORE DOMAIN 5 • AUTOMATA THEORY • AKASH")
+    owner_sub = " (Akash's Contribution • Full-Stack Lead)" if with_names else ""
+    add_header(s9, f"Module 5: Finite Automata (DFA / NFA) Visualizer{owner_sub}", "CORE DOMAIN 5 • AUTOMATA THEORY • AKASH (FULL-STACK LEAD)" if with_names else "CORE DOMAIN 5 • AUTOMATA THEORY")
 
     c1 = add_card_box(s9, Inches(0.8), Inches(1.65), Inches(5.7), Inches(5.35), border_color=BORDER_CYAN)
     tf1 = c1.text_frame
@@ -925,8 +925,8 @@ def build_presentation(with_names: bool, filename: str):
     # =========================================================================
     s10 = prs.slides.add_slide(blank_layout)
     add_bg(s10)
-    owner_sub = " (Akash's Contribution • Chatbot & AI)" if with_names else ""
-    add_header(s10, f"LogicAI: Context-Aware Mathematical Tutor & Chatbot{owner_sub}", "INTELLIGENT AI TUTORING & CHATBOT • AKASH")
+    owner_sub = " (Akash's Contribution • Full-Stack Lead)" if with_names else ""
+    add_header(s10, f"LogicAI: Context-Aware Mathematical Tutor & Chatbot{owner_sub}", "INTELLIGENT AI TUTORING & CHATBOT • AKASH (FULL-STACK LEAD)" if with_names else "INTELLIGENT AI TUTORING & CHATBOT")
 
     c1 = add_card_box(s10, Inches(0.8), Inches(1.65), Inches(5.7), Inches(5.35), border_color=BORDER_PURPLE)
     tf1 = c1.text_frame
@@ -1024,28 +1024,28 @@ def build_presentation(with_names: bool, filename: str):
             ("Regex Engine", "Visual regex pattern builder with Thompson's construction converting RE to NFA."),
             ("CFG & Parse Trees", "Context-Free Grammar production editor, derivation trees, and 4-step CNF converter."),
             ("CYK Parsing Algorithm", "Dynamic programming triangular parsing table verifying grammar membership in O(n^3)."),
-        ], "Frontend Canvas • Regex • CFG & CYK", BORDER_CRIMSON),
+        ], "Frontend Team • Canvas, Regex & CFG", BORDER_CRIMSON),
 
         ("Ghansham", "Frontend Architect & Logic Specialist", [
             ("Frontend Architecture", "Designed Next.js 16 multi-dock shell, dark Crimson Orbit theme & navigation."),
             ("Logic Gate Canvas", "Interactive logic gate nodes (AND, OR, NOT, IMPLIES, IFF) with live signal flow."),
             ("Truth Table Generator", "Exhaustive 2^n valuation tables for up to 16 variables with tautology checks."),
             ("Normal Forms & Export", "Automated DNF/CNF formula compilation with clean LaTeX & Unicode rendering."),
-        ], "Frontend UI/UX • Boolean Logic • React 19", BORDER_GREEN),
+        ], "Frontend Team • UI/UX, Logic & React 19", BORDER_GREEN),
 
         ("Sanskar", "Backend Systems & Set Theory Specialist", [
             ("Set Theory Engine", "Custom set builder, set roster notation, and bracket parsing algorithms."),
             ("High-Performance Bitsets", "64-bit integer bitmasks delivering O(1) set union, intersection, and difference."),
             ("Dynamic Venn Diagrams", "Interactive 2-set & 3-set SVG region decomposition with 8-region spatial sorting."),
             ("Backend Store & Powerset", "Zustand-backed compute pipeline calculating powerset lattice (2^A) upon mutation."),
-        ], "Backend Systems • Set Theory • Fast Bitsets", BORDER_GOLD),
+        ], "Backend Team • Set Theory & Fast Bitsets", BORDER_GOLD),
 
         ("Hari", "Backend Systems & Relations Specialist", [
             ("Binary Relations Engine", "Boolean adjacency matrices (M_R) with reflexivity, symmetry, and transitivity checks."),
             ("Warshall's Algorithm", "Step-by-step O(n^3) matrix closure algorithm computing reachability graphs (R+)."),
             ("Hasse Diagram Generator", "Transitive reduction algorithm stripping redundant edges for partially ordered sets."),
             ("Function Mapping Engine", "Domain-to-codomain arrow vectors with Injective, Surjective, and Bijective classifiers."),
-        ], "Backend Algorithms • Relations • Graph Math", BORDER_PURPLE),
+        ], "Backend Team • Relations & Graph Math", BORDER_PURPLE),
     ] if with_names else [
         ("Team Member 1", "Lead Architect | Full-Stack Integrator", [
             ("Full-Stack Integration", "Connected Frontend & Backend via reactive hypergraph IPC event bus."),
@@ -1059,28 +1059,28 @@ def build_presentation(with_names: bool, filename: str):
             ("Regex Engine", "Visual regex pattern builder with Thompson's construction converting RE to NFA."),
             ("CFG & Parse Trees", "Context-Free Grammar production editor, derivation trees, and 4-step CNF converter."),
             ("CYK Parsing Algorithm", "Dynamic programming triangular parsing table verifying grammar membership in O(n^3)."),
-        ], "Frontend Canvas • Regex • CFG & CYK", BORDER_CRIMSON),
+        ], "Frontend Team • Canvas, Regex & CFG", BORDER_CRIMSON),
 
         ("Team Member 3", "Frontend Architect & Logic Specialist", [
             ("Frontend Architecture", "Designed Next.js 16 multi-dock shell, dark Crimson Orbit theme & navigation."),
             ("Logic Gate Canvas", "Interactive logic gate nodes (AND, OR, NOT, IMPLIES, IFF) with live signal flow."),
             ("Truth Table Generator", "Exhaustive 2^n valuation tables for up to 16 variables with tautology checks."),
             ("Normal Forms & Export", "Automated DNF/CNF formula compilation with clean LaTeX & Unicode rendering."),
-        ], "Frontend UI/UX • Boolean Logic • React 19", BORDER_GREEN),
+        ], "Frontend Team • UI/UX, Logic & React 19", BORDER_GREEN),
 
         ("Team Member 4", "Backend Systems & Set Theory Specialist", [
             ("Set Theory Engine", "Custom set builder, set roster notation, and bracket parsing algorithms."),
             ("High-Performance Bitsets", "64-bit integer bitmasks delivering O(1) set union, intersection, and difference."),
             ("Dynamic Venn Diagrams", "Interactive 2-set & 3-set SVG region decomposition with 8-region spatial sorting."),
             ("Backend Store & Powerset", "Zustand-backed compute pipeline calculating powerset lattice (2^A) upon mutation."),
-        ], "Backend Systems • Set Theory • Fast Bitsets", BORDER_GOLD),
+        ], "Backend Team • Set Theory & Fast Bitsets", BORDER_GOLD),
 
         ("Team Member 5", "Backend Systems & Relations Specialist", [
             ("Binary Relations Engine", "Boolean adjacency matrices (M_R) with reflexivity, symmetry, and transitivity checks."),
             ("Warshall's Algorithm", "Step-by-step O(n^3) matrix closure algorithm computing reachability graphs (R+)."),
             ("Hasse Diagram Generator", "Transitive reduction algorithm stripping redundant edges for partially ordered sets."),
             ("Function Mapping Engine", "Domain-to-codomain arrow vectors with Injective, Surjective, and Bijective classifiers."),
-        ], "Backend Algorithms • Relations • Graph Math", BORDER_PURPLE),
+        ], "Backend Team • Relations & Graph Math", BORDER_PURPLE),
     ]
 
     card_w = Inches(2.2)
@@ -1155,14 +1155,14 @@ def build_presentation(with_names: bool, filename: str):
     s12 = prs.slides.add_slide(blank_layout)
     add_bg(s12)
     owner_sub = " (Krishna: Regex/CFG • Akash: PDA/TM)" if with_names else ""
-    add_header(s12, f"Advanced Formal Languages: Regex, CFG, PDA & Turing Machines{owner_sub}", "FORMAL LANGUAGES & COMPUTABILITY • KRISHNA & AKASH")
+    add_header(s12, f"Advanced Formal Languages: Regex, CFG, PDA & Turing Machines{owner_sub}", "FORMAL LANGUAGES & COMPUTABILITY • KRISHNA (FRONTEND) & AKASH (FULL-STACK)" if with_names else "FORMAL LANGUAGES & COMPUTABILITY")
 
     c1 = add_card_box(s12, Inches(0.8), Inches(1.65), Inches(5.7), Inches(5.35), border_color=BORDER_GOLD)
     tf1 = c1.text_frame
 
     p1_h = tf1.paragraphs[0]
     p1_h.alignment = PP_ALIGN.LEFT
-    p1_h.text = "MODULE 6: REGEX & CFG" + (" (Krishna's Contribution)" if with_names else "")
+    p1_h.text = "MODULE 6: REGEX & CFG" + (" (Krishna's Contribution • Frontend Team)" if with_names else " (Frontend Team)")
     p1_h.font.name = "Arial"
     p1_h.font.size = Pt(14)
     p1_h.font.bold = True
@@ -1188,7 +1188,7 @@ def build_presentation(with_names: bool, filename: str):
 
     p1_foot = tf1.add_paragraph()
     p1_foot.alignment = PP_ALIGN.LEFT
-    p1_foot.text = "Krishna: Visual Regex Thompson Engine + CFG Syntax Trees & CYK Grid"
+    p1_foot.text = "Krishna (Frontend Team): Visual Regex Thompson Engine + CFG Syntax Trees & CYK Grid" if with_names else "Frontend Team: Visual Regex Thompson Engine + CFG Syntax Trees & CYK Grid"
     p1_foot.font.name = "Calibri"
     p1_foot.font.size = Pt(10)
     p1_foot.font.bold = True
@@ -1200,7 +1200,7 @@ def build_presentation(with_names: bool, filename: str):
 
     p2_h = tf2.paragraphs[0]
     p2_h.alignment = PP_ALIGN.LEFT
-    p2_h.text = "MODULE 7: PDA & TURING MACHINES" + (" (Akash's Contribution)" if with_names else "")
+    p2_h.text = "MODULE 7: PDA & TURING MACHINES" + (" (Akash's Contribution • Full-Stack Lead)" if with_names else " (Full-Stack Integrator)")
     p2_h.font.name = "Arial"
     p2_h.font.size = Pt(14)
     p2_h.font.bold = True
@@ -1226,7 +1226,7 @@ def build_presentation(with_names: bool, filename: str):
 
     p2_foot = tf2.add_paragraph()
     p2_foot.alignment = PP_ALIGN.LEFT
-    p2_foot.text = "Akash: LIFO Stack Visualizer + Turing Tape Simulation & Halting Proofs"
+    p2_foot.text = "Akash (Full-Stack Lead): LIFO Stack Visualizer + Turing Tape Simulation & Halting Proofs" if with_names else "Full-Stack Lead: LIFO Stack Visualizer + Turing Tape Simulation & Halting Proofs"
     p2_foot.font.name = "Calibri"
     p2_foot.font.size = Pt(10)
     p2_foot.font.bold = True

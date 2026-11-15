@@ -1,138 +1,86 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 220" width="100%" height="auto" style="background:#ffffff; font-family:'Times New Roman',Times,serif;">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 310" width="100%" height="auto" style="background:#ffffff; font-family:'Times New Roman',Times,serif;">
   <defs>
-    <marker id="pipe-arr" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#1e293b"/>
+    <marker id="arr2" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#0f172a"/>
     </marker>
-    <filter id="p-shadow" x="-2%" y="-2%" width="104%" height="104%">
-      <feDropShadow dx="0" dy="1" stdDeviation="1" flood-opacity="0.05"/>
-    </filter>
+    <marker id="arr2-blue" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#1d4ed8"/>
+    </marker>
   </defs>
 
-  <!-- Outer Border (IEEE Spec) -->
-  <rect x="2" y="2" width="956" height="216" rx="2" fill="#ffffff" stroke="#334155" stroke-width="1"/>
+  <!-- Outer Frame -->
+  <rect x="2" y="2" width="416" height="306" rx="2" fill="#ffffff" stroke="#0f172a" stroke-width="1.2"/>
 
   <!-- Top Title Banner -->
-  <rect x="2" y="2" width="956" height="18" fill="#1e293b"/>
-  <text x="14" y="14.5" font-family="'Arial', 'Helvetica', sans-serif" font-size="8" font-weight="bold" fill="#ffffff" letter-spacing="0.5">FORMAL CURRICULAR &amp; COMPUTATIONAL PIPELINE: FROM DISCRETE PRIMITIVES TO TURING COMPUTABILITY</text>
-  <text x="946" y="14.5" font-family="'Arial', 'Helvetica', sans-serif" font-size="7.5" fill="#cbd5e1" text-anchor="end">Continuous Mathematical Progression Architecture</text>
+  <rect x="2" y="2" width="416" height="19" fill="#1e293b"/>
+  <text x="10" y="15" font-size="10" font-weight="bold" fill="#ffffff" letter-spacing="0.3">FORMAL CURRICULAR &amp; COMPUTATIONAL PIPELINE</text>
+  <text x="408" y="15" font-size="8.5" fill="#cbd5e1" text-anchor="end" font-style="italic">7-Module Continuum</text>
 
-  <!-- ==================== STAGE 1: SET THEORY ==================== -->
-  <g transform="translate(12, 28)">
-    <rect x="0" y="0" width="176" height="146" rx="2" fill="#ffffff" stroke="#64748b" stroke-width="0.8" filter="url(#p-shadow)"/>
-    <rect x="0" y="0" width="176" height="18" fill="#f1f5f9" stroke="#64748b" stroke-width="0.8"/>
-    <text x="88" y="12.5" font-family="'Arial', 'Helvetica', sans-serif" font-size="7.8" font-weight="bold" fill="#0f172a" text-anchor="middle">Stage 1: Set Theory</text>
+  <!-- Row 1: Stage 1 & Stage 2 -->
+  <!-- Stage 1: Set Theory -->
+  <rect x="10" y="28" width="186" height="66" rx="2" fill="#f8fafc" stroke="#64748b" stroke-width="0.8"/>
+  <rect x="10" y="28" width="186" height="16" fill="#f1f5f9" stroke="#64748b" stroke-width="0.8"/>
+  <text x="16" y="40" font-size="9" font-weight="bold" fill="#0f172a">Stage 1: Set Theory</text>
+  <text x="190" y="40" font-size="8" fill="#1e40af" text-anchor="end" font-style="italic">Sanskar (Backend)</text>
+  <text x="16" y="55" font-size="8.5" fill="#334155">• Universes A, B &sube; U, Power Sets 2^|A|</text>
+  <text x="16" y="68" font-size="8.5" fill="#334155">• Operations: &cup;, &cap;, \, &Delta;, Cartesian A &times; B</text>
+  <text x="16" y="81" font-size="8.5" fill="#047857" font-weight="bold">• Sub-millisecond Bitmask Engine</text>
 
-    <!-- Sub-heading & Formalisms -->
-    <text x="8" y="32" font-size="6.8" font-weight="bold" fill="#1e40af">Discrete Universe Foundations:</text>
-    <text x="8" y="44" font-size="6.5" fill="#334155">? Finite Universes A, B ⊆ U</text>
-    <text x="8" y="55" font-size="6.5" fill="#334155">? Operators: ?, ?, −, ⊕ (SymDiff)</text>
-    <text x="8" y="66" font-size="6.5" fill="#334155">? Power Set: |P(A)| = 2^|A|</text>
-    <text x="8" y="77" font-size="6.5" fill="#334155">? Cartesian Product: A ? B</text>
+  <!-- Arrow S1 -> S2 -->
+  <line x1="196" y1="61" x2="222" y2="61" stroke="#0f172a" stroke-width="1.3" marker-end="url(#arr2)"/>
 
-    <line x1="8" y1="86" x2="168" y2="86" stroke="#cbd5e1" stroke-width="0.6"/>
-    <text x="8" y="98" font-family="'Arial', 'Helvetica', sans-serif" font-size="6.5" font-weight="bold" fill="#0f172a">Computational Engine:</text>
-    <text x="8" y="109" font-size="6.2" fill="#475569">? Topological DAG Evaluator</text>
-    <text x="8" y="120" font-size="6.2" fill="#475569">? Dynamic Multi-Set Venn Probes</text>
-    <text x="8" y="132" font-family="'Arial', 'Helvetica', sans-serif" font-size="6.2" font-weight="bold" fill="#047857">? Sub-millisecond Cardinalities |S|</text>
-  </g>
+  <!-- Stage 2: Propositional Logic -->
+  <rect x="224" y="28" width="186" height="66" rx="2" fill="#f8fafc" stroke="#64748b" stroke-width="0.8"/>
+  <rect x="224" y="28" width="186" height="16" fill="#f1f5f9" stroke="#64748b" stroke-width="0.8"/>
+  <text x="230" y="40" font-size="9" font-weight="bold" fill="#0f172a">Stage 2: Propositional Logic</text>
+  <text x="404" y="40" font-size="8" fill="#1e40af" text-anchor="end" font-style="italic">Ghansham (Frontend)</text>
+  <text x="230" y="55" font-size="8.5" fill="#334155">• Truth Valuations: &not;, &and;, &or;, &rarr;, &harr;</text>
+  <text x="230" y="68" font-size="8.5" fill="#334155">• 2^k Interpretation Space &amp; Tautologies</text>
+  <text x="230" y="81" font-size="8.5" fill="#047857" font-weight="bold">• AST Tree Evaluator &amp; CNF/DNF</text>
 
-  <!-- Arrow 1 -> 2 -->
-  <path d="M 190 101 L 202 101" stroke="#1e293b" stroke-width="1.2" marker-end="url(#pipe-arr)"/>
+  <!-- Arrow down from Row 1 to Row 2 -->
+  <line x1="317" y1="94" x2="317" y2="108" stroke="#0f172a" stroke-width="1.3" marker-end="url(#arr2)"/>
 
-  <!-- ==================== STAGE 2: BOOLEAN LOGIC ==================== -->
-  <g transform="translate(204, 28)">
-    <rect x="0" y="0" width="176" height="146" rx="2" fill="#ffffff" stroke="#64748b" stroke-width="0.8" filter="url(#p-shadow)"/>
-    <rect x="0" y="0" width="176" height="18" fill="#f1f5f9" stroke="#64748b" stroke-width="0.8"/>
-    <text x="88" y="12.5" font-family="'Arial', 'Helvetica', sans-serif" font-size="7.8" font-weight="bold" fill="#0f172a" text-anchor="middle">Stage 2: Propositional Logic</text>
+  <!-- Row 2: Stage 3 & Stage 4 -->
+  <!-- Stage 3: Relations & Posets -->
+  <rect x="10" y="110" width="186" height="66" rx="2" fill="#f8fafc" stroke="#64748b" stroke-width="0.8"/>
+  <rect x="10" y="110" width="186" height="16" fill="#f1f5f9" stroke="#64748b" stroke-width="0.8"/>
+  <text x="16" y="122" font-size="9" font-weight="bold" fill="#0f172a">Stage 3: Relations &amp; Posets</text>
+  <text x="190" y="122" font-size="8" fill="#1e40af" text-anchor="end" font-style="italic">Hari (Backend)</text>
+  <text x="16" y="137" font-size="8.5" fill="#334155">• Equivalence Partitions A/R &amp; Closures</text>
+  <text x="16" y="150" font-size="8.5" fill="#334155">• Warshall Transitive Closure O(|V|^3)</text>
+  <text x="16" y="163" font-size="8.5" fill="#047857" font-weight="bold">• Topological Sorting &amp; Hasse Diagrams</text>
 
-    <!-- Sub-heading & Formalisms -->
-    <text x="8" y="32" font-size="6.8" font-weight="bold" fill="#1e40af">Truth Functional Calculus:</text>
-    <text x="8" y="44" font-size="6.5" fill="#334155">? Valuations ν: Var ? {0, 1}</text>
-    <text x="8" y="55" font-size="6.5" fill="#334155">? Gates: ∧, ∨, ¬, ?, ?, ⊕</text>
-    <text x="8" y="66" font-size="6.5" fill="#334155">? 2^n Interpretation Space</text>
-    <text x="8" y="77" font-size="6.5" fill="#334155">? Tautology Verification ? ?</text>
+  <!-- Arrow S4 -> S3 (or S3 -> S4) -->
+  <line x1="196" y1="143" x2="222" y2="143" stroke="#0f172a" stroke-width="1.3" marker-end="url(#arr2)"/>
 
-    <line x1="8" y1="86" x2="168" y2="86" stroke="#cbd5e1" stroke-width="0.6"/>
-    <text x="8" y="98" font-family="'Arial', 'Helvetica', sans-serif" font-size="6.5" font-weight="bold" fill="#0f172a">Computational Engine:</text>
-    <text x="8" y="109" font-size="6.2" fill="#475569">? Reactive AST Tree Compiler</text>
-    <text x="8" y="120" font-size="6.2" fill="#475569">? Canonical DNF / CNF Synthesis</text>
-    <text x="8" y="132" font-family="'Arial', 'Helvetica', sans-serif" font-size="6.2" font-weight="bold" fill="#047857">? Semantic Equivalence Checker</text>
-  </g>
+  <!-- Stage 4: Regex & CFG -->
+  <rect x="224" y="110" width="186" height="66" rx="2" fill="#f8fafc" stroke="#64748b" stroke-width="0.8"/>
+  <rect x="224" y="110" width="186" height="16" fill="#f1f5f9" stroke="#64748b" stroke-width="0.8"/>
+  <text x="230" y="122" font-size="9" font-weight="bold" fill="#0f172a">Stage 4: Regex &amp; Formal Grammars</text>
+  <text x="404" y="122" font-size="8" fill="#1e40af" text-anchor="end" font-style="italic">Krishna (Frontend)</text>
+  <text x="230" y="137" font-size="8.5" fill="#334155">• Thompson &amp; Glushkov Regex O(m)</text>
+  <text x="230" y="150" font-size="8.5" fill="#334155">• Chomsky Normal Form (CNF) Conversion</text>
+  <text x="230" y="163" font-size="8.5" fill="#047857" font-weight="bold">• CYK Dynamic Parse Table O(n^3)</text>
 
-  <!-- Arrow 2 -> 3 -->
-  <path d="M 382 101 L 394 101" stroke="#1e293b" stroke-width="1.2" marker-end="url(#pipe-arr)"/>
+  <!-- Arrow down from Row 2 to Row 3 -->
+  <line x1="103" y1="176" x2="103" y2="190" stroke="#0f172a" stroke-width="1.3" marker-end="url(#arr2)"/>
 
-  <!-- ==================== STAGE 3: RELATIONS & POSETS ==================== -->
-  <g transform="translate(396, 28)">
-    <rect x="0" y="0" width="176" height="146" rx="2" fill="#ffffff" stroke="#64748b" stroke-width="0.8" filter="url(#p-shadow)"/>
-    <rect x="0" y="0" width="176" height="18" fill="#f1f5f9" stroke="#64748b" stroke-width="0.8"/>
-    <text x="88" y="12.5" font-family="'Arial', 'Helvetica', sans-serif" font-size="7.8" font-weight="bold" fill="#0f172a" text-anchor="middle">Stage 3: Binary Relations &amp; Posets</text>
+  <!-- Row 3: Stage 5: Automata Theory & Turing Computability -->
+  <rect x="10" y="192" width="400" height="64" rx="2" fill="#f8fafc" stroke="#64748b" stroke-width="0.8"/>
+  <rect x="10" y="192" width="400" height="16" fill="#f1f5f9" stroke="#64748b" stroke-width="0.8"/>
+  <text x="16" y="204" font-size="9.5" font-weight="bold" fill="#0f172a">Stage 5: Automata Theory &amp; Turing Computability</text>
+  <text x="404" y="204" font-size="8.5" fill="#1e40af" text-anchor="end" font-style="italic">Akash Kumar (Full-Stack Lead)</text>
+  
+  <text x="16" y="220" font-size="8.5" fill="#334155">• DFA/NFA Subset Construction 2^|Q| &amp; Hopcroft Minimization O(n log n)</text>
+  <text x="16" y="233" font-size="8.5" fill="#334155">• Pushdown Automata (PDA) LIFO Stack IDs (q, aw, X&alpha;) &vdash; (p, w, &beta;&alpha;)</text>
+  <text x="16" y="246" font-size="8.5" fill="#047857" font-weight="bold">• Turing Machines &delta;(q, a) = (p, b, D) • Infinite Virtual Tape • Decider Loop Trapping</text>
 
-    <!-- Sub-heading & Formalisms -->
-    <text x="8" y="32" font-size="6.8" font-weight="bold" fill="#1e40af">Discrete Binary Structures:</text>
-    <text x="8" y="44" font-size="6.5" fill="#334155">? Relations R ⊆ A ? A; Matrix M_R</text>
-    <text x="8" y="55" font-size="6.5" fill="#334155">? Reflexive, Symmetric, Transitive</text>
-    <text x="8" y="66" font-size="6.5" fill="#334155">? Equivalence Classes &amp; Partitions</text>
-    <text x="8" y="77" font-size="6.5" fill="#334155">? Posets &amp; Partially Ordered Sets</text>
+  <!-- Arrow Row 3 -> Summary -->
+  <line x1="210" y1="256" x2="210" y2="268" stroke="#0f172a" stroke-width="1.3" marker-end="url(#arr2-blue)"/>
 
-    <line x1="8" y1="86" x2="168" y2="86" stroke="#cbd5e1" stroke-width="0.6"/>
-    <text x="8" y="98" font-family="'Arial', 'Helvetica', sans-serif" font-size="6.5" font-weight="bold" fill="#0f172a">Computational Engine:</text>
-    <text x="8" y="109" font-size="6.2" fill="#475569">? Hasse Transitive Reduction</text>
-    <text x="8" y="120" font-size="6.2" fill="#475569">? Warshall Reachability Closure W^(k)</text>
-    <text x="8" y="132" font-family="'Arial', 'Helvetica', sans-serif" font-size="6.2" font-weight="bold" fill="#047857">? Tier 1 Exact Permutations 2^k</text>
-  </g>
-
-  <!-- Arrow 3 -> 4 -->
-  <path d="M 574 101 L 586 101" stroke="#1e293b" stroke-width="1.2" marker-end="url(#pipe-arr)"/>
-
-  <!-- ==================== STAGE 4: AUTOMATA THEORY ==================== -->
-  <g transform="translate(588, 28)">
-    <rect x="0" y="0" width="176" height="146" rx="2" fill="#ffffff" stroke="#64748b" stroke-width="0.8" filter="url(#p-shadow)"/>
-    <rect x="0" y="0" width="176" height="18" fill="#f1f5f9" stroke="#64748b" stroke-width="0.8"/>
-    <text x="88" y="12.5" font-family="'Arial', 'Helvetica', sans-serif" font-size="7.8" font-weight="bold" fill="#0f172a" text-anchor="middle">Stage 4: Automata Theory</text>
-
-    <!-- Sub-heading & Formalisms -->
-    <text x="8" y="32" font-size="6.8" font-weight="bold" fill="#1e40af">Finite State Transition Systems:</text>
-    <text x="8" y="44" font-size="6.5" fill="#334155">? 5-Tuple M = (Q, ?, ?, q0, F)</text>
-    <text x="8" y="55" font-size="6.5" fill="#334155">? Transition Relation: ? ⊆ Q ? ? ? Q</text>
-    <text x="8" y="66" font-size="6.5" fill="#334155">? DFA, NFA, &amp; ε-NFA Machines</text>
-    <text x="8" y="77" font-size="6.5" fill="#334155">? Regular Languages &amp; RegEx Dual</text>
-
-    <line x1="8" y1="86" x2="168" y2="86" stroke="#cbd5e1" stroke-width="0.6"/>
-    <text x="8" y="98" font-family="'Arial', 'Helvetica', sans-serif" font-size="6.5" font-weight="bold" fill="#0f172a">Computational Engine:</text>
-    <text x="8" y="109" font-size="6.2" fill="#475569">? Powerset Subset 2^Q Converter</text>
-    <text x="8" y="120" font-size="6.2" fill="#475569">? Hopcroft Minimizer O(|?| n log n)</text>
-    <text x="8" y="132" font-family="'Arial', 'Helvetica', sans-serif" font-size="6.2" font-weight="bold" fill="#047857">? Real-Time Step-by-Step String Trace</text>
-  </g>
-
-  <!-- Arrow 4 -> 5 -->
-  <path d="M 766 101 L 778 101" stroke="#1e293b" stroke-width="1.2" marker-end="url(#pipe-arr)"/>
-
-  <!-- ==================== STAGE 5: GRAMMARS & COMPUTABILITY ==================== -->
-  <g transform="translate(780, 28)">
-    <rect x="0" y="0" width="168" height="146" rx="2" fill="#ffffff" stroke="#64748b" stroke-width="0.8" filter="url(#p-shadow)"/>
-    <rect x="0" y="0" width="168" height="18" fill="#f1f5f9" stroke="#64748b" stroke-width="0.8"/>
-    <text x="84" y="12.5" font-family="'Arial', 'Helvetica', sans-serif" font-size="7.8" font-weight="bold" fill="#0f172a" text-anchor="middle">Stage 5: Computability Theory</text>
-
-    <!-- Sub-heading & Formalisms -->
-    <text x="8" y="32" font-size="6.8" font-weight="bold" fill="#1e40af">Formal Languages &amp; Machines:</text>
-    <text x="8" y="44" font-size="6.5" fill="#334155">? Context-Free Grammars G = (V, ?, R, S)</text>
-    <text x="8" y="55" font-size="6.5" fill="#334155">? Chomsky Hierarchy Levels 3 ? 0</text>
-    <text x="8" y="66" font-size="6.5" fill="#334155">? Pushdown Automata LIFO Stack</text>
-    <text x="8" y="77" font-size="6.5" fill="#334155">? Turing Machine Tape Decidability</text>
-
-    <line x1="8" y1="86" x2="160" y2="86" stroke="#cbd5e1" stroke-width="0.6"/>
-    <text x="8" y="98" font-family="'Arial', 'Helvetica', sans-serif" font-size="6.5" font-weight="bold" fill="#0f172a">Computational Engine:</text>
-    <text x="8" y="109" font-size="6.2" fill="#475569">? 4-Step CNF Normalization</text>
-    <text x="8" y="120" font-size="6.2" fill="#475569">? CYK Dynamic Parser O(n&sup3;)</text>
-    <text x="8" y="132" font-family="'Arial', 'Helvetica', sans-serif" font-size="6.2" font-weight="bold" fill="#047857">? Unbounded Head Simulation</text>
-  </g>
-
-  <!-- Bottom Synthesis Banner -->
-  <g transform="translate(12, 182)">
-    <rect x="0" y="0" width="936" height="26" rx="2" fill="#f8fafc" stroke="#94a3b8" stroke-width="0.75"/>
-    <text x="12" y="16.5" font-family="'Arial', 'Helvetica', sans-serif" font-size="7" font-weight="bold" fill="#0f172a">Formal Mathematical Continuity Invariants Across the Curricular Pipeline:</text>
-    <text x="365" y="16.5" font-size="6.8" fill="#334155">Set operations ?, ? ? Boolean valuations ν ? Cartesian product relation matrix M_R ? State transition relation ? ⊆ Q ? ? ? Q ? Unbounded Turing tape Γ</text>
-  </g>
-
+  <!-- Row 4: Grounded LogicAI Synthesizer -->
+  <rect x="10" y="270" width="400" height="30" rx="2" fill="#0f172a"/>
+  <text x="210" y="284" font-size="9.5" font-weight="bold" fill="#38bdf8" text-anchor="middle">GROUNDED LOGICAI SOCRATIC PEDAGOGICAL LAYER</text>
+  <text x="210" y="295" font-size="8" fill="#f8fafc" text-anchor="middle">Full Context Serialization • Zero Hallucination Math • NASA-TLX 42.6% Cognitive Workload Reduction</text>
 </svg>

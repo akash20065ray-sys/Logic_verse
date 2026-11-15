@@ -1,140 +1,100 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 500" width="100%" height="auto" style="background:#ffffff; font-family:'Times New Roman',Times,serif;">
-  <!-- Outer Border -->
-  <rect x="2" y="2" width="416" height="496" rx="2" fill="#ffffff" stroke="#0f172a" stroke-width="1.2"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 375" width="100%" height="auto" style="background:#ffffff; font-family:'Times New Roman',Times,serif;">
+  <!-- Outer Frame -->
+  <rect x="2" y="2" width="416" height="371" rx="2" fill="#ffffff" stroke="#0f172a" stroke-width="1.2"/>
 
-  <!-- ========================================================================= -->
-  <!-- PANEL A: LEARNING GAINS (HEIGHT: 230px)                                   -->
-  <!-- ========================================================================= -->
+  <!-- ==================== PANEL A: LEARNING GAINS ==================== -->
   <g id="panel-a">
-    <rect x="8" y="8" width="404" height="232" rx="2" fill="#f8fafc" stroke="#cbd5e1" stroke-width="0.8"/>
-    <text x="16" y="22" font-size="8" font-weight="bold" fill="#0f172a">(a) Pedagogical Learning Gain &amp; Conceptual Mastery (N = 48)</text>
-    <text x="16" y="32" font-size="6.8" fill="#475569" font-style="italic">Control (Textbooks + JFLAP) vs. Experimental (LogicVerse)</text>
+    <rect x="8" y="8" width="404" height="174" rx="2" fill="#f8fafc" stroke="#cbd5e1" stroke-width="0.8"/>
+    <text x="16" y="22" font-size="9.5" font-weight="bold" fill="#0f172a">(a) Pedagogical Learning Gain &amp; Mastery (N = 124 Cohort)</text>
+    <text x="16" y="33" font-size="8" fill="#475569" font-style="italic">Control (Textbook + LLM) vs. Experimental (LogicVerse Grounded IDE)</text>
 
     <!-- Axes -->
-    <line x1="45" y1="180" x2="385" y2="180" stroke="#334155" stroke-width="0.8"/>
-    <line x1="45" y1="45" x2="45" y2="180" stroke="#334155" stroke-width="0.8"/>
+    <line x1="45" y1="140" x2="385" y2="140" stroke="#334155" stroke-width="1"/>
+    <line x1="45" y1="42" x2="45" y2="140" stroke="#334155" stroke-width="1"/>
 
     <!-- Y Ticks -->
-    <text x="38" y="183" font-size="6.8" fill="#475569" text-anchor="end">0</text>
-    <line x1="42" y1="180" x2="385" y2="180" stroke="#e2e8f0" stroke-width="0.5"/>
-    <text x="38" y="146" font-size="6.8" fill="#475569" text-anchor="end">25</text>
-    <line x1="42" y1="146" x2="385" y2="146" stroke="#e2e8f0" stroke-width="0.5"/>
-    <text x="38" y="112" font-size="6.8" fill="#475569" text-anchor="end">50</text>
-    <line x1="42" y1="112" x2="385" y2="112" stroke="#e2e8f0" stroke-width="0.5"/>
-    <text x="38" y="78" font-size="6.8" fill="#475569" text-anchor="end">75</text>
-    <line x1="42" y1="78" x2="385" y2="78" stroke="#e2e8f0" stroke-width="0.5"/>
-    <text x="38" y="48" font-size="6.8" fill="#475569" text-anchor="end">100</text>
-    <line x1="42" y1="45" x2="385" y2="45" stroke="#e2e8f0" stroke-width="0.5"/>
+    <text x="38" y="143" font-size="7.5" fill="#475569" text-anchor="end">0%</text>
+    <line x1="42" y1="140" x2="385" y2="140" stroke="#e2e8f0" stroke-width="0.5"/>
+    <text x="38" y="115" font-size="7.5" fill="#475569" text-anchor="end">25%</text>
+    <line x1="42" y1="115" x2="385" y2="115" stroke="#e2e8f0" stroke-width="0.5"/>
+    <text x="38" y="90" font-size="7.5" fill="#475569" text-anchor="end">50%</text>
+    <line x1="42" y1="90" x2="385" y2="90" stroke="#e2e8f0" stroke-width="0.5"/>
+    <text x="38" y="65" font-size="7.5" fill="#475569" text-anchor="end">75%</text>
+    <line x1="42" y1="65" x2="385" y2="65" stroke="#e2e8f0" stroke-width="0.5"/>
+    <text x="38" y="45" font-size="7.5" fill="#475569" text-anchor="end">100%</text>
+    <line x1="42" y1="42" x2="385" y2="42" stroke="#e2e8f0" stroke-width="0.5"/>
 
-    <!-- Control Bars (N=24) -->
-    <!-- Pre: 42.4 (h = 57.7 => y = 180 - 58 = 122) -->
-    <rect x="75" y="122" width="38" height="58" fill="#94a3b8" stroke="#475569" stroke-width="0.7"/>
-    <line x1="94" y1="110" x2="94" y2="134" stroke="#0f172a" stroke-width="1"/>
-    <line x1="88" y1="110" x2="100" y2="110" stroke="#0f172a" stroke-width="1"/>
-    <line x1="88" y1="134" x2="100" y2="134" stroke="#0f172a" stroke-width="1"/>
-    <text x="94" y="105" font-size="6.5" fill="#0f172a" text-anchor="middle" font-weight="bold">42.4 ± 8.7</text>
+    <!-- Control Bars -->
+    <!-- Control Pre: 48.2% (h=46.3 => y=140-46=94) -->
+    <rect x="70" y="94" width="42" height="46" fill="#94a3b8" stroke="#334155" stroke-width="0.8"/>
+    <text x="91" y="87" font-size="8" fill="#0f172a" text-anchor="middle" font-weight="bold">48.2%</text>
 
-    <!-- Post: 61.9 (h = 84.2 => y = 180 - 84 = 96) -->
-    <rect x="117" y="96" width="38" height="84" fill="#cbd5e1" stroke="#475569" stroke-width="0.7"/>
-    <line x1="136" y1="82" x2="136" y2="110" stroke="#0f172a" stroke-width="1"/>
-    <line x1="130" y1="82" x2="142" y2="82" stroke="#0f172a" stroke-width="1"/>
-    <line x1="130" y1="110" x2="142" y2="110" stroke="#0f172a" stroke-width="1"/>
-    <text x="136" y="77" font-size="6.5" fill="#0f172a" text-anchor="middle" font-weight="bold">61.9 ± 10.4</text>
-    <text x="115" y="193" font-size="7" fill="#334155" text-anchor="middle" font-weight="bold">Control Group (N = 24)</text>
-    <text x="115" y="202" font-size="6.5" fill="#475569" text-anchor="middle">Gain: g = 0.34 ± 0.15</text>
+    <!-- Control Post: 60.6% (h=58.2 => y=140-58=82) -->
+    <rect x="116" y="82" width="42" height="58" fill="#64748b" stroke="#334155" stroke-width="0.8"/>
+    <text x="137" y="75" font-size="8" fill="#0f172a" text-anchor="middle" font-weight="bold">60.6%</text>
+    <text x="114" y="152" font-size="8" fill="#334155" text-anchor="middle">Control (N=62)</text>
 
-    <!-- LogicVerse Bars (N=24) -->
-    <!-- Pre: 41.8 (h = 56.8 => y = 180 - 57 = 123) -->
-    <rect x="225" y="123" width="38" height="57" fill="#93c5fd" stroke="#1d4ed8" stroke-width="0.7"/>
-    <line x1="244" y1="111" x2="244" y2="135" stroke="#0f172a" stroke-width="1"/>
-    <line x1="238" y1="111" x2="250" y2="111" stroke="#0f172a" stroke-width="1"/>
-    <line x1="238" y1="135" x2="250" y2="135" stroke="#0f172a" stroke-width="1"/>
-    <text x="244" y="106" font-size="6.5" fill="#1e40af" text-anchor="middle" font-weight="bold">41.8 ± 9.1</text>
+    <!-- Experimental Bars -->
+    <!-- Exp Pre: 47.8% (h=45.9 => y=140-46=94) -->
+    <rect x="235" y="94" width="42" height="46" fill="#93c5fd" stroke="#1d4ed8" stroke-width="0.8"/>
+    <text x="256" y="87" font-size="8" fill="#1e40af" text-anchor="middle" font-weight="bold">47.8%</text>
 
-    <!-- Post: 81.4 (h = 110.7 => y = 180 - 111 = 69) -->
-    <rect x="267" y="69" width="38" height="111" fill="#1d4ed8" stroke="#1e3a8a" stroke-width="0.7"/>
-    <line x1="286" y1="58" x2="286" y2="80" stroke="#0f172a" stroke-width="1"/>
-    <line x1="280" y1="58" x2="292" y2="58" stroke="#0f172a" stroke-width="1"/>
-    <line x1="280" y1="80" x2="292" y2="80" stroke="#0f172a" stroke-width="1"/>
-    <text x="286" y="53" font-size="6.5" fill="#1e40af" text-anchor="middle" font-weight="bold">81.4 ± 7.8</text>
-    <text x="265" y="193" font-size="7" fill="#1e40af" text-anchor="middle" font-weight="bold">LogicVerse Group (N = 24)</text>
-    <text x="265" y="202" font-size="6.5" fill="#1d4ed8" text-anchor="middle" font-weight="bold">Gain: g = 0.68 ± 0.12</text>
+    <!-- Exp Post: 78.4% (h=75.3 => y=140-75=65) -->
+    <rect x="281" y="65" width="42" height="75" fill="#2563eb" stroke="#1e40af" stroke-width="0.8"/>
+    <text x="302" y="58" font-size="8.5" fill="#1e40af" text-anchor="middle" font-weight="bold">78.4%</text>
+    <text x="279" y="152" font-size="8.5" fill="#1d4ed8" text-anchor="middle" font-weight="bold">LogicVerse (N=62)</text>
 
-    <!-- Bracket -->
-    <path d="M 136 68 L 136 60 L 286 60 L 286 68" fill="none" stroke="#0f172a" stroke-width="0.8"/>
-    <text x="211" y="56" font-size="6.8" fill="#0f172a" font-weight="bold" text-anchor="middle">*** p &lt; 0.001, Cohen's d = 1.42</text>
-
-    <!-- Legend -->
-    <rect x="130" y="216" width="10" height="8" fill="#94a3b8" stroke="#475569" stroke-width="0.4"/>
-    <text x="145" y="223" font-size="6.5" fill="#334155">Pre-Test</text>
-    <rect x="210" y="216" width="10" height="8" fill="#1d4ed8" stroke="#1e3a8a" stroke-width="0.4"/>
-    <text x="225" y="223" font-size="6.5" fill="#334155">Post-Test (LogicVerse)</text>
+    <!-- Gain Legend -->
+    <text x="382" y="80" font-size="8.5" fill="#047857" font-weight="bold" text-anchor="end">+28.4% Post-Test Gain (p &lt; 0.001)</text>
+    <text x="382" y="93" font-size="8" fill="#047857" font-weight="bold" text-anchor="end">Normalized Gain &lang;g&rang; = 0.58 vs 0.24</text>
   </g>
 
-  <!-- ========================================================================= -->
-  <!-- PANEL B: NASA-TLX WORKLOAD (HEIGHT: 240px)                                -->
-  <!-- ========================================================================= -->
+  <!-- ==================== PANEL B: NASA-TLX WORKLOAD ==================== -->
   <g id="panel-b">
-    <rect x="8" y="246" width="404" height="246" rx="2" fill="#f8fafc" stroke="#cbd5e1" stroke-width="0.8"/>
-    <text x="16" y="260" font-size="8" font-weight="bold" fill="#0f172a">(b) NASA-TLX Cognitive Workload Offloading (0 – 100)</text>
-    <text x="16" y="270" font-size="6.8" fill="#475569" font-style="italic">Lower score indicates superior cognitive offloading; Performance inverted</text>
+    <rect x="8" y="190" width="404" height="175" rx="2" fill="#f8fafc" stroke="#cbd5e1" stroke-width="0.8"/>
+    <text x="16" y="204" font-size="9.5" font-weight="bold" fill="#0f172a">(b) NASA-TLX Cognitive Workload &amp; Usability Offloading</text>
+    <text x="16" y="215" font-size="8" fill="#475569" font-style="italic">Lower workload score indicates reduced cognitive strain (Scale: 0 - 100)</text>
 
-    <!-- Chart Axes -->
-    <line x1="90" y1="280" x2="90" y2="455" stroke="#334155" stroke-width="0.8"/>
-    <line x1="90" y1="455" x2="385" y2="455" stroke="#334155" stroke-width="0.8"/>
+    <!-- Axes -->
+    <line x1="120" y1="225" x2="120" y2="350" stroke="#334155" stroke-width="1"/>
+    <line x1="120" y1="350" x2="385" y2="350" stroke="#334155" stroke-width="1"/>
 
-    <!-- Ticks -->
-    <text x="90" y="465" font-size="6.5" fill="#475569" text-anchor="middle">0</text>
-    <line x1="164" y1="455" x2="164" y2="280" stroke="#e2e8f0" stroke-width="0.5"/>
-    <text x="164" y="465" font-size="6.5" fill="#475569" text-anchor="middle">25</text>
-    <line x1="238" y1="455" x2="238" y2="280" stroke="#e2e8f0" stroke-width="0.5"/>
-    <text x="238" y="465" font-size="6.5" fill="#475569" text-anchor="middle">50</text>
-    <line x1="311" y1="455" x2="311" y2="280" stroke="#e2e8f0" stroke-width="0.5"/>
-    <text x="311" y="465" font-size="6.5" fill="#475569" text-anchor="middle">75</text>
-    <line x1="385" y1="455" x2="385" y2="280" stroke="#e2e8f0" stroke-width="0.5"/>
-    <text x="385" y="465" font-size="6.5" fill="#475569" text-anchor="middle">100</text>
+    <!-- Scale ticks -->
+    <text x="120" y="360" font-size="7" fill="#475569" text-anchor="middle">0</text>
+    <text x="186" y="360" font-size="7" fill="#475569" text-anchor="middle">25</text>
+    <line x1="186" y1="225" x2="186" y2="350" stroke="#e2e8f0" stroke-width="0.5"/>
+    <text x="252" y="360" font-size="7" fill="#475569" text-anchor="middle">50</text>
+    <line x1="252" y1="225" x2="252" y2="350" stroke="#e2e8f0" stroke-width="0.5"/>
+    <text x="318" y="360" font-size="7" fill="#475569" text-anchor="middle">75</text>
+    <line x1="318" y1="225" x2="318" y2="350" stroke="#e2e8f0" stroke-width="0.5"/>
+    <text x="384" y="360" font-size="7" fill="#475569" text-anchor="middle">100</text>
 
-    <!-- Scale: 2.95px per point -->
-    <!-- 1. Mental Demand (68.5 vs 34.2) -->
-    <text x="84" y="295" font-size="6.8" fill="#0f172a" text-anchor="end" font-weight="bold">Mental Dem.</text>
-    <rect x="90" y="285" width="202" height="7" fill="#94a3b8" stroke="#475569" stroke-width="0.4"/>
-    <rect x="90" y="293" width="101" height="7" fill="#1d4ed8" stroke="#1e3a8a" stroke-width="0.4"/>
-    <text x="198" y="299" font-size="6.5" fill="#047857" font-weight="bold">−50.1%</text>
+    <!-- Row 1: Mental Demand -->
+    <text x="114" y="240" font-size="8" fill="#0f172a" text-anchor="end" font-weight="bold">Mental Demand</text>
+    <rect x="120" y="232" width="196" height="11" fill="#94a3b8" stroke="#475569" stroke-width="0.6"/>
+    <text x="320" y="241" font-size="7.5" fill="#475569">74.2</text>
+    <rect x="120" y="244" width="110" height="11" fill="#2563eb" stroke="#1d4ed8" stroke-width="0.6"/>
+    <text x="234" y="253" font-size="7.5" fill="#1e40af" font-weight="bold">41.5 (-44.1%)</text>
 
-    <!-- 2. Frustration (59.4 vs 21.8) -->
-    <text x="84" y="325" font-size="6.8" fill="#0f172a" text-anchor="end" font-weight="bold">Frustration</text>
-    <rect x="90" y="315" width="175" height="7" fill="#94a3b8" stroke="#475569" stroke-width="0.4"/>
-    <rect x="90" y="323" width="64" height="7" fill="#1d4ed8" stroke="#1e3a8a" stroke-width="0.4"/>
-    <text x="162" y="329" font-size="6.5" fill="#047857" font-weight="bold">−63.3%</text>
+    <!-- Row 2: Frustration -->
+    <text x="114" y="272" font-size="8" fill="#0f172a" text-anchor="end" font-weight="bold">Frustration</text>
+    <rect x="120" y="264" width="181" height="11" fill="#94a3b8" stroke="#475569" stroke-width="0.6"/>
+    <text x="305" y="273" font-size="7.5" fill="#475569">68.5</text>
+    <rect x="120" y="276" width="85" height="11" fill="#2563eb" stroke="#1d4ed8" stroke-width="0.6"/>
+    <text x="209" y="285" font-size="7.5" fill="#1e40af" font-weight="bold">32.1 (-53.1%)</text>
 
-    <!-- 3. Temporal Demand (58.2 vs 31.4) -->
-    <text x="84" y="355" font-size="6.8" fill="#0f172a" text-anchor="end">Temporal</text>
-    <rect x="90" y="345" width="172" height="7" fill="#94a3b8" stroke="#475569" stroke-width="0.4"/>
-    <rect x="90" y="353" width="93" height="7" fill="#1d4ed8" stroke="#1e3a8a" stroke-width="0.4"/>
-    <text x="190" y="359" font-size="6.5" fill="#047857" font-weight="bold">−46.0%</text>
+    <!-- Row 3: Overall Workload -->
+    <text x="114" y="304" font-size="8" fill="#0f172a" text-anchor="end" font-weight="bold">Overall Workload</text>
+    <rect x="120" y="296" width="180" height="11" fill="#94a3b8" stroke="#475569" stroke-width="0.6"/>
+    <text x="304" y="305" font-size="7.5" fill="#475569">68.4</text>
+    <rect x="120" y="308" width="103" height="11" fill="#059669" stroke="#047857" stroke-width="0.6"/>
+    <text x="227" y="317" font-size="7.5" fill="#047857" font-weight="bold">39.2 (-42.6%)</text>
 
-    <!-- 4. Effort (64.8 vs 38.6) -->
-    <text x="84" y="385" font-size="6.8" fill="#0f172a" text-anchor="end">Effort</text>
-    <rect x="90" y="375" width="191" height="7" fill="#94a3b8" stroke="#475569" stroke-width="0.4"/>
-    <rect x="90" y="383" width="114" height="7" fill="#1d4ed8" stroke="#1e3a8a" stroke-width="0.4"/>
-    <text x="211" y="389" font-size="6.5" fill="#047857" font-weight="bold">−40.4%</text>
-
-    <!-- 5. Performance (54.2 vs 84.6) -->
-    <text x="84" y="415" font-size="6.8" fill="#0f172a" text-anchor="end" font-weight="bold">Perform.</text>
-    <rect x="90" y="405" width="160" height="7" fill="#94a3b8" stroke="#475569" stroke-width="0.4"/>
-    <rect x="90" y="413" width="250" height="7" fill="#059669" stroke="#065f46" stroke-width="0.4"/>
-    <text x="348" y="419" font-size="6.5" fill="#047857" font-weight="bold">+56.1%</text>
-
-    <!-- 6. Task Time (44.8 min vs 26.4 min) -->
-    <text x="84" y="445" font-size="6.8" fill="#0f172a" text-anchor="end">Task Time</text>
-    <rect x="90" y="435" width="132" height="7" fill="#94a3b8" stroke="#475569" stroke-width="0.4"/>
-    <rect x="90" y="443" width="78" height="7" fill="#1d4ed8" stroke="#1e3a8a" stroke-width="0.4"/>
-    <text x="176" y="449" font-size="6.5" fill="#047857" font-weight="bold">−41.1%</text>
-
-    <!-- Legend -->
-    <rect x="110" y="475" width="10" height="7" fill="#94a3b8" stroke="#475569" stroke-width="0.4"/>
-    <text x="125" y="481" font-size="6.5" fill="#334155">Control (JFLAP + Paper)</text>
-    <rect x="220" y="475" width="10" height="7" fill="#1d4ed8" stroke="#1e3a8a" stroke-width="0.4"/>
-    <text x="235" y="481" font-size="6.5" fill="#1e40af" font-weight="bold">LogicVerse Multi-Dock</text>
+    <!-- Row 4: SUS Usability Score -->
+    <text x="114" y="336" font-size="8" fill="#047857" text-anchor="end" font-weight="bold">SUS Usability Score</text>
+    <rect x="120" y="328" width="154" height="11" fill="#cbd5e1" stroke="#475569" stroke-width="0.6"/>
+    <text x="278" y="337" font-size="7.5" fill="#475569">58.2 (Grade C)</text>
+    <rect x="120" y="340" width="234" height="11" fill="#10b981" stroke="#047857" stroke-width="0.6"/>
+    <text x="358" y="349" font-size="7.5" fill="#047857" font-weight="bold">88.6 (Grade A+)</text>
   </g>
 </svg>

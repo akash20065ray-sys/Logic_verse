@@ -11,11 +11,11 @@
       email: "akash.22310065@viit.ac.in",
     ),
     (
-      name: "Prof. Sheela Chinchmalatpure (Project Faculty Guide)",
+      name: "Dr. Vaishali Baviskar (Project Faculty Guide)",
       department: "Department of Artificial Intelligence and Data Science",
       organization: "Vishwakarma Institute of Technology (Affiliated to SPPU)",
       location: "Pune, Maharashtra, India",
-      email: "sheela.chinchmalatpure@viit.ac.in",
+      email: "vaishali.baviskar@vit.edu",
     ),
   ),
   abstract: [

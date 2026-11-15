@@ -139,103 +139,177 @@ def build_presentation(with_names: bool, filename: str):
             run_desc.font.color.rgb = TEXT_MUTED
 
     # =========================================================================
-    # SLIDE 1: TITLE SLIDE
+    # SLIDE 1: TITLE SLIDE (Exact ArgusML Design: Centered, Top Pill, Dual Guide Cards & Team Pill)
     # =========================================================================
     s1 = prs.slides.add_slide(blank_layout)
     add_bg(s1)
 
-    # Crimson Vertical Left Accent Line
-    accent_bar = s1.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0.8), Inches(1.15), Inches(0.12), Inches(3.2))
-    accent_bar.fill.solid()
-    accent_bar.fill.fore_color.rgb = BORDER_CRIMSON
-    accent_bar.line.fill.background()
+    # 1. Top Institution Pill Banner (Centered)
+    pill_w = Inches(10.2)
+    pill_h = Inches(0.68)
+    pill_left = Inches((13.333 - 10.2) / 2)
+    pill_top = Inches(0.62)
+    top_pill = s1.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, pill_left, pill_top, pill_w, pill_h)
+    top_pill.fill.solid()
+    top_pill.fill.fore_color.rgb = BG_CARD
+    top_pill.line.color.rgb = BORDER_CRIMSON
+    top_pill.line.width = Pt(1.75)
+    try:
+        top_pill.adjustments[0] = 0.28
+    except Exception:
+        pass
+    tf_pill = top_pill.text_frame
+    tf_pill.word_wrap = True
+    tf_pill.vertical_anchor = MSO_ANCHOR.MIDDLE
+    tf_pill.margin_left = tf_pill.margin_right = tf_pill.margin_top = tf_pill.margin_bottom = 0
+    p_pill = tf_pill.paragraphs[0]
+    p_pill.alignment = PP_ALIGN.CENTER
+    p_pill.text = "VISHWAKARMA INSTITUTE OF TECHNOLOGY, PUNE • DEPT. OF AI & DATA SCIENCE"
+    p_pill.font.name = "Arial"
+    p_pill.font.size = Pt(12)
+    p_pill.font.bold = True
+    p_pill.font.color.rgb = TEXT_GOLD
 
-    # Title & Subtitle Box
-    tb_main = s1.shapes.add_textbox(Inches(1.15), Inches(1.05), Inches(11.38), Inches(3.3))
-    tf_main = tb_main.text_frame
-    tf_main.word_wrap = True
-    tf_main.vertical_anchor = MSO_ANCHOR.TOP
-    tf_main.margin_left = tf_main.margin_top = tf_main.margin_right = tf_main.margin_bottom = 0
+    # 2. Main Title (LOGICVERSE - Bold Crimson Red, Centered)
+    tb_title = s1.shapes.add_textbox(Inches(1.0), Inches(1.50), Inches(11.333), Inches(0.95))
+    tf_title = tb_title.text_frame
+    tf_title.word_wrap = True
+    tf_title.vertical_anchor = MSO_ANCHOR.MIDDLE
+    tf_title.margin_left = tf_title.margin_right = tf_title.margin_top = tf_title.margin_bottom = 0
+    p_title = tf_title.paragraphs[0]
+    p_title.alignment = PP_ALIGN.CENTER
+    p_title.text = "LOGICVERSE"
+    p_title.font.name = "Arial"
+    p_title.font.size = Pt(46)
+    p_title.font.bold = True
+    p_title.font.color.rgb = BORDER_CRIMSON
 
-    p_tag = tf_main.paragraphs[0]
-    p_tag.alignment = PP_ALIGN.LEFT
-    p_tag.text = "DISCRETE MATHEMATICS & AUTOMATA THEORY • CAPSTONE PRESENTATION"
+    # 3. Primary Subtitle / Tagline (Bold White, Centered)
+    tb_tag = s1.shapes.add_textbox(Inches(1.0), Inches(2.48), Inches(11.333), Inches(0.55))
+    tf_tag = tb_tag.text_frame
+    tf_tag.word_wrap = True
+    tf_tag.vertical_anchor = MSO_ANCHOR.TOP
+    tf_tag.margin_left = tf_tag.margin_right = tf_tag.margin_top = tf_tag.margin_bottom = 0
+    p_tag = tf_tag.paragraphs[0]
+    p_tag.alignment = PP_ALIGN.CENTER
+    p_tag.text = "Real-Time Visual IDE & Grounded AI Tutor for Discrete Mathematics"
     p_tag.font.name = "Arial"
-    p_tag.font.size = Pt(11)
+    p_tag.font.size = Pt(19)
     p_tag.font.bold = True
-    p_tag.font.color.rgb = BORDER_GOLD
+    p_tag.font.color.rgb = TEXT_WHITE
 
-    p_h1 = tf_main.add_paragraph()
-    p_h1.alignment = PP_ALIGN.LEFT
-    p_h1.text = "LogicVerse: An Interactive Visual IDE\nfor Discrete Math & Automata Theory"
-    p_h1.font.name = "Arial"
-    p_h1.font.size = Pt(30)
-    p_h1.font.bold = True
-    p_h1.font.color.rgb = TEXT_WHITE
-    p_h1.space_before = Pt(8)
+    # 4. Description Paragraph (Soft Gray, Centered)
+    tb_desc = s1.shapes.add_textbox(Inches(1.5), Inches(3.08), Inches(10.333), Inches(0.85))
+    tf_desc = tb_desc.text_frame
+    tf_desc.word_wrap = True
+    tf_desc.vertical_anchor = MSO_ANCHOR.TOP
+    tf_desc.margin_left = tf_desc.margin_right = tf_desc.margin_top = tf_desc.margin_bottom = 0
+    p_desc = tf_desc.paragraphs[0]
+    p_desc.alignment = PP_ALIGN.CENTER
+    p_desc.text = "A reactive visual computing platform that simulates discrete structures and state machines, catches logical errors using formal graph algorithms, and provides step-by-step guidance via a grounded AI tutor."
+    p_desc.font.name = "Calibri"
+    p_desc.font.size = Pt(12)
+    p_desc.font.color.rgb = TEXT_MUTED
 
-    p_sub = tf_main.add_paragraph()
-    p_sub.alignment = PP_ALIGN.LEFT
-    p_sub.text = "Build mathematical graphs on a canvas, simulate algorithms step-by-step, observe dynamic Venn diagrams, and receive live pedagogical guidance from LogicAI."
-    p_sub.font.name = "Calibri"
-    p_sub.font.size = Pt(13.5)
-    p_sub.font.color.rgb = TEXT_MUTED
-    p_sub.space_before = Pt(10)
+    # 5. Middle Dual Cards: Presented By (Left, Cyan) & Guide (Right, Gold)
+    card_w = Inches(4.35)
+    card_h = Inches(0.92)
+    gap = Inches(0.4)
+    total_w = Inches(4.35 * 2 + 0.4)
+    c_left = Inches((13.333 - (4.35 * 2 + 0.4)) / 2)
+    c_top = Inches(4.18)
 
-    # Bottom Team Information Card
-    card_info = add_card_box(s1, Inches(0.8), Inches(4.7), Inches(11.73), Inches(2.3), border_color=BORDER_CRIMSON)
-    tf_info = card_info.text_frame
+    # 5a. Left Card: Presented By GROUP - 9
+    card_pres = s1.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, c_left, c_top, card_w, card_h)
+    card_pres.fill.solid()
+    card_pres.fill.fore_color.rgb = BG_CARD
+    card_pres.line.color.rgb = BORDER_CYAN
+    card_pres.line.width = Pt(1.75)
+    try:
+        card_pres.adjustments[0] = 0.12
+    except Exception:
+        pass
+    tf_pres = card_pres.text_frame
+    tf_pres.vertical_anchor = MSO_ANCHOR.MIDDLE
+    p_pres = tf_pres.paragraphs[0]
+    p_pres.alignment = PP_ALIGN.CENTER
+    p_pres.text = "Presented By: GROUP - 9"
+    p_pres.font.name = "Arial"
+    p_pres.font.size = Pt(14)
+    p_pres.font.bold = True
+    p_pres.font.color.rgb = TEXT_WHITE
 
-    p_ih = tf_info.paragraphs[0]
-    p_ih.alignment = PP_ALIGN.LEFT
-    p_ih.text = "PROJECT ROLES & CONTRIBUTORS" if with_names else "PROJECT DOMAINS & PLATFORM ARCHITECTURE"
-    p_ih.font.name = "Arial"
-    p_ih.font.size = Pt(13)
-    p_ih.font.bold = True
-    p_ih.font.color.rgb = TEXT_GOLD
+    # 5b. Right Card: Guide: Dr. Vaishali Baviskar
+    card_guide = s1.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, c_left + card_w + gap, c_top, card_w, card_h)
+    card_guide.fill.solid()
+    card_guide.fill.fore_color.rgb = BG_CARD
+    card_guide.line.color.rgb = BORDER_GOLD
+    card_guide.line.width = Pt(1.75)
+    try:
+        card_guide.adjustments[0] = 0.12
+    except Exception:
+        pass
+    tf_guide = card_guide.text_frame
+    tf_guide.vertical_anchor = MSO_ANCHOR.MIDDLE
+    p_guide = tf_guide.paragraphs[0]
+    p_guide.alignment = PP_ALIGN.CENTER
+    p_guide.text = "Guide: Dr. Vaishali Baviskar"
+    p_guide.font.name = "Arial"
+    p_guide.font.size = Pt(14)
+    p_guide.font.bold = True
+    p_guide.font.color.rgb = TEXT_GOLD
 
+    # 6. Bottom Wide Card: Team Members (GROUP - 9)
+    bot_w = Inches(10.2)
+    bot_h = Inches(1.15)
+    bot_left = Inches((13.333 - 10.2) / 2)
+    bot_top = Inches(5.28)
+    card_team = s1.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, bot_left, bot_top, bot_w, bot_h)
+    card_team.fill.solid()
+    card_team.fill.fore_color.rgb = BG_CARD_LIGHT
+    card_team.line.color.rgb = RGBColor(60, 75, 105)
+    card_team.line.width = Pt(1.25)
+    try:
+        card_team.adjustments[0] = 0.12
+    except Exception:
+        pass
+    tf_team = card_team.text_frame
+    tf_team.vertical_anchor = MSO_ANCHOR.MIDDLE
+    tf_team.margin_top = Inches(0.12)
+    tf_team.margin_bottom = Inches(0.12)
+
+    p_th = tf_team.paragraphs[0]
+    p_th.alignment = PP_ALIGN.CENTER
+    p_th.text = "TEAM MEMBERS (GROUP - 9)" if with_names else "CORE CURRICULAR DOMAINS (GROUP - 9)"
+    p_th.font.name = "Arial"
+    p_th.font.size = Pt(10)
+    p_th.font.bold = True
+    p_th.font.color.rgb = BORDER_CRIMSON
+
+    p_tm = tf_team.add_paragraph()
+    p_tm.alignment = PP_ALIGN.CENTER
+    p_tm.space_before = Pt(4)
     if with_names:
-        roles = [
-            ("Full-Stack Lead (Akash)", "Connected Frontend & Backend via Reactive Hypergraph IPC + DFA/NFA + PDA & Turing Machines + LogicAI Chatbot"),
-            ("Frontend Team (Krishna & Ghansham)", "Interactive Canvas & Formal Languages Regex/CFG (Krishna) + UI Shell & Propositional Logic (Ghansham)"),
-            ("Backend Team (Hari & Sanskar)", "Set Theory Bitset Engine & Dynamic Venn (Sanskar) + Binary Relations, Warshall's Closure & Functions (Hari)"),
-        ]
-        for leader, area in roles:
-            p = tf_info.add_paragraph()
-            p.alignment = PP_ALIGN.LEFT
-            p.space_before = Pt(7)
-            r1 = p.add_run()
-            r1.text = f"• {leader}: "
-            r1.font.name = "Calibri"
-            r1.font.size = Pt(11.5)
-            r1.font.bold = True
-            r1.font.color.rgb = TEXT_WHITE
-            r2 = p.add_run()
-            r2.text = area
-            r2.font.name = "Calibri"
-            r2.font.size = Pt(11)
-            r2.font.color.rgb = TEXT_MUTED
+        p_tm.text = "Ghansham Agaldare (Roll 4)  •  Krishna Aher (Roll 7)  •  Akash Kumar (Roll 9)  •  Sanskar Bhargude (Roll 38)  •  Hari Birare (Roll 49)"
     else:
-        info_bullets = [
-            ("Core Focus", "Set Theory, Propositional Logic, Proof Solvers, Relations & Functions, and Finite Automata (DFA/NFA)"),
-            ("Key Innovations", "Interactive drag-and-drop canvas, live step-by-step glowing simulation, and context-aware AI tutor"),
-            ("Engineering", "Next.js 16, React Flow, Zustand, TypeScript, and Google Gemini LLM with 51 passing automated unit tests"),
-        ]
-        for label, val in info_bullets:
-            p = tf_info.add_paragraph()
-            p.alignment = PP_ALIGN.LEFT
-            p.space_before = Pt(7)
-            r1 = p.add_run()
-            r1.text = f"• {label}: "
-            r1.font.name = "Calibri"
-            r1.font.size = Pt(11.5)
-            r1.font.bold = True
-            r1.font.color.rgb = TEXT_WHITE
-            r2 = p.add_run()
-            r2.text = val
-            r2.font.name = "Calibri"
-            r2.font.size = Pt(11)
-            r2.font.color.rgb = TEXT_MUTED
+        p_tm.text = "Set Theory Engine  •  Propositional Logic  •  Proof Solvers  •  Relations & Posets  •  Automata (DFA/PDA/TM)"
+    p_tm.font.name = "Calibri"
+    p_tm.font.size = Pt(11)
+    p_tm.font.bold = True
+    p_tm.font.color.rgb = TEXT_WHITE
+
+    # 7. Bottom Metadata Footer Line
+    tb_meta = s1.shapes.add_textbox(Inches(1.0), Inches(6.62), Inches(11.333), Inches(0.35))
+    tf_meta = tb_meta.text_frame
+    tf_meta.word_wrap = True
+    tf_meta.vertical_anchor = MSO_ANCHOR.TOP
+    tf_meta.margin_left = tf_meta.margin_right = tf_meta.margin_top = tf_meta.margin_bottom = 0
+    p_meta = tf_meta.paragraphs[0]
+    p_meta.alignment = PP_ALIGN.CENTER
+    p_meta.text = "2026  •  Built with 5 Core Mathematical Engines  •  Platform: Next.js 16, React Flow & TypeScript"
+    p_meta.font.name = "Calibri"
+    p_meta.font.size = Pt(9.5)
+    p_meta.font.color.rgb = RGBColor(148, 163, 184)
 
     # =========================================================================
     # SLIDE 2: PROBLEM STATEMENT & SOLUTION

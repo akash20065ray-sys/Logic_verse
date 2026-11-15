@@ -196,9 +196,9 @@ def build_presentation(with_names: bool, filename: str):
 
     if with_names:
         roles = [
-            ("Akash (Lead)", "Finite Automata (DFA/NFA Simulator, NFA->DFA, Minimization) + LogicAI Chatbot + Canvas IDE"),
-            ("Sanskar & Ghansham", "Set Theory Engine, Interactive Venn Diagrams, Propositional Logic Gates & Truth Tables"),
-            ("Hari & Krishna", "Mathematical Proof Solvers (PIE, Cantor, Induction) + Binary Relations & Warshall's Algorithm"),
+            ("Akash (Lead)", "Full-Stack Integration (Connected Frontend & Backend) + DFA/NFA & PDA/TM + LogicAI Chatbot"),
+            ("Krishna & Ghansham", "Frontend Architecture: Canvas & Regex/CFG (Krishna) + Next.js 16 UI & Propositional Logic (Ghansham)"),
+            ("Sanskar & Hari", "Backend Systems: Set Theory Bitset Engine (Sanskar) + Binary Relations, Warshall & Posets (Hari)"),
         ]
         for leader, area in roles:
             p = tf_info.add_paragraph()
@@ -461,8 +461,8 @@ def build_presentation(with_names: bool, filename: str):
     # =========================================================================
     s5 = prs.slides.add_slide(blank_layout)
     add_bg(s5)
-    owner_sub = " (Sanskar's Contribution)" if with_names else ""
-    add_header(s5, f"Module 1: Set Theory & Dynamic Venn Diagrams{owner_sub}", "CORE DOMAIN 1 • SET THEORY")
+    owner_sub = " (Sanskar's Contribution • Backend)" if with_names else ""
+    add_header(s5, f"Module 1: Set Theory & Dynamic Venn Diagrams{owner_sub}", "CORE DOMAIN 1 • SET THEORY • SANSKAR")
 
     c1 = add_card_box(s5, Inches(0.8), Inches(1.65), Inches(5.7), Inches(5.35), border_color=BORDER_CYAN)
     tf1 = c1.text_frame
@@ -545,8 +545,8 @@ def build_presentation(with_names: bool, filename: str):
     # =========================================================================
     s6 = prs.slides.add_slide(blank_layout)
     add_bg(s6)
-    owner_sub = " (Ghansham's Contribution)" if with_names else ""
-    add_header(s6, f"Module 2: Propositional Logic & Truth Tables{owner_sub}", "CORE DOMAIN 2 • FORMAL LOGIC")
+    owner_sub = " (Ghansham's Contribution • Frontend & Logic)" if with_names else ""
+    add_header(s6, f"Module 2: Propositional Logic & Truth Tables{owner_sub}", "CORE DOMAIN 2 • FORMAL LOGIC • GHANSHAM")
 
     c1 = add_card_box(s6, Inches(0.8), Inches(1.65), Inches(5.7), Inches(5.35), border_color=BORDER_PURPLE)
     tf1 = c1.text_frame
@@ -629,8 +629,8 @@ def build_presentation(with_names: bool, filename: str):
     # =========================================================================
     s7 = prs.slides.add_slide(blank_layout)
     add_bg(s7)
-    owner_sub = " (Hari's Contribution)" if with_names else ""
-    add_header(s7, f"Module 3: Step-by-Step Proof & Countability Solvers{owner_sub}", "CORE DOMAIN 3 • PROOF SOLVERS")
+    owner_sub = " (Sanskar & Hari's Contribution • Backend)" if with_names else ""
+    add_header(s7, f"Module 3: Step-by-Step Proof & Countability Solvers{owner_sub}", "CORE DOMAIN 3 • BACKEND PROOF SOLVERS • SANSKAR & HARI")
 
     c1 = add_card_box(s7, Inches(0.8), Inches(1.65), Inches(3.73), Inches(5.35), border_color=BORDER_GOLD)
     tf1 = c1.text_frame
@@ -757,8 +757,8 @@ def build_presentation(with_names: bool, filename: str):
     # =========================================================================
     s8 = prs.slides.add_slide(blank_layout)
     add_bg(s8)
-    owner_sub = " (Krishna's Contribution)" if with_names else ""
-    add_header(s8, f"Module 4: Relations, Order Theory & Functions{owner_sub}", "CORE DOMAIN 4 • RELATIONS & FUNCTIONS")
+    owner_sub = " (Hari's Contribution • Backend)" if with_names else ""
+    add_header(s8, f"Module 4: Relations, Order Theory & Functions{owner_sub}", "CORE DOMAIN 4 • RELATIONS & FUNCTIONS • HARI")
 
     c1 = add_card_box(s8, Inches(0.8), Inches(1.65), Inches(5.7), Inches(5.35), border_color=BORDER_GOLD)
     tf1 = c1.text_frame
@@ -841,8 +841,8 @@ def build_presentation(with_names: bool, filename: str):
     # =========================================================================
     s9 = prs.slides.add_slide(blank_layout)
     add_bg(s9)
-    owner_sub = " (Akash's Contribution)" if with_names else ""
-    add_header(s9, f"Module 5: Finite Automata (DFA / NFA) Visualizer{owner_sub}", "CORE DOMAIN 5 • AUTOMATA THEORY")
+    owner_sub = " (Akash's Contribution • Automata & Full-Stack)" if with_names else ""
+    add_header(s9, f"Module 5: Finite Automata (DFA / NFA) Visualizer{owner_sub}", "CORE DOMAIN 5 • AUTOMATA THEORY • AKASH")
 
     c1 = add_card_box(s9, Inches(0.8), Inches(1.65), Inches(5.7), Inches(5.35), border_color=BORDER_CYAN)
     tf1 = c1.text_frame
@@ -925,8 +925,8 @@ def build_presentation(with_names: bool, filename: str):
     # =========================================================================
     s10 = prs.slides.add_slide(blank_layout)
     add_bg(s10)
-    owner_sub = " (Akash's Contribution)" if with_names else ""
-    add_header(s10, f"LogicAI: Context-Aware Mathematical Tutor{owner_sub}", "INTELLIGENT AI TUTORING")
+    owner_sub = " (Akash's Contribution • Chatbot & AI)" if with_names else ""
+    add_header(s10, f"LogicAI: Context-Aware Mathematical Tutor & Chatbot{owner_sub}", "INTELLIGENT AI TUTORING & CHATBOT • AKASH")
 
     c1 = add_card_box(s10, Inches(0.8), Inches(1.65), Inches(5.7), Inches(5.35), border_color=BORDER_PURPLE)
     tf1 = c1.text_frame
@@ -1012,75 +1012,75 @@ def build_presentation(with_names: bool, filename: str):
     add_header(s11, "Team Roles & Technical Contribution Breakdown", "INDIVIDUAL CONTRIBUTIONS")
 
     members = [
-        ("Akash", "Team Lead & System Architect", [
-            ("Automata Engine", "DFA/NFA simulator, glowing stepper, and batch test runner."),
-            ("Algorithms", "NFA to DFA subset construction & Hopcroft DFA minimization."),
-            ("LogicAI Chatbot", "Canvas context injection & live LLM integration with API modal."),
-            ("Frontend IDE", "Next.js 16 shell, dock panels, and custom glowing node components."),
-        ], "Next.js 16 • React Flow • Gemini LLM", BORDER_CYAN),
+        ("Akash", "Lead Architect | Full-Stack Integrator", [
+            ("Full-Stack Integration", "Connected Frontend & Backend via reactive hypergraph IPC event bus."),
+            ("Finite Automata", "DFA/NFA simulator, glowing step execution, NFA→DFA subset construction & Hopcroft."),
+            ("PDA & Turing Machines", "Pushdown Automata interactive LIFO stack & Turing Machine 2-way tape simulation."),
+            ("LogicAI Chatbot", "Context-aware tutor combining Tier 1 exact math solver with Tier 2 prompt-grounded LLM."),
+        ], "Connected FE/BE • DFA/PDA/TM • Chatbot", BORDER_CYAN),
 
-        ("Sanskar", "Set Theory & Venn Specialist", [
-            ("Set Builder", "Custom sets, set roster notation, and bracket parsing."),
-            ("Set Operations", "Union, Intersection, Difference, and Power Set P(A)."),
-            ("Dynamic Venn", "Interactive 2-set & 3-set SVG diagrams with 8-region spatial sorting."),
-            ("Live Reactivity", "Zustand synchronization re-evaluating sets upon node mutations."),
-        ], "SVG Math • Set Theory • Zustand", BORDER_GOLD),
+        ("Krishna", "Frontend Canvas & Formal Languages", [
+            ("Frontend Canvas", "Built interactive node-wire canvas with custom circular states & bezier edges."),
+            ("Regex Engine", "Visual regex pattern builder with Thompson's construction converting RE to NFA."),
+            ("CFG & Parse Trees", "Context-Free Grammar production editor, derivation trees, and 4-step CNF converter."),
+            ("CYK Parsing Algorithm", "Dynamic programming triangular parsing table verifying grammar membership in O(n^3)."),
+        ], "Frontend Canvas • Regex • CFG & CYK", BORDER_CRIMSON),
 
-        ("Ghansham", "Propositional Logic Specialist", [
-            ("Logic Gate Canvas", "AND, OR, NOT, IMPLIES, and IFF gates with signal flow."),
-            ("Truth Table Engine", "Exhaustive 2^n valuation tables for up to 16 boolean variables."),
-            ("Normal Forms", "Automated DNF, CNF, and formal Tautology / Contradiction verification."),
-            ("LaTeX Export", "Mathematical formula synthesis into publication LaTeX."),
-        ], "Boolean AST • Formal Logic • Proofs", BORDER_GREEN),
+        ("Ghansham", "Frontend Architect & Logic Specialist", [
+            ("Frontend Architecture", "Designed Next.js 16 multi-dock shell, dark Crimson Orbit theme & navigation."),
+            ("Logic Gate Canvas", "Interactive logic gate nodes (AND, OR, NOT, IMPLIES, IFF) with live signal flow."),
+            ("Truth Table Generator", "Exhaustive 2^n valuation tables for up to 16 variables with tautology checks."),
+            ("Normal Forms & Export", "Automated DNF/CNF formula compilation with clean LaTeX & Unicode rendering."),
+        ], "Frontend UI/UX • Boolean Logic • React 19", BORDER_GREEN),
 
-        ("Hari", "Proof & Verification Specialist", [
-            ("PIE Counting Solver", "Step-by-step arithmetic solver for Inclusion-Exclusion problems."),
-            ("Cantor Visualizer", "Uncountability proof of R with interactive anti-diagonal inversion."),
-            ("Snake Path Engine", "Countability of positive rational numbers ℚ⁺ via snake grid."),
-            ("Induction Pipeline", "Base step, hypothesis, and inductive step proof derivations."),
-        ], "Proof Theory • Number Theory • Algorithms", BORDER_PURPLE),
+        ("Sanskar", "Backend Systems & Set Theory Specialist", [
+            ("Set Theory Engine", "Custom set builder, set roster notation, and bracket parsing algorithms."),
+            ("High-Performance Bitsets", "64-bit integer bitmasks delivering O(1) set union, intersection, and difference."),
+            ("Dynamic Venn Diagrams", "Interactive 2-set & 3-set SVG region decomposition with 8-region spatial sorting."),
+            ("Backend Store & Powerset", "Zustand-backed compute pipeline calculating powerset lattice (2^A) upon mutation."),
+        ], "Backend Systems • Set Theory • Fast Bitsets", BORDER_GOLD),
 
-        ("Krishna", "Relations & Order Specialist", [
-            ("Relation Matrix", "Interactive matrix checking Reflexive, Symmetric, and Transitive rules."),
-            ("Warshall's Algorithm", "Step-by-step matrix derivation computing transitive closure R+."),
-            ("Hasse Diagrams", "Automated poset trees stripping reflexive and transitive edges."),
-            ("Function Analyzer", "Arrow mapping vectors with Injective / Surjective classification."),
-        ], "Matrix Ops • Order Theory • Graph Math", BORDER_CRIMSON),
+        ("Hari", "Backend Systems & Relations Specialist", [
+            ("Binary Relations Engine", "Boolean adjacency matrices (M_R) with reflexivity, symmetry, and transitivity checks."),
+            ("Warshall's Algorithm", "Step-by-step O(n^3) matrix closure algorithm computing reachability graphs (R+)."),
+            ("Hasse Diagram Generator", "Transitive reduction algorithm stripping redundant edges for partially ordered sets."),
+            ("Function Mapping Engine", "Domain-to-codomain arrow vectors with Injective, Surjective, and Bijective classifiers."),
+        ], "Backend Algorithms • Relations • Graph Math", BORDER_PURPLE),
     ] if with_names else [
-        ("Team Member 1", "Lead Architect & Automata Engineer", [
-            ("Automata Engine", "DFA/NFA simulator, glowing stepper, and batch test runner."),
-            ("Algorithms", "NFA to DFA subset construction & Hopcroft DFA minimization."),
-            ("LogicAI Chatbot", "Canvas context injection & live LLM integration with API modal."),
-            ("Frontend IDE", "Next.js 16 shell, dock panels, and custom glowing node components."),
-        ], "Next.js 16 • React Flow • Gemini LLM", BORDER_CYAN),
+        ("Team Member 1", "Lead Architect | Full-Stack Integrator", [
+            ("Full-Stack Integration", "Connected Frontend & Backend via reactive hypergraph IPC event bus."),
+            ("Finite Automata", "DFA/NFA simulator, glowing step execution, NFA→DFA subset construction & Hopcroft."),
+            ("PDA & Turing Machines", "Pushdown Automata interactive LIFO stack & Turing Machine 2-way tape simulation."),
+            ("LogicAI Chatbot", "Context-aware tutor combining Tier 1 exact math solver with Tier 2 prompt-grounded LLM."),
+        ], "Connected FE/BE • DFA/PDA/TM • Chatbot", BORDER_CYAN),
 
-        ("Team Member 2", "Set Theory & Venn Specialist", [
-            ("Set Builder", "Custom sets, set roster notation, and bracket parsing."),
-            ("Set Operations", "Union, Intersection, Difference, and Power Set P(A)."),
-            ("Dynamic Venn", "Interactive 2-set & 3-set SVG diagrams with 8-region spatial sorting."),
-            ("Live Reactivity", "Zustand synchronization re-evaluating sets upon node mutations."),
-        ], "SVG Math • Set Theory • Zustand", BORDER_GOLD),
+        ("Team Member 2", "Frontend Canvas & Formal Languages", [
+            ("Frontend Canvas", "Built interactive node-wire canvas with custom circular states & bezier edges."),
+            ("Regex Engine", "Visual regex pattern builder with Thompson's construction converting RE to NFA."),
+            ("CFG & Parse Trees", "Context-Free Grammar production editor, derivation trees, and 4-step CNF converter."),
+            ("CYK Parsing Algorithm", "Dynamic programming triangular parsing table verifying grammar membership in O(n^3)."),
+        ], "Frontend Canvas • Regex • CFG & CYK", BORDER_CRIMSON),
 
-        ("Team Member 3", "Propositional Logic Specialist", [
-            ("Logic Gate Canvas", "AND, OR, NOT, IMPLIES, and IFF gates with signal flow."),
-            ("Truth Table Engine", "Exhaustive 2^n valuation tables for up to 16 boolean variables."),
-            ("Normal Forms", "Automated DNF, CNF, and formal Tautology / Contradiction verification."),
-            ("LaTeX Export", "Mathematical formula synthesis into publication LaTeX."),
-        ], "Boolean AST • Formal Logic • Proofs", BORDER_GREEN),
+        ("Team Member 3", "Frontend Architect & Logic Specialist", [
+            ("Frontend Architecture", "Designed Next.js 16 multi-dock shell, dark Crimson Orbit theme & navigation."),
+            ("Logic Gate Canvas", "Interactive logic gate nodes (AND, OR, NOT, IMPLIES, IFF) with live signal flow."),
+            ("Truth Table Generator", "Exhaustive 2^n valuation tables for up to 16 variables with tautology checks."),
+            ("Normal Forms & Export", "Automated DNF/CNF formula compilation with clean LaTeX & Unicode rendering."),
+        ], "Frontend UI/UX • Boolean Logic • React 19", BORDER_GREEN),
 
-        ("Team Member 4", "Proof & Verification Specialist", [
-            ("PIE Counting Solver", "Step-by-step arithmetic solver for Inclusion-Exclusion problems."),
-            ("Cantor Visualizer", "Uncountability proof of R with interactive anti-diagonal inversion."),
-            ("Snake Path Engine", "Countability of positive rational numbers ℚ⁺ via snake grid."),
-            ("Induction Pipeline", "Base step, hypothesis, and inductive step proof derivations."),
-        ], "Proof Theory • Number Theory • Algorithms", BORDER_PURPLE),
+        ("Team Member 4", "Backend Systems & Set Theory Specialist", [
+            ("Set Theory Engine", "Custom set builder, set roster notation, and bracket parsing algorithms."),
+            ("High-Performance Bitsets", "64-bit integer bitmasks delivering O(1) set union, intersection, and difference."),
+            ("Dynamic Venn Diagrams", "Interactive 2-set & 3-set SVG region decomposition with 8-region spatial sorting."),
+            ("Backend Store & Powerset", "Zustand-backed compute pipeline calculating powerset lattice (2^A) upon mutation."),
+        ], "Backend Systems • Set Theory • Fast Bitsets", BORDER_GOLD),
 
-        ("Team Member 5", "Relations & Order Specialist", [
-            ("Relation Matrix", "Interactive matrix checking Reflexive, Symmetric, and Transitive rules."),
-            ("Warshall's Algorithm", "Step-by-step matrix derivation computing transitive closure R+."),
-            ("Hasse Diagrams", "Automated poset trees stripping reflexive and transitive edges."),
-            ("Function Analyzer", "Arrow mapping vectors with Injective / Surjective classification."),
-        ], "Matrix Ops • Order Theory • Graph Math", BORDER_CRIMSON),
+        ("Team Member 5", "Backend Systems & Relations Specialist", [
+            ("Binary Relations Engine", "Boolean adjacency matrices (M_R) with reflexivity, symmetry, and transitivity checks."),
+            ("Warshall's Algorithm", "Step-by-step O(n^3) matrix closure algorithm computing reachability graphs (R+)."),
+            ("Hasse Diagram Generator", "Transitive reduction algorithm stripping redundant edges for partially ordered sets."),
+            ("Function Mapping Engine", "Domain-to-codomain arrow vectors with Injective, Surjective, and Bijective classifiers."),
+        ], "Backend Algorithms • Relations • Graph Math", BORDER_PURPLE),
     ]
 
     card_w = Inches(2.2)
@@ -1154,14 +1154,15 @@ def build_presentation(with_names: bool, filename: str):
     # =========================================================================
     s12 = prs.slides.add_slide(blank_layout)
     add_bg(s12)
-    add_header(s12, "Future Roadmap: Context-Free Grammars & Turing Machines", "FUTURE EXPANSION ROADMAP")
+    owner_sub = " (Krishna: Regex/CFG • Akash: PDA/TM)" if with_names else ""
+    add_header(s12, f"Advanced Formal Languages: Regex, CFG, PDA & Turing Machines{owner_sub}", "FORMAL LANGUAGES & COMPUTABILITY • KRISHNA & AKASH")
 
     c1 = add_card_box(s12, Inches(0.8), Inches(1.65), Inches(5.7), Inches(5.35), border_color=BORDER_GOLD)
     tf1 = c1.text_frame
 
     p1_h = tf1.paragraphs[0]
     p1_h.alignment = PP_ALIGN.LEFT
-    p1_h.text = "MODULE 6: CONTEXT-FREE GRAMMAR (CFG) [PHASE 2]"
+    p1_h.text = "MODULE 6: REGEX & CFG" + (" (Krishna's Contribution)" if with_names else "")
     p1_h.font.name = "Arial"
     p1_h.font.size = Pt(14)
     p1_h.font.bold = True
@@ -1169,7 +1170,7 @@ def build_presentation(with_names: bool, filename: str):
 
     p1_sub = tf1.add_paragraph()
     p1_sub.alignment = PP_ALIGN.LEFT
-    p1_sub.text = "Grammar Rules, Parse Trees & Chomsky Normal Form"
+    p1_sub.text = "Regular Expressions (Thompson RE→NFA) & CFG Parse Trees"
     p1_sub.font.name = "Calibri"
     p1_sub.font.size = Pt(10.5)
     p1_sub.font.bold = True
@@ -1177,17 +1178,17 @@ def build_presentation(with_names: bool, filename: str):
     p1_sub.space_before = Pt(2)
 
     items_f1 = [
-        ("Grammar Rule Builder", "Interactive editor to type production rules like S -> aSb | ε."),
+        ("Regex Builder & Thompson Engine", "Visual regex pattern builder with Thompson's construction converting RE to NFA."),
         ("Dynamic Parse Trees", "Visual syntax tree generation showing exact leftmost and rightmost derivation steps."),
         ("Chomsky Normal Form (CNF)", "Automated 4-step converter eliminating ε-rules, unit rules, and useless symbols."),
         ("CYK Parsing Algorithm", "Dynamic programming triangular parsing table verifying string membership in O(n^3)."),
-        ("Ambiguity Detection", "Highlights ambiguous grammars that produce multiple distinct parse trees for one string."),
+        ("Pumping Lemma & Ambiguity", "Verifies non-regularity proofs via Pumping Lemma and highlights ambiguous parse trees."),
     ]
     append_bullets(tf1, items_f1, title_color=TEXT_GOLD, title_font_size=12, desc_font_size=11, spacing=10)
 
     p1_foot = tf1.add_paragraph()
     p1_foot.alignment = PP_ALIGN.LEFT
-    p1_foot.text = "Phase 2 Target: Visual CFG Syntax Trees & CYK Parsing Grid"
+    p1_foot.text = "Krishna: Visual Regex Thompson Engine + CFG Syntax Trees & CYK Grid"
     p1_foot.font.name = "Calibri"
     p1_foot.font.size = Pt(10)
     p1_foot.font.bold = True
@@ -1199,7 +1200,7 @@ def build_presentation(with_names: bool, filename: str):
 
     p2_h = tf2.paragraphs[0]
     p2_h.alignment = PP_ALIGN.LEFT
-    p2_h.text = "MODULE 7: PDA & TURING MACHINES [PHASE 2]"
+    p2_h.text = "MODULE 7: PDA & TURING MACHINES" + (" (Akash's Contribution)" if with_names else "")
     p2_h.font.name = "Arial"
     p2_h.font.size = Pt(14)
     p2_h.font.bold = True
@@ -1207,7 +1208,7 @@ def build_presentation(with_names: bool, filename: str):
 
     p2_sub = tf2.add_paragraph()
     p2_sub.alignment = PP_ALIGN.LEFT
-    p2_sub.text = "Pushdown Automata, Stack Memory & Infinite Tape"
+    p2_sub.text = "Pushdown Automata (LIFO Stack) & Infinite Tape Simulation"
     p2_sub.font.name = "Calibri"
     p2_sub.font.size = Pt(10.5)
     p2_sub.font.bold = True
@@ -1216,16 +1217,16 @@ def build_presentation(with_names: bool, filename: str):
 
     items_f2 = [
         ("Pushdown Automata (PDA)", "Interactive LIFO stack animator showing real-time push and pop transitions."),
-        ("Dual Acceptance Modes", "Visualize acceptance by Final State vs Empty Stack criteria."),
-        ("Turing Machine Infinite Tape", "Interactive 2-way tape with head movements (Left, Right, Stay)."),
+        ("Dual Acceptance Modes", "Visualize acceptance by Final State vs Empty Stack criteria with step execution."),
+        ("Turing Machine Infinite Tape", "Interactive 2-way tape with animated read/write head movements (Left, Right, Stay)."),
         ("Multi-Tape Simulation", "Visual execution of multi-tape Turing machines for complex computational problems."),
-        ("Halting Problem Proofs", "Visual explanations of computability limits and undecidable languages."),
+        ("Halting Problem Proofs", "Visual step-by-step explanations of computability limits and undecidable languages."),
     ]
     append_bullets(tf2, items_f2, title_color=TEXT_PURPLE, title_font_size=12, desc_font_size=11, spacing=10)
 
     p2_foot = tf2.add_paragraph()
     p2_foot.alignment = PP_ALIGN.LEFT
-    p2_foot.text = "Phase 2 Target: LIFO Stack Visualizer & Turing Halting Proofs"
+    p2_foot.text = "Akash: LIFO Stack Visualizer + Turing Tape Simulation & Halting Proofs"
     p2_foot.font.name = "Calibri"
     p2_foot.font.size = Pt(10)
     p2_foot.font.bold = True

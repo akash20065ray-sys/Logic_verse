@@ -837,88 +837,138 @@ def build_presentation(with_names: bool, filename: str):
     p2_foot.space_before = Pt(14)
 
     # =========================================================================
-    # SLIDE 9: MODULE 5 — FINITE AUTOMATA (DFA / NFA)
+    # SLIDE 9: MODULE 5 — AUTOMATA THEORY & COMPUTABILITY (DFA/NFA, PDA & TURING MACHINES)
     # =========================================================================
     s9 = prs.slides.add_slide(blank_layout)
     add_bg(s9)
     owner_sub = " (Akash's Contribution • Full-Stack Lead)" if with_names else ""
-    add_header(s9, f"Module 5: Finite Automata (DFA / NFA) Visualizer{owner_sub}", "CORE DOMAIN 5 • AUTOMATA THEORY • AKASH (FULL-STACK LEAD)" if with_names else "CORE DOMAIN 5 • AUTOMATA THEORY")
+    add_header(s9, f"Module 5: Automata Theory & Computability: DFA/NFA, PDA & Turing Machines{owner_sub}", "CORE DOMAIN 5 • AUTOMATA & COMPUTABILITY • AKASH (FULL-STACK LEAD)" if with_names else "CORE DOMAIN 5 • AUTOMATA & COMPUTABILITY")
 
-    c1 = add_card_box(s9, Inches(0.8), Inches(1.65), Inches(5.7), Inches(5.35), border_color=BORDER_CYAN)
+    # Column 1: DFA / NFA (Regular Languages)
+    c1 = add_card_box(s9, Inches(0.8), Inches(1.65), Inches(3.73), Inches(5.35), border_color=BORDER_CYAN)
     tf1 = c1.text_frame
+    tf1.margin_left = tf1.margin_right = Inches(0.22)
+    tf1.margin_top = Inches(0.22)
+    tf1.margin_bottom = Inches(0.15)
 
     p1_h = tf1.paragraphs[0]
     p1_h.alignment = PP_ALIGN.LEFT
-    p1_h.text = "STATE GRAPH CANVAS & SIMULATION"
+    p1_h.text = "FINITE AUTOMATA (DFA/NFA)"
     p1_h.font.name = "Arial"
-    p1_h.font.size = Pt(14)
+    p1_h.font.size = Pt(12.5)
     p1_h.font.bold = True
     p1_h.font.color.rgb = BORDER_CYAN
 
     p1_sub = tf1.add_paragraph()
     p1_sub.alignment = PP_ALIGN.LEFT
-    p1_sub.text = "DFA/NFA Graph Editor & Glowing Step Playback"
+    p1_sub.text = "State Graphs, Glowing Playback & Minimization"
     p1_sub.font.name = "Calibri"
-    p1_sub.font.size = Pt(10.5)
+    p1_sub.font.size = Pt(9.5)
     p1_sub.font.bold = True
-    p1_sub.font.color.rgb = TEXT_GOLD
+    p1_sub.font.color.rgb = TEXT_WHITE
     p1_sub.space_before = Pt(2)
 
     items_a1 = [
-        ("Custom Circular States", "Add states q0, q1 with start arrow (→q0) and concentric double-rings for accept states."),
-        ("Glowing Step Playback", "Type an input string (e.g. '101') and watch active states glow with animated pulse rings."),
-        ("Active Edge Highlighting", "Transition arrows light up with a drop-shadow glow as characters are consumed."),
-        ("Batch Test Suite", "Test multiple strings simultaneously with green ACCEPTED and red REJECTED badges."),
-        ("Execution Trace Table", "Displays an interactive step-by-step trace showing current state, symbol, and next state."),
+        ("State Machine Canvas", "Place states q0, q1 with start arrow (→q0) and double-ring accept states."),
+        ("Glowing Step Playback", "Type test strings and watch active states glow with real-time pulse animations."),
+        ("NFA → DFA Subset Engine", "Calculates ε-closures and powerset tables with 1-click minimal DFA loading."),
+        ("Hopcroft Minimization", "Runs O(n log n) state partitioning and builds Distinguishability Matrix."),
+        ("Batch String Test Suite", "Simultaneous multi-string testing with green accepted and red rejected badges."),
     ]
-    append_bullets(tf1, items_a1, title_color=TEXT_CYAN, title_font_size=12, desc_font_size=11, spacing=10)
+    append_bullets(tf1, items_a1, title_color=TEXT_CYAN, title_font_size=11, desc_font_size=10, spacing=8)
 
     p1_foot = tf1.add_paragraph()
     p1_foot.alignment = PP_ALIGN.LEFT
-    p1_foot.text = "Simulation: Real-Time Glowing State Pulses & Multi-String Testing"
+    p1_foot.text = "Regular: Glowing Step Execution & Hopcroft Solvers"
     p1_foot.font.name = "Calibri"
-    p1_foot.font.size = Pt(10)
+    p1_foot.font.size = Pt(8.5)
     p1_foot.font.bold = True
     p1_foot.font.color.rgb = TEXT_CYAN
-    p1_foot.space_before = Pt(14)
+    p1_foot.space_before = Pt(10)
 
-    c2 = add_card_box(s9, Inches(6.83), Inches(1.65), Inches(5.7), Inches(5.35), border_color=BORDER_CRIMSON)
+    # Column 2: Pushdown Automata (PDA) (Context-Free Languages)
+    c2 = add_card_box(s9, Inches(4.8), Inches(1.65), Inches(3.73), Inches(5.35), border_color=BORDER_PURPLE)
     tf2 = c2.text_frame
+    tf2.margin_left = tf2.margin_right = Inches(0.22)
+    tf2.margin_top = Inches(0.22)
+    tf2.margin_bottom = Inches(0.15)
 
     p2_h = tf2.paragraphs[0]
     p2_h.alignment = PP_ALIGN.LEFT
-    p2_h.text = "CONVERSION & MINIMIZATION SOLVERS"
+    p2_h.text = "PUSHDOWN AUTOMATA (PDA)"
     p2_h.font.name = "Arial"
-    p2_h.font.size = Pt(14)
+    p2_h.font.size = Pt(12.5)
     p2_h.font.bold = True
-    p2_h.font.color.rgb = BORDER_CRIMSON
+    p2_h.font.color.rgb = BORDER_PURPLE
 
     p2_sub = tf2.add_paragraph()
     p2_sub.alignment = PP_ALIGN.LEFT
-    p2_sub.text = "NFA → DFA Subset Construction & Hopcroft Algorithm"
+    p2_sub.text = "Context-Free Languages & LIFO Stack Simulator"
     p2_sub.font.name = "Calibri"
-    p2_sub.font.size = Pt(10.5)
+    p2_sub.font.size = Pt(9.5)
     p2_sub.font.bold = True
-    p2_sub.font.color.rgb = TEXT_GOLD
+    p2_sub.font.color.rgb = TEXT_WHITE
     p2_sub.space_before = Pt(2)
 
     items_a2 = [
-        ("NFA → DFA Subset Construction", "Calculates ε-closures and powerset tables with 1-click 'Load Converted DFA to Canvas'."),
-        ("Hopcroft DFA Minimization", "Runs partition refinement (0-equiv, 1-equiv) and builds the Distinguishability Matrix."),
-        ("1-Click Minimal Graph", "Instantly merges redundant states and renders the minimal equivalent DFA on screen."),
-        ("Distinguishability Table", "Displays lower-triangular table marking distinct pairs to visually prove equivalence."),
-        ("Moore ⇄ Mealy Transducers", "Simulates state-output vs edge-output machines with cumulative output sequences."),
+        ("Interactive LIFO Stack", "Animated push and pop visualizer showing real-time stack-top inspections."),
+        ("Dual Acceptance Modes", "Simulate acceptance by Final State (q ∈ F) vs Empty Stack (Stack = ∅)."),
+        ("Non-Deterministic PDA", "Branch trace visualization exploring parallel transitions for ambiguous inputs."),
+        ("Language Recognition", "Visual verification for non-regular languages like aⁿbⁿ and palindromes (w wᴿ)."),
+        ("Stack Height Inspector", "Real-time stack depth monitor alerting on underflow or memory deadlocks."),
     ]
-    append_bullets(tf2, items_a2, title_color=TEXT_CRIMSON, title_font_size=12, desc_font_size=11, spacing=10)
+    append_bullets(tf2, items_a2, title_color=TEXT_PURPLE, title_font_size=11, desc_font_size=10, spacing=8)
 
     p2_foot = tf2.add_paragraph()
     p2_foot.alignment = PP_ALIGN.LEFT
-    p2_foot.text = "Solvers: Hopcroft Minimization + Powerset Engine + Transducers"
+    p2_foot.text = "Memory: Synchronized LIFO Stack & Dual Acceptance"
     p2_foot.font.name = "Calibri"
-    p2_foot.font.size = Pt(10)
+    p2_foot.font.size = Pt(8.5)
     p2_foot.font.bold = True
-    p2_foot.font.color.rgb = TEXT_CRIMSON
-    p2_foot.space_before = Pt(14)
+    p2_foot.font.color.rgb = TEXT_PURPLE
+    p2_foot.space_before = Pt(10)
+
+    # Column 3: Turing Machines (TM) (Universal Computability)
+    c3 = add_card_box(s9, Inches(8.8), Inches(1.65), Inches(3.73), Inches(5.35), border_color=BORDER_CRIMSON)
+    tf3 = c3.text_frame
+    tf3.margin_left = tf3.margin_right = Inches(0.22)
+    tf3.margin_top = Inches(0.22)
+    tf3.margin_bottom = Inches(0.15)
+
+    p3_h = tf3.paragraphs[0]
+    p3_h.alignment = PP_ALIGN.LEFT
+    p3_h.text = "TURING MACHINES (TM)"
+    p3_h.font.name = "Arial"
+    p3_h.font.size = Pt(12.5)
+    p3_h.font.bold = True
+    p3_h.font.color.rgb = BORDER_CRIMSON
+
+    p3_sub = tf3.add_paragraph()
+    p3_sub.alignment = PP_ALIGN.LEFT
+    p3_sub.text = "Universal Computability & 2-Way Tape Simulator"
+    p3_sub.font.name = "Calibri"
+    p3_sub.font.size = Pt(9.5)
+    p3_sub.font.bold = True
+    p3_sub.font.color.rgb = TEXT_WHITE
+    p3_sub.space_before = Pt(2)
+
+    items_a3 = [
+        ("Infinite 2-Way Tape", "Interactive tape strip with animated Read/Write head movements (Left, Right, Stay)."),
+        ("5-Tuple Transitions", "Executes formal transition function δ(q, σ) = (q', σ', L/R) with blank symbol (⊔)."),
+        ("Multi-Tape Simulation", "Visual execution of synchronized multi-tape machines for complex algorithms."),
+        ("Halting State Detection", "Instant visual indicators for Accepted (q_acc), Rejected (q_rej), or looping."),
+        ("Decidability & Bounds", "Step-by-step visual proofs explaining the Halting Problem and computability limits."),
+    ]
+    append_bullets(tf3, items_a3, title_color=TEXT_CRIMSON, title_font_size=11, desc_font_size=10, spacing=8)
+
+    p3_foot = tf3.add_paragraph()
+    p3_foot.alignment = PP_ALIGN.LEFT
+    p3_foot.text = "Universal: 2-Way Infinite Tape & Halting Boundary"
+    p3_foot.font.name = "Calibri"
+    p3_foot.font.size = Pt(8.5)
+    p3_foot.font.bold = True
+    p3_foot.font.color.rgb = TEXT_CRIMSON
+    p3_foot.space_before = Pt(10)
 
     # =========================================================================
     # SLIDE 10: INTELLIGENT LOGICAI CHATBOT
@@ -1150,19 +1200,20 @@ def build_presentation(with_names: bool, filename: str):
         p_tf.space_before = Pt(10)
 
     # =========================================================================
-    # SLIDE 12: FUTURE SCOPE & ROADMAP (Phase 2 Modules)
+    # SLIDE 12: ADVANCED FORMAL GRAMMARS (Regex, CFG, Parse Trees & CYK)
     # =========================================================================
     s12 = prs.slides.add_slide(blank_layout)
     add_bg(s12)
-    owner_sub = " (Krishna: Regex/CFG • Akash: PDA/TM)" if with_names else ""
-    add_header(s12, f"Advanced Formal Languages: Regex, CFG, PDA & Turing Machines{owner_sub}", "FORMAL LANGUAGES & COMPUTABILITY • KRISHNA (FRONTEND) & AKASH (FULL-STACK)" if with_names else "FORMAL LANGUAGES & COMPUTABILITY")
+    owner_sub = " (Krishna's Contribution • Frontend Team)" if with_names else ""
+    add_header(s12, f"Advanced Formal Grammars: Regex Thompson Engine & Context-Free Grammars{owner_sub}", "FORMAL GRAMMARS & SYNTAX TREES • KRISHNA (FRONTEND TEAM)" if with_names else "FORMAL GRAMMARS & SYNTAX TREES")
 
+    # Card 1: Regex & Thompson Engine
     c1 = add_card_box(s12, Inches(0.8), Inches(1.65), Inches(5.7), Inches(5.35), border_color=BORDER_GOLD)
     tf1 = c1.text_frame
 
     p1_h = tf1.paragraphs[0]
     p1_h.alignment = PP_ALIGN.LEFT
-    p1_h.text = "MODULE 6: REGEX & CFG" + (" (Krishna's Contribution • Frontend Team)" if with_names else " (Frontend Team)")
+    p1_h.text = "MODULE 6: REGEX & THOMPSON ENGINE" + (" (Krishna's Contribution • Frontend Team)" if with_names else " (Frontend Team)")
     p1_h.font.name = "Arial"
     p1_h.font.size = Pt(14)
     p1_h.font.bold = True
@@ -1170,7 +1221,7 @@ def build_presentation(with_names: bool, filename: str):
 
     p1_sub = tf1.add_paragraph()
     p1_sub.alignment = PP_ALIGN.LEFT
-    p1_sub.text = "Regular Expressions (Thompson RE→NFA) & CFG Parse Trees"
+    p1_sub.text = "Visual Regex Pattern Builder & Thompson RE→NFA Engine"
     p1_sub.font.name = "Calibri"
     p1_sub.font.size = Pt(10.5)
     p1_sub.font.bold = True
@@ -1178,29 +1229,30 @@ def build_presentation(with_names: bool, filename: str):
     p1_sub.space_before = Pt(2)
 
     items_f1 = [
-        ("Regex Builder & Thompson Engine", "Visual regex pattern builder with Thompson's construction converting RE to NFA."),
-        ("Dynamic Parse Trees", "Visual syntax tree generation showing exact leftmost and rightmost derivation steps."),
-        ("Chomsky Normal Form (CNF)", "Automated 4-step converter eliminating ε-rules, unit rules, and useless symbols."),
-        ("CYK Parsing Algorithm", "Dynamic programming triangular parsing table verifying string membership in O(n^3)."),
-        ("Pumping Lemma & Ambiguity", "Verifies non-regularity proofs via Pumping Lemma and highlights ambiguous parse trees."),
+        ("Regex Pattern Builder", "Visual regex pattern builder with interactive union (|), concatenation (•), and Kleene star (*) operators."),
+        ("Thompson RE → NFA Engine", "Automated Thompson's construction converting regular expressions into equivalent ε-NFA state graphs."),
+        ("State Elimination Method", "Extracts canonical regular expressions directly from active DFA/NFA state machines on canvas."),
+        ("Pumping Lemma Verifier", "Step-by-step adversarial proof game proving non-regularity for languages like aⁿbⁿ."),
+        ("Live Match Inspector", "Real-time regex syntax highlighting and instant string acceptance/rejection testing."),
     ]
     append_bullets(tf1, items_f1, title_color=TEXT_GOLD, title_font_size=12, desc_font_size=11, spacing=10)
 
     p1_foot = tf1.add_paragraph()
     p1_foot.alignment = PP_ALIGN.LEFT
-    p1_foot.text = "Krishna (Frontend Team): Visual Regex Thompson Engine + CFG Syntax Trees & CYK Grid" if with_names else "Frontend Team: Visual Regex Thompson Engine + CFG Syntax Trees & CYK Grid"
+    p1_foot.text = "Krishna (Frontend): Visual Regex Pattern Builder & Thompson RE→NFA Engine" if with_names else "Frontend Team: Visual Regex Pattern Builder & Thompson RE→NFA Engine"
     p1_foot.font.name = "Calibri"
     p1_foot.font.size = Pt(10)
     p1_foot.font.bold = True
     p1_foot.font.color.rgb = TEXT_GOLD
     p1_foot.space_before = Pt(14)
 
+    # Card 2: CFG & CYK Parser
     c2 = add_card_box(s12, Inches(6.83), Inches(1.65), Inches(5.7), Inches(5.35), border_color=BORDER_PURPLE)
     tf2 = c2.text_frame
 
     p2_h = tf2.paragraphs[0]
     p2_h.alignment = PP_ALIGN.LEFT
-    p2_h.text = "MODULE 7: PDA & TURING MACHINES" + (" (Akash's Contribution • Full-Stack Lead)" if with_names else " (Full-Stack Integrator)")
+    p2_h.text = "MODULE 7: CONTEXT-FREE GRAMMARS & CYK" + (" (Krishna's Contribution • Frontend Team)" if with_names else " (Frontend Team)")
     p2_h.font.name = "Arial"
     p2_h.font.size = Pt(14)
     p2_h.font.bold = True
@@ -1208,7 +1260,7 @@ def build_presentation(with_names: bool, filename: str):
 
     p2_sub = tf2.add_paragraph()
     p2_sub.alignment = PP_ALIGN.LEFT
-    p2_sub.text = "Pushdown Automata (LIFO Stack) & Infinite Tape Simulation"
+    p2_sub.text = "CFG Production Editor, Dynamic Parse Trees & CYK Parsing"
     p2_sub.font.name = "Calibri"
     p2_sub.font.size = Pt(10.5)
     p2_sub.font.bold = True
@@ -1216,17 +1268,17 @@ def build_presentation(with_names: bool, filename: str):
     p2_sub.space_before = Pt(2)
 
     items_f2 = [
-        ("Pushdown Automata (PDA)", "Interactive LIFO stack animator showing real-time push and pop transitions."),
-        ("Dual Acceptance Modes", "Visualize acceptance by Final State vs Empty Stack criteria with step execution."),
-        ("Turing Machine Infinite Tape", "Interactive 2-way tape with animated read/write head movements (Left, Right, Stay)."),
-        ("Multi-Tape Simulation", "Visual execution of multi-tape Turing machines for complex computational problems."),
-        ("Halting Problem Proofs", "Visual step-by-step explanations of computability limits and undecidable languages."),
+        ("CFG Production Editor", "Interactive grammar editor defining variables (V), terminals (Σ), start symbol (S), and rules (P)."),
+        ("Dynamic Parse Trees", "Visual syntax tree generation showing exact leftmost and rightmost derivation steps."),
+        ("Chomsky Normal Form (CNF)", "Automated 4-step converter eliminating ε-rules, unit rules, and useless symbols."),
+        ("CYK Parsing Algorithm", "Dynamic programming triangular parsing table verifying string membership in O(n³)."),
+        ("Grammar Ambiguity Detector", "Identifies grammars with multiple parse trees for identical input strings with side-by-side trees."),
     ]
     append_bullets(tf2, items_f2, title_color=TEXT_PURPLE, title_font_size=12, desc_font_size=11, spacing=10)
 
     p2_foot = tf2.add_paragraph()
     p2_foot.alignment = PP_ALIGN.LEFT
-    p2_foot.text = "Akash (Full-Stack Lead): LIFO Stack Visualizer + Turing Tape Simulation & Halting Proofs" if with_names else "Full-Stack Lead: LIFO Stack Visualizer + Turing Tape Simulation & Halting Proofs"
+    p2_foot.text = "Krishna (Frontend): CFG Production Editor, Parse Trees & CYK Triangular Matrix" if with_names else "Frontend Team: CFG Production Editor, Parse Trees & CYK Triangular Matrix"
     p2_foot.font.name = "Calibri"
     p2_foot.font.size = Pt(10)
     p2_foot.font.bold = True
@@ -1320,22 +1372,18 @@ if __name__ == "__main__":
     # Also automatically copy to user's Downloads folder
     downloads_dir = r"C:\Users\akash\Downloads"
     if os.path.exists(downloads_dir):
-        # With Names copy
-        dest_with_names = os.path.join(downloads_dir, "LogicVerse_Presentation_With_Names.pptx")
-        try:
-            shutil.copy2(ppt_with_names, dest_with_names)
-            print(f"[OK] Copied {os.path.basename(ppt_with_names)} to {downloads_dir}")
-        except PermissionError:
-            dest_alt = os.path.join(downloads_dir, "LogicVerse_Presentation_With_Names_Updated.pptx")
-            shutil.copy2(ppt_with_names, dest_alt)
-            print(f"[NOTE] Original was open in PowerPoint. Copied to {dest_alt}")
+        def copy_best(src_file, base_name):
+            names = [base_name, base_name.replace('.pptx', '_Latest.pptx'), base_name.replace('.pptx', '_Updated.pptx'), base_name.replace('.pptx', '_New.pptx')]
+            for n in names:
+                dst = os.path.join(downloads_dir, n)
+                try:
+                    shutil.copy2(src_file, dst)
+                    print(f"[OK] Copied {os.path.basename(src_file)} -> {dst}")
+                    return dst
+                except PermissionError:
+                    continue
+            print(f"[WARN] Could not copy {src_file} due to file lock in PowerPoint")
+            return None
 
-        # Without Names copy
-        dest_without_names = os.path.join(downloads_dir, "LogicVerse_Presentation_Without_Names.pptx")
-        try:
-            shutil.copy2(ppt_without_names, dest_without_names)
-            print(f"[OK] Copied {os.path.basename(ppt_without_names)} to {downloads_dir}")
-        except PermissionError:
-            dest_alt = os.path.join(downloads_dir, "LogicVerse_Presentation_Without_Names_Updated.pptx")
-            shutil.copy2(ppt_without_names, dest_alt)
-            print(f"[NOTE] Original was open in PowerPoint. Copied to {dest_alt}")
+        copy_best(ppt_with_names, "LogicVerse_Presentation_With_Names.pptx")
+        copy_best(ppt_without_names, "LogicVerse_Presentation_Without_Names.pptx")
